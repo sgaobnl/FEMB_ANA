@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Mon 19 Mar 2018 11:31:08 PM CET
+Last modified: Thu Apr 12 17:56:46 2018
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -64,9 +64,9 @@ def log_parser(testruns, APAno, runtime="01_15_2018", runno="01", runtype="chk")
             break
     if con_a and con_b :
         apainfo = run_reqed[2][0:-1]
-        env = run_reqed[3][0:-1]
-        run_title =  run_reqed[5][0:-1]
-        rtd_info =  run_reqed[6][0:-1]
+        env = "Cold box"
+        run_title =  run_reqed[4][0:-1]
+        rtd_info =  run_reqed[5][0:-1]
 
         for lineno in range(len(run_reqed)):
             if (run_reqed[lineno].find(runtime) > 0) and (run_reqed[lineno].find("run"+runno+runtype) > 0):

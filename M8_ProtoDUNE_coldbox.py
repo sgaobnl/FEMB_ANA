@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Apr 12 17:30:19 2018
+Last modified: Thu Apr 12 18:14:57 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -162,7 +162,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.text(0.05,0.60, "Test type      : " + loginfo[4], fontsize=16 )
         ax.text(0.05,0.55, "Rawdata path   : " + loginfo[5], fontsize=16 )
         ax.text(0.05,0.50, "Test started at : " + loginfo[6], fontsize=16 )
-        ax.text(0.05,0.45, "Inactive FEMBs : " + loginfo[7], fontsize=16 )
+        if (len(loginfo[7]) > 5 ):
+            ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
         ax.savefig(pp, format='pdf')
         ax.close()
 
@@ -220,7 +221,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.xlim([0,total_chn])
         ax.ylim([0,4100])
         ax.text( (total_chn/40.0),450, "Test started at : " + loginfo[6] )
-        ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
+        if (len(loginfo[7]) > 5 ):
+            ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
         ax.title(title , fontsize=12 )
@@ -292,8 +294,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.xlim([0,total_chn])
         ax.ylim([-2000,3000])
         ax.text( (total_chn/40.0),-1500, "Test started at  : " + loginfo[6] )
-        ax.text( (total_chn/40.0),-1700, "Inactive FEMBs : " + loginfo[7] )
-
+        if (len(loginfo[7]) > 5 ):
+            ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
+ 
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
         ax.title(title , fontsize=12 )
@@ -458,7 +461,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.ylim([0,5000])
         ax.legend(loc=6)
         ax.text( (total_chn/40.0),4100, "Test started at  : " + loginfo[6] )
-        ax.text( (total_chn/40.0),3800, "Inactive FEMBs : " + loginfo[7] )
+        if (len(loginfo[7]) > 5 ):
+            ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
+ 
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
         ax.title(title , fontsize=12 )
@@ -533,7 +538,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.xlim([0,total_chn])
         ax.ylim([0,5000])
         ax.text( (total_chn/40.0),700, "Test started at  : " + loginfo[6] )
-        ax.text( (total_chn/40.0),400, "Inactive FEMBs : " + loginfo[7] )
+        if (len(loginfo[7]) > 5 ):
+            ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
+ 
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
         ax.title(title , fontsize=12 )
@@ -670,7 +677,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.ylim([0,1])
 
         ax.text( (total_chn/20.0),0.20, "Test started at  : " + loginfo[6] )
-        ax.text( (total_chn/20.0),0.15, "Inactive FEMBs : " + loginfo[7] )
+        if (len(loginfo[7]) > 5 ):
+            ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
+ 
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
         ax.title(title , fontsize=12 )
@@ -737,9 +746,11 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             ax.text( (total_chn/20.0),60, "RTDs(TT0206 to TT0200) measured at %s: %3dK, %3dK, %3dK, %3dK, %3dK, %3dK, %3dK "%(run_temp[8],\
                     run_temp[7],run_temp[6],run_temp[5],run_temp[4],run_temp[3],run_temp[2],run_temp[1] ) )
         else:
-            ax.text( (total_chn/20.0),60, "Temperature : " + loginfo[3] )
+            ax.text( (total_chn/20.0),60, "Temperature : " + loginfo[3]  )
         ax.text( (total_chn/20.0),55, "Test started at  : " + loginfo[6] )
-        ax.text( (total_chn/20.0),50, "Inactive FEMBs : " + loginfo[7] )
+        if (len(loginfo[7]) > 5 ):
+            ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
+ 
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
         ax.title(title , fontsize=12 )
