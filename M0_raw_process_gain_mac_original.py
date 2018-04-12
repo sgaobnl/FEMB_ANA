@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Apr 12 10:39:38 2018
+Last modified: Thu Apr 12 14:19:25 2018
 """
 
 #defaut setting for scientific caculation
@@ -141,7 +141,8 @@ APAno = int(sys.argv[7])
 
 one_run =   strrun 
 if (server_flg == "server"):
-    path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno+ strdate + "/" + strrun + "/"
+    #path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno+ strdate + "/" + strrun + "/"
+    path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ strdate + "/" + strrun + "/"
 else:
     path = "/Users/shanshangao/Documents/data2/Rawdata/APA3/Rawdata_"+ strdate + "/" + strrun + "/"
 #femb_set = strenv + strstep

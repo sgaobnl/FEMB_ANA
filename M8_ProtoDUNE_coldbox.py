@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Apr 12 11:02:14 2018
+Last modified: Thu Apr 12 17:30:19 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -68,7 +68,7 @@ def APA_sort(APAno = 1):
 
     return APA_sort, APA_X_sort, APA_V_sort, APA_U_sort 
 
-def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max_limit=15, min_limit=5, frontpage = False, APAno = 3):
+def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max_limit=15, min_limit=5, frontpage = False, APAno = 3, r_wfm = "./"):
     fembinfo = []
 
     if gain == 3:
@@ -95,6 +95,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         chnfemb_np     = []
         chnasic_np     = []
         chnchn_np      = []
+        chnwire_np     = []
 
         onefemb = sort_np[onefemb_loc]
         #if ( onefemb[0][1].find("WIB2_FEMB0") >= 0 ) or ( onefemb[0][1].find("WIB2_FEMB2") >= 0 ):
@@ -115,6 +116,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             for chn_info in onefemb[1]: #find chn
                 for chndata in apa_results:
                     if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) :
+                        chnwire_np.append(chn_info[0][0])
                         chnwib_np.append(chndata[2])
                         chnfemb_np.append(chndata[3])
                         chnasic_np.append(chndata[4])
@@ -135,7 +137,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 
         fembinfo.append([onefemb_loc, np.array(ped_np)        , np.array(rms_np)        , np.array(sf_ped_np)     , np.array(sf_rms_np)     , \
                     np.array(sf_ratio_np)   , np.array(chn_peakp_avg), np.array(chn_peakn_avg), chn_wave      , np.array(chn_peakp_ped) , \
-                    np.array(chn_peakn_ped) , chnwib_np     , chnfemb_np    , chnasic_np    , chnchn_np    ] )
+                    np.array(chn_peakn_ped) , chnwib_np     , chnfemb_np    , chnasic_np    , chnchn_np, chnwire_np    ] )
 
     for fembloc in range(20):
         ped_np         = fembinfo[fembloc][1]
@@ -347,7 +349,11 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.title(title , fontsize=12 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
-        ax.savefig(pp, format='pdf')
+        save_cycle = 0
+        while (os.path.isfile(r_wfm)):
+            save_cycle = save_cycle + 1
+            r_wfm = result_dir + "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
+        ax.savefig(r_wfm, format='png')
         ax.close()
     
     
@@ -364,6 +370,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ylabel = "%s plane: RMS noise / e-"%wiretype
         print "Noise Measurement-->%s wires has %d channels in total"%(wiretype, total_chn)
 
+        label_flag = True
         for fembloc in range(20):
             ped_np         = fembinfo[fembloc][1]
             rms_np         = fembinfo[fembloc][2]
@@ -379,6 +386,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             chnfemb_np     = fembinfo[fembloc][12]
             chnasic_np     = fembinfo[fembloc][13]
             chnchn_np      = fembinfo[fembloc][14]
+            chnwire_np      = fembinfo[fembloc][15]
 
             chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
             if len(ped_np)!= 0:
@@ -386,16 +394,57 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 plabel = "RMS Noise / e-"
                 y_np = rms_np*egain
 
-                ax.scatter( chn_np, y_np)
-                ax.plot( chn_np, y_np)
+                xchn_np = []
+                xy_np = []
+                vchn_np = []
+                vy_np = []
+                uchn_np = []
+                uy_np = []
+                for i in range(len(chn_np)):
+                    if chnwire_np[i] == "X" :
+                        xchn_np.append(chn_np[i])
+                        xy_np.append(y_np[i])
+                        color = 'g'
+                    elif chnwire_np[i] == "V" :
+                        vchn_np.append(chn_np[i])
+                        vy_np.append(y_np[i])
+                        color = 'b'
+                    elif chnwire_np[i] == "U" :
+                        uchn_np.append(chn_np[i])
+                        uy_np.append(y_np[i])
+                        color = 'r'
+ 
+                if (label_flag):
+                    ax.plot( xchn_np, xy_np, color='g', label = "X wire")
+                    ax.plot( vchn_np, vy_np, color='b', label = "V wire")
+                    ax.plot( uchn_np, uy_np, color='r', label = "U wire")
+                    label_flag = False
+                else:
+                    ax.plot( xchn_np, xy_np, color='g')
+                    ax.plot( vchn_np, vy_np, color='b')
+                    ax.plot( uchn_np, uy_np, color='r')
+ 
+                ax.scatter(xchn_np, xy_np,color='g', marker='.')
+                ax.scatter(vchn_np, vy_np,color='b', marker='.')
+                ax.scatter(uchn_np, uy_np,color='r', marker='.')
+
+#                for i in range(len(chn_np)):
+#                    if chnwire_np[i] == "X" :
+#                        color = 'g'
+#                    elif chnwire_np[i] == "V" :
+#                        color = 'b'
+#                    elif chnwire_np[i] == "U" :
+#                        color = 'r'
+#                    ax.scatter( [chn_np[i]], [y_np[i]], color = color, marker = '.')
                 if (fembloc < 10 ):
                     ax.text (chn_np[0], 100, "B" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
                 else:
                     ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
-                ax.text (chn_np[0], 4800, "Alive", color = 'g' )
-                ax.text (chn_np[0], 4600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
-                ax.text (chn_np[0], 4400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
-                print "APA3_LOC"+(format(fembloc+1, "2d"))
+                ax.text (chn_np[0]+2, 4800, "Alive", color = 'g' )
+                ax.text (chn_np[0]+2, 4600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
+                ax.text (chn_np[0]+2, 4400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
+                ax.vlines(chn_np[0], 0, 5000, color='m', linestyles="dotted", linewidth=0.8)
+                print "APA_LOC"+(format(fembloc+1, "2d"))
             else:
                 ax.text (chn_np[0], 4800, "Dead", color = 'r' )
 #                ax.text (chn_np[0], 4400, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
@@ -407,12 +456,13 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.tick_params(labelsize=8)
         ax.xlim([0,total_chn])
         ax.ylim([0,5000])
+        ax.legend(loc=6)
         ax.text( (total_chn/40.0),4100, "Test started at  : " + loginfo[6] )
         ax.text( (total_chn/40.0),3800, "Inactive FEMBs : " + loginfo[7] )
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
         ax.title(title , fontsize=12 )
-        ax.grid()
+#        ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
         ax.close()
@@ -739,6 +789,7 @@ else:
         exit()
 
 result_pdf = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.pdf'
+result_waveform = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
 
 #while (os.path.isfile(result_pdf)):
 #    save_cycle = save_cycle + 1
@@ -754,10 +805,10 @@ wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mo
 fig = plt.figure(figsize=(16,9))
 APA_sort, APA_X_sort, APA_V_sort, APA_U_sort = APA_sort(APAno)
 
-plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_sort,   pp, gain, max_limit, min_limit, frontpage = True , APAno = APAno)
-plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_X_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno)
-plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_V_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno)
-plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_U_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno)
+plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_sort,   pp, gain, max_limit, min_limit, frontpage = True , APAno = APAno, r_wfm = result_waveform)
+plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_X_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
+plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_V_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
+plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_U_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
 
 
 pp.close()

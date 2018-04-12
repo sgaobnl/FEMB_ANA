@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun 08 Apr 2018 06:46:00 PM CEST
+Last modified: Thu Apr 12 15:51:16 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -67,20 +67,21 @@ if (jumbo_flag == "True"):
 else:
     jumbo_flag = False
 
-femb_set = strenv + "step"
+#femb_set = strenv + "step"
+femb_set = "step"
 
 if (server_flg == "server" ):
-    path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA3/Rawdata_"+ rmsstrdate + "/" 
-    path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata//APA3/Rawdata_"+ gainstrdate + "/" 
+    path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ rmsstrdate + "/" 
+    path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ gainstrdate + "/" 
 else:
     path_raw = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ rmsstrdate + "/" 
     path_gain = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ gainstrdate + "/"
 
 step_info = [ 
-              [[rmsstrstep],[0,1,2],strenv, "WIB00"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
+              [[rmsstrstep],[0,1,2,3],strenv, "WIB00"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
               [[rmsstrstep],[0,1,2,3],strenv, "WIB01"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB01"+femb_set], 
-              [[rmsstrstep],[2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
-              [[rmsstrstep],[1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
+              [[rmsstrstep],[0,1,2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
+              [[rmsstrstep],[0,1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
               [[rmsstrstep],[0,1,2,3],strenv, "WIB04"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB04"+femb_set], 
             ]
 
@@ -106,11 +107,11 @@ for step_one_info in step_info:
             #result_pdfpath = path + "\\" "FEMB%d"%femb + step + "_" + DAC + "_" + 'results.pdf'
             result_pdfpath = path + "/" + "FEMB%d"%femb + step + "_" + DAC + "_" + 'results.pdf'
             
-            save_cycle = 0
-            while (os.path.isfile(result_pdfpath)):
-                save_cycle = save_cycle + 1
-                #result_pdfpath = path + "\\" + "FEMB%d"%femb +  step + "_" + DAC + "_"  + 'results' + str(save_cycle)+'.pdf'
-                result_pdfpath = path + "/" + "FEMB%d"%femb +  step + "_" + DAC + "_"  + 'results' + str(save_cycle)+'.pdf'
+            ####save_cycle = 0
+            ####while (os.path.isfile(result_pdfpath)):
+            ####    save_cycle = save_cycle + 1
+            ####    #result_pdfpath = path + "\\" + "FEMB%d"%femb +  step + "_" + DAC + "_"  + 'results' + str(save_cycle)+'.pdf'
+            ####    result_pdfpath = path + "/" + "FEMB%d"%femb +  step + "_" + DAC + "_"  + 'results' + str(save_cycle)+'.pdf'
             print result_pdfpath
             pp = PdfPages(result_pdfpath)
             
@@ -118,12 +119,13 @@ for step_one_info in step_info:
             #raw data processing or import processed result
             print "raw data processing or import processed result"
             #readfile = path +"\\" + "FEMB%d"%femb +  step +  "_" + DAC + "_"+ "alldata_result.bin"
-            readfile = path +"/" + rms_step +  "FEMB%d"%femb +  step +  "_" + DAC + "_"+ "alldata_result_org.bin"
-            if os.path.isfile(readfile):
-                import pickle
-                with open (readfile, 'rb') as fp:
-                    all_chn_results = pickle.load(fp)
-            else:
+            ####readfile = path +"/" + rms_step +  "FEMB%d"%femb +  step +  "_" + DAC + "_"+ "alldata_result_org.bin"
+            ####if os.path.isfile(readfile):
+            ####    import pickle
+            ####    with open (readfile, 'rb') as fp:
+            ####        all_chn_results = pickle.load(fp)
+            ####else:
+            if (True):
                 all_chn_results = raw_convertion( path, gainpath, step_np = [step], env = env, femb=femb, psd = psd, rms_smps =100000, stuck_filter = True, \
                             gain = gain, gain_step = gain_step, DAC = DAC, DACvalue = DACvalue, jumbo_flag = jumbo_flag)
             print "time cost = %.3f seconds"%(timer()-start)

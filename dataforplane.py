@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Nov 18 18:55:00 2017
+Last modified: Thu Apr 12 15:47:45 2018
 """
 
 #defaut setting for scientific caculation
@@ -18,10 +18,12 @@ Last modified: Sat Nov 18 18:55:00 2017
 #from openpyxl import Workbook
 import numpy as np
 #import struct
-from apa_mapping import apa_mapping
+from apa_mapping import APA_MAP 
+APAMAP = APA_MAP()
 
 def dataforplane (alldata, apa="ProtoDUNE", femb = 0, tp = 1 ):
-    apa_yuv, apa_y, apa_v, apa_u = apa_mapping(apa=apa)
+    APAMAP.APA = apa
+    apa_yuv, apa_y, apa_v, apa_u = APAMAP.apa_mapping()
     yuv_chndata = []
     for yuv_chn in apa_yuv:
         for onedata in alldata:

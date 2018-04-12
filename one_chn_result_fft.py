@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Nov 24 19:17:42 2017
+Last modified: Thu Apr 12 15:47:53 2018
 """
 
 #defaut setting for scientific caculation
@@ -18,12 +18,14 @@ Last modified: Fri Nov 24 19:17:42 2017
 import numpy as np
 import math
 from fft_chn import chn_rfft, chn_rfft_psd, chn_fft, chn_fft_psd
-from apa_mapping import apa_mapping
+from apa_mapping import APA_MAP
+APAMAP = APA_MAP()
 
 
 def one_chn_result(yuv_data_in, chn, apa= "ProtoDUNE", femb = 0, tp = 1, psd = True, step="step001", stuck_filter = True, env = "RT"):
     [yuv_chndata, y_chndata, v_chndata, u_chndata] =yuv_data_in 
-    apa_yuv, apa_y, apa_v, apa_u = apa_mapping(apa=apa)
+    APAMAP.APA = apa
+    apa_yuv, apa_y, apa_v, apa_u = apamap.apa_mapping()
 
     wire_type = "B"
     y_wire = np.where(chn == np.array(apa_y))
