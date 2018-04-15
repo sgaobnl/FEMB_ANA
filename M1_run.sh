@@ -7,4 +7,11 @@ python M1_raw_to_final_results_run_original.py 04_12_2018 05rms LN 31 04fpg 32 0
 python M1_raw_to_final_results_run_original.py 04_12_2018 06rms LN 31 04fpg 32 04_12_2018 False, server &
 python M1_raw_to_final_results_run_original.py 04_12_2018 07rms LN 31 04fpg 32 04_12_2018 False, server &
 python M1_raw_to_final_results_run_original.py 04_12_2018 08rms LN 31 04fpg 32 04_12_2018 False, server &
+python M1_raw_to_final_results_run_original.py 04_12_2018 09rms LN 31 04fpg 32 04_12_2018 False, server &
+
+python M1_raw_to_final_results_run_original.py 04_13_2018 01rms LN 31 04fpg 32 04_12_2018 False, server &
+python M1_raw_to_final_results_run_original.py 04_13_2018 02rms LN 31 04fpg 32 04_12_2018 False, server &
+python M1_raw_to_final_results_run_original.py 04_13_2018 03rms LN 31 04fpg 32 04_12_2018 False, server &
+python M1_raw_to_final_results_run_original.py 04_13_2018 04rms LN 31 04fpg 32 04_12_2018 False, server &
+python M1_raw_to_final_results_run_original.py 04_13_2018 05rms LN 31 04fpg 32 04_12_2018 False, server &
 
