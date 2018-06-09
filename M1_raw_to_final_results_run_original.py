@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Apr 12 15:51:16 2018
+Last modified: Wed 06 Jun 2018 06:57:30 AM CEST
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -49,6 +49,7 @@ gainstrstep =  sys.argv[6]
 gainstrdate = sys.argv[7] #
 jumbo_flag = sys.argv[8]
 server_flg = sys.argv[9]
+APAno = sys.argv[10]
 
 if (gainstrstep[1] == "2" ):
     DAC_cs = "FPGADAC"
@@ -71,8 +72,8 @@ else:
 femb_set = "step"
 
 if (server_flg == "server" ):
-    path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ rmsstrdate + "/" 
-    path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ gainstrdate + "/" 
+    path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ rmsstrdate + "/" 
+    path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ gainstrdate + "/" 
 else:
     path_raw = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ rmsstrdate + "/" 
     path_gain = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ gainstrdate + "/"

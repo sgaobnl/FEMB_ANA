@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Apr 13 07:19:45 2018
+Last modified: Wed 06 Jun 2018 06:32:55 AM CEST
 """
 
 #defaut setting for scientific caculation
@@ -141,8 +141,8 @@ APAno = int(sys.argv[7])
 
 one_run =   strrun 
 if (server_flg == "server"):
-    #path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno+ strdate + "/" + strrun + "/"
-    path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ strdate + "/" + strrun + "/"
+    path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno+ strdate + "/" + strrun + "/"
+    #path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ strdate + "/" + strrun + "/"
 else:
     path = "/Users/shanshangao/Documents/data2/Rawdata/APA3/Rawdata_"+ strdate + "/" + strrun + "/"
 #femb_set = strenv + strstep
@@ -152,21 +152,21 @@ for onedir in onedir_np:
     for FEMB in ["FEMB0", "FEMB1", "FEMB2","FEMB3" ]:
         Active_flg = True
 
-        if (APAno == 2):
-            if (onedir.find("WIB02") >= 0) and (FEMB == "FEMB2"):
-                Active_flg = False
-        elif (APAno == 3):
-            if (onedir.find("WIB02") >= 0) and (FEMB == "FEMB1"):
-                Active_flg = False
-            elif (onedir.find("WIB02") >= 0) and (FEMB == "FEMB0"):
-                Active_flg = False
-            elif (onedir.find("WIB03") >= 0) and (FEMB == "FEMB0"):
-                Active_flg = False
-            elif (onedir.find("WIB00") >= 0) and (FEMB == "FEMB3"):
-                Active_flg = False
-        elif (APAno == 4):
-            if (onedir.find("WIB01") >= 0) and (FEMB == "FEMB1"):
-                Active_flg = False
+        #if (APAno == 2):
+        #    if (onedir.find("WIB02") >= 0) and (FEMB == "FEMB2"):
+        #        Active_flg = False
+        #elif (APAno == 3):
+        #    if (onedir.find("WIB02") >= 0) and (FEMB == "FEMB1"):
+        #        Active_flg = False
+        #    elif (onedir.find("WIB02") >= 0) and (FEMB == "FEMB0"):
+        #        Active_flg = False
+        #    elif (onedir.find("WIB03") >= 0) and (FEMB == "FEMB0"):
+        #        Active_flg = False
+        #    elif (onedir.find("WIB00") >= 0) and (FEMB == "FEMB3"):
+        #        Active_flg = False
+        #elif (APAno == 4):
+        #    if (onedir.find("WIB01") >= 0) and (FEMB == "FEMB1"):
+        #        Active_flg = False
 
         if (Active_flg ):
             wb = Workbook()

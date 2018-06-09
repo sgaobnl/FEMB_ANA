@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun 01 Apr 2018 03:10:49 PM CEST
+Last modified: Fri 25 May 2018 05:27:42 AM CEST
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -54,7 +54,7 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
                temper_time_np, temper_femb0_np, temper_femb1_np, temper_femb2_np, temper_femb3_np, \
                gain=3, tp=2,  enc_flg = True, sf_flg = False ):
 
-    plt.figure(figsize=(16,9))
+    plt.figure(figsize=(12,8))
     ax = plt.subplot2grid((1, 1), (0, 0))
 
     rtd_time_np = ( np.array(temperrtdts_np) - np.min(time_np) ) / 3600.0
@@ -125,21 +125,21 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     ax2 = ax.twinx()
     ax2patch = []
     ax2label = []
-    ax2.plot(rtd_time_np, temperrtd0_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd1_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd2_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd3_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd4_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd5_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd0_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd1_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd2_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd3_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd4_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd5_np, color = 'tab:orange' )
     ax2.plot(rtd_time_np, temperrtd6_np, color = 'tab:orange' )
-    ax2.scatter(rtd_time_np, temperrtd0_np, color = 'b',           marker = '1', label = "TT0200 (K)")
-    ax2.scatter(rtd_time_np, temperrtd1_np, color = 'g',           marker = '2', label = "TT0201 (K)")
-    ax2.scatter(rtd_time_np, temperrtd2_np, color = 'c',           marker = '4', label = "TT0202 (K)")
-    ax2.scatter(rtd_time_np, temperrtd3_np, color = 'm',           marker = '8', label = "TT0203 (K)")
-    ax2.scatter(rtd_time_np, temperrtd4_np, color = 'y',           marker = 's', label = "TT0204 (K)")
-    ax2.scatter(rtd_time_np, temperrtd5_np, color = 'tab:orange',  marker = '+', label = "TT0205 (K)")
-    ax2.scatter(rtd_time_np, temperrtd6_np, color = 'r',           marker = 'x', label = "TT0206 (K)")
-    ax2.legend(loc = 4 )
+#    ax2.scatter(rtd_time_np, temperrtd0_np, color = 'b',           marker = '1', label = "TT0200 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd1_np, color = 'g',           marker = '2', label = "TT0201 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd2_np, color = 'c',           marker = '4', label = "TT0202 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd3_np, color = 'm',           marker = '8', label = "TT0203 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd4_np, color = 'y',           marker = 's', label = "TT0204 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd5_np, color = 'tab:orange',  marker = '+', label = "TT0205 (K)")
+    ax2.scatter(rtd_time_np, temperrtd6_np, color = 'r',           marker = '+', label = "RTD TT0206 (K)")
+    ax2.legend(loc = 1, fontsize=16 )
 
     if (FE_temper_flg == True):
         ax2.scatter(temper_time_np, temper_femb0_np, color = 'tab:orange', marker = 'x')
@@ -154,14 +154,14 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
         ax2.scatter(temper_time_np, temper_femb3_np, color = 'tab:olive', marker = 'x')
         ax2patch.append( mpatches.Patch(color = 'tab:olive') )
         ax2label.append( "Temperature on WIB5FEMB3" )
-        ax2.legend(ax2patch, ax2label, loc=4, fontsize=12 )
+        ax2.legend(ax2patch, ax2label, loc=4, fontsize=16 )
     
         ax2.plot(temper_time_np, temper_femb0_np, color =  'tab:orange', marker = 'x')
         ax2.plot(temper_time_np, temper_femb1_np, color =  'tab:purple', marker = 'x')
         ax2.plot(temper_time_np, temper_femb2_np, color =  'tab:brown', marker = 'x')
         ax2.plot(temper_time_np, temper_femb3_np, color =  'tab:olive', marker = 'x')
-    ax2.set_ylabel('Temperature / K', color='tab:orange', fontsize=12)
-    ax2.tick_params('y', colors='tab:orange')
+    ax2.set_ylabel('Temperature / K', color='tab:orange', fontsize=16)
+    ax2.tick_params('y',labelsize=16, colors='tab:orange')
     ax2.set_ylim([-50, 350])
     ax2.set_xlim([np.min(time_np)-1,np.max(time_np)+2])
 
@@ -170,34 +170,34 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
         ax.errorbar(time_np, onewire[1], onewire[2], color = clor[markerno], marker = mker[markerno])
         if enc_flg == True:
             if (onewire[0][0] == "X" ):
-                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.85, "X plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=10) 
+                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.88, "X plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=16) 
             elif (onewire[0][0] == "U" ):                                                                                                          
-                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.79, "U plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=10) 
+                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.76, "U plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=16) 
             elif (onewire[0][0] == "V" ):                                                                                                          
-                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "V plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
+                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.82, "V plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=16) 
 
         patch.append( mpatches.Patch(color = clor[markerno]))
         label.append("ENC of %s"%(onewire[0] ))
-        if (markerno  == 0 ):
-            ax.text( time_np[0], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[0], fontsize=8) 
-            runlen = len(time_np)
-            for runtmp in range(1,runlen,1):
-                if (strtime_np[runtmp][0:10] != strtime_np[runtmp-1][0:10] ):
-                    ax.text( time_np[runtmp], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[runtmp], fontsize=8) 
+#        if (markerno  == 0 ):
+#            ax.text( time_np[0], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[0], fontsize=10) 
+#            runlen = len(time_np)
+    #        for runtmp in range(1,runlen,1):
+    #            if (strtime_np[runtmp][0:10] != strtime_np[runtmp-1][0:10] ):
+    #                ax.text( time_np[runtmp], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[runtmp], fontsize=10) 
         markerno = markerno + 1
 
-    ax.legend(patch, label, loc=3, fontsize=12 )
-    ax.tick_params(labelsize=12)
+    ax.legend(patch, label, loc=3, fontsize=16 )
+    ax.tick_params(labelsize=16)
     ax.set_ylim(yrange)
     ax.set_xlim([np.min(time_np),np.max(time_np)])
     if enc_flg == True:
-        ax.set_ylabel("ENC / e$^-$", fontsize=12)
-        ax.set_title("ENC (Gain = 25mV/fC, Tp = %s$\mu$s) vs. Temperature"%strtp, fontsize=12 )
+        ax.set_ylabel("ENC / e$^-$", fontsize=16)
+        ax.set_title("ENC (Gain = 25mV/fC, Tp = %s$\mu$s) vs. Temperature"%strtp, fontsize=16 )
     else:
-        ax.set_ylabel("ADC /bin", fontsize=12)
-        ax.set_title("Noise", fontsize=12 )
+        ax.set_ylabel("ADC /bin", fontsize=16)
+        ax.set_title("Noise", fontsize=16 )
 
-    ax.set_xlabel("Time / hour", fontsize=12)
+    ax.set_xlabel("Time / hour", fontsize=16)
     ax.grid()
 
 
@@ -208,6 +208,7 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
             plt.savefig(path+pngfile, format='png')
         else:
             pngfile =  "APA" + "gain" + str(gain) + "tp" + str(tp) + "encnoise.png"
+            print path+ pngfile
             plt.savefig(path+ pngfile, format='png')
     else:
         pngfile =  "APA" + "gain" + str(gain) + "tp" + str(tp) + "adcnoise.png"
@@ -224,11 +225,12 @@ stryear = sys.argv[7] #"2018"
 FE_temper_flg = ( sys.argv[8] == True )
 
 if (server_flg == "server" ):
-    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/"
+    #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/"
+    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA2/"
 else:
     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/"
 prepath = rootpath + "Rawdata_"
-rtdsfile = rootpath + "APA4_cooldown_RTDdata.csv" 
+rtdsfile = rootpath + "APA2_cooldown_RTDsdata.csv" 
 
 month_np = []
 for tmp in range(0, len(strmonths), 3):
@@ -339,12 +341,27 @@ sfurms_np = []
 sfurms_errbar_np = []
 
 del_run = [
-            ["Rawdata_02_06_2018",  "run13chk",] ,
-            ["Rawdata_02_06_2018",  "run19chk",] ,
-            ["Rawdata_02_07_2018",  "run03chk",] ,
-            ["Rawdata_02_07_2018",  "run04chk",] ,
-            ["Rawdata_02_07_2018",  "run05chk",] ,
-            ["Rawdata_02_07_2018",  "run06chk",] ,
+
+            ["Rawdata_01_15_2018",  "run01chk",] ,
+            ["Rawdata_01_15_2018",  "run02chk",] ,
+            ["Rawdata_01_15_2018",  "run03chk",] ,
+            ["Rawdata_01_15_2018",  "run04chk",] ,
+            ["Rawdata_01_15_2018",  "run05chk",] ,
+            ["Rawdata_01_15_2018",  "run06chk",] ,
+            ["Rawdata_01_16_2018",  "run10chk",] ,
+            ["Rawdata_01_17_2018",  "run10chk",] ,
+            ["Rawdata_01_17_2018",  "run11chk",] ,
+            ["Rawdata_01_17_2018",  "run12chk",] ,
+            ["Rawdata_01_18_2018",  "run03chk",] ,
+            ["Rawdata_01_18_2018",  "run04chk",] ,
+            ["Rawdata_01_18_2018",  "run05chk",] ,
+
+#            ["Rawdata_02_06_2018",  "run13chk",] ,
+#            ["Rawdata_02_06_2018",  "run19chk",] ,
+#            ["Rawdata_02_07_2018",  "run03chk",] ,
+#            ["Rawdata_02_07_2018",  "run04chk",] ,
+#            ["Rawdata_02_07_2018",  "run05chk",] ,
+#            ["Rawdata_02_07_2018",  "run06chk",] ,
         ]
 
 

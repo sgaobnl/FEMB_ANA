@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Apr 12 18:14:57 2018
+Last modified: Sat Jun  9 19:29:11 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -130,7 +130,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                         chn_peakn_avg.append(chndata[12] -  chndata[6])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[13])
-                        chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
+                        chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+100])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -307,16 +307,20 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
     
     if ( (plot_en&0x04) != 0 ):
     ####plot  pulse  wave      
-        fig = plt.figure(figsize=(16,9))
+        fig = plt.figure(figsize=(12,8))
         ax = plt
     
-        title = "%s plane: Pulse Waveform Overlap of %d "%( wiretype, total_chn)
+        #title = "%s planes: Pulse Waveform Overlap of %d wires"%( wiretype, total_chn)
+        title = "Pulse Waveform Overlap of %d wires"%(total_chn)
         ylabel = "ADC output /bin"
         print "Pulse Waveform-->%s wires has %d channels in total"%(wiretype, total_chn)
         print "WIB, FEMB, ASIC, CHN, PeakPos"
         ped_label = "Positive Pulse Amplitude / ADC bin"
 
         for fembloc in range(20):
+            fig = plt.figure(figsize=(12,8))
+            ax = plt
+ 
             ped_np         = fembinfo[fembloc][1]
             rms_np         = fembinfo[fembloc][2]
             sf_ped_np      = fembinfo[fembloc][3]
@@ -344,20 +348,33 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                     ax.scatter( x_np, y_np)
                     ax.plot( x_np, y_np)
                     ax.xlim([0,np.max(x_np)])
-
-        ax.tick_params(labelsize=8)
-        ax.ylim([-2000,2000])
-        ax.ylabel(ylabel, fontsize=12 )
-        ax.xlabel("Time / us", fontsize=12 )
-        ax.title(title , fontsize=12 )
-        ax.grid()
-        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
-        save_cycle = 0
-        while (os.path.isfile(r_wfm)):
-            save_cycle = save_cycle + 1
-            r_wfm = result_dir + "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
-        ax.savefig(r_wfm, format='png')
-        ax.close()
+            ax.tick_params(labelsize=16)
+            ax.ylim([-2000,2000])
+            ax.ylabel(ylabel, fontsize=16 )
+            ax.xlabel("Time / us", fontsize=16 )
+            ax.title(title , fontsize=16 )
+            ax.grid()
+            ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+            save_cycle = 0
+            while (os.path.isfile(r_wfm)):
+                save_cycle = save_cycle + 1
+                r_wfm = result_dir + "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+"_" + str(fembloc)+'.png'
+            ax.savefig(r_wfm, format='png')
+            ax.close()
+ 
+#        ax.tick_params(labelsize=16)
+#        ax.ylim([-2000,2000])
+#        ax.ylabel(ylabel, fontsize=16 )
+#        ax.xlabel("Time / us", fontsize=16 )
+#        ax.title(title , fontsize=16 )
+#        ax.grid()
+#        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+#        save_cycle = 0
+#        while (os.path.isfile(r_wfm)):
+#            save_cycle = save_cycle + 1
+#            r_wfm = result_dir + "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
+#        ax.savefig(r_wfm, format='png')
+#        ax.close()
     
     
     if ( (plot_en&0x08) != 0 ):
@@ -456,7 +473,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 #        patch.append( mpatches.Patch(color=color))
 #        label.append(plabel)
 #        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=8)
+        ax.tick_params(labelsize=24)
         ax.xlim([0,total_chn])
         ax.ylim([0,5000])
         ax.legend(loc=6)
@@ -464,9 +481,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
  
-        ax.ylabel(ylabel, fontsize=12 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
-        ax.title(title , fontsize=12 )
+        ax.ylabel(ylabel, fontsize=24 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=24 )
+        ax.title(title , fontsize=24 )
 #        ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -777,16 +794,18 @@ print "Start run%schk"%strrunno
 rundir = "run%schk"%strrunno
 if (server_flg == "server" ):
     #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
-    #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA4" + "/"
-    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "Coldbox" + "/"
+    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
+#    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "Coldbox" + "/"
 else:
     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/APA3/"
 path =rootpath + "Rawdata_"+ strdate + "/" 
-rtdsfile = rootpath +  "APA4_cooldown_RTDdata.csv"
+#rtdsfile = rootpath +  "APA5_cooldown_RTDdata.csv"
+#rtdsfile = rootpath +  "APA4_cooldown_RTDdata.csv"
 
 apamap.APA = "ProtoDUNE"
 loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = strdate, runno = strrunno, runtype = "chk") 
-run_temp = run_rtds(filepath=rtdsfile, runtime =loginfo[6]) 
+#run_temp = run_rtds(filepath=rtdsfile, runtime =loginfo[6]) 
+run_temp = None
 
 save_cycle = 0
 result_dir = path + "results/" 
