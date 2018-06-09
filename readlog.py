@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Apr 12 17:56:46 2018
+Last modified: Fri Jun  8 14:10:15 2018
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -26,7 +26,7 @@ import os.path
 def readlog(rootpath, APAno, runtime, runno, runtype):
     print rootpath
     #filepath = rootpath + "ProtoDUNEreadme.log"
-    filepath = rootpath + "Coldboxreadme.log"
+    filepath = rootpath + "LArIATreadme.log"
 
     if os.path.isfile(filepath):
         with open(filepath,"r") as f:
