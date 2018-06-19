@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/13/2018 3:40:00 PM
+Last modified: Tue Jun 19 10:20:23 2018
 """
 
 #defaut setting for scientific caculation
@@ -112,7 +112,8 @@ def raw_convertor_feedloc(raw_data, smps, jumbo_flag = True):
             else:
                 pass
             i = i + 13 
-
+    if (len(feed_loc) == 0 ):
+        feed_loc = [0]
     return chn_data, feed_loc
 
 def raw_convertor(raw_data, smps, jumbo_flag = True):
@@ -121,7 +122,7 @@ def raw_convertor(raw_data, smps, jumbo_flag = True):
 
 def raw_convertor_peak(raw_data, smps, jumbo_flag = True):
     chn_data, feed_loc = raw_convertor_feedloc(raw_data, smps, jumbo_flag)
-    if ( len(feed_loc)  ) > 2 :
+    if ( len(feed_loc)  ) > 1 :
         chn_peakp=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],]
         chn_peakn=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],]
         for tmp in range(len(feed_loc)-1):
@@ -129,8 +130,12 @@ def raw_convertor_peak(raw_data, smps, jumbo_flag = True):
                 chn_peakp[chn].append ( np.max(chn_data[chn][feed_loc[ tmp]:feed_loc[tmp]+100 ]) )
                 chn_peakn[chn].append ( np.min(chn_data[chn][feed_loc[ tmp]:feed_loc[tmp]+100 ]) )
     else:
-        chn_peakp = None
-        chn_peakn = None
+        chn_peakp=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],]
+        chn_peakn=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],]
+        for tmp in range(len(feed_loc)-1):
+            for chn in range(16):
+                chn_peakp[chn].append ( np.max(chn_data[chn][0:10000 ]) )
+                chn_peakn[chn].append ( np.min(chn_data[chn][0:10000 ]) )
     return  chn_data, feed_loc, chn_peakp, chn_peakn
 
 

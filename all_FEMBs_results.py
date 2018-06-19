@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jun  9 11:16:56 2018
+Last modified: Tue Jun 19 10:25:59 2018
 """
 
 #defaut setting for scientific caculation
@@ -96,7 +96,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                                     break
 
                             rms_data = []
-                            for oneloc in feed_loc[0:-1]:
+                            for oneloc in feed_loc:
                                 rms_data = rms_data + chn_data[chn][oneloc+100: oneloc+feed_freq]
 
                             if (hp_filter == True ):
