@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jun  9 12:10:52 2018
+Last modified: Tue Jun 19 13:58:06 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -150,7 +150,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                         chn_peakn_avg.append(chndata[12] -  chndata[6])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[13])
-                        chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
+                        chn_wave.append(chndata[13][0:100000])
+                        #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+300])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -370,6 +371,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                 for chn in range(len(chn_wave)):
                     y_np = np.array(chn_wave[chn])
                     y_max = np.max(y_np)
+                    #y_np = y_np - ped_np[chn]
                     y_np = y_np - ped_np[chn]
                     smps_np = np.arange(len(chn_wave[chn])) 
                     x_np = smps_np * 0.5
@@ -836,8 +838,8 @@ plot_en = int(sys.argv[8],16)
 #hp_filter  = ( sys.argv[10] == "True" )
 #plot_en = int(sys.argv[11],16)
 
-print "Start run%schk"%strrunno
-rundir = "run%schk"%strrunno
+print "Start run%scfg"%strrunno
+rundir = "run%scfg"%strrunno
 if (server_flg == "server" ):
     rootpath = "/daqdata/BNL_LD_data/LArIAT/Rawdata/"
 else:
@@ -847,7 +849,7 @@ path =rootpath + "Rawdata_"+ strdate + "/"
 #rtdsfile = rootpath +  "APA4_cooldown_RTDdata.csv"
 #apamap.APA = "ProtoDUNE"
 apamap.APA = "LArIAT"
-loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = strdate, runno = strrunno, runtype = "chk") 
+loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = strdate, runno = strrunno, runtype = "cfg") 
 #run_temp = run_rtds(filepath=rtdsfile, runtime =loginfo[6]) 
 run_temp = None
 
@@ -867,7 +869,7 @@ result_waveform = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + ap
 
 pp = PdfPages(result_pdf)
 
-mode = 0
+mode = "E" 
 wib_np = [0,1]
 feed_freq=500
 wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter)
