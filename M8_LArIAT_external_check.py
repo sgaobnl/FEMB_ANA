@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jun 19 17:09:11 2018
+Last modified: Tue Jun 19 18:05:28 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -870,7 +870,6 @@ result_waveform = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + ap
 pp = PdfPages(result_pdf)
 
 mode = "E" 
-gain = "X"
 wib_np = [0,1]
 feed_freq=500
 wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter)

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jun 19 16:52:51 2018
+Last modified: Tue Jun 19 18:07:13 2018
 """
 
 #defaut setting for scientific caculation
@@ -72,11 +72,15 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                     wib  = int( rawfilep[(rawfilep.find("WIB") + 3):(rawfilep.find("WIB") + 5)])
                     femb = int( rawfilep[rawfilep.find("FEMB") + 4])
                     chip = int( rawfilep[rawfilep.find("CHIP") + 4])
-                    filetp = int( rawfilep[rawfilep.find("CHIP") + 6],16) & 0x03
-                    CFG_flg = (rawfilep.find("CFG_DATA")  > 0 )
+                    CFG_flg = (rawfilep.find("CFG_DATA") > 0 )
+                    if (CFG_flg):
+                        filetp = tp
+                    else:
+                        filetp = int( rawfilep[rawfilep.find("CHIP") + 6],16) & 0x03
+
                     apamap.femb = wib*4+femb
                     apa_femb_loc, X_sort, V_sort, U_sort = apamap.apa_femb_mapping()
-                    if os.path.isfile(rawfilep) and ( (filetp==tp) or CFG_flg) :
+                    if os.path.isfile(rawfilep) and (filetp==tp) :
                         with open(rawfilep, 'rb') as f:
                             raw_data = f.read()                
                             len_file = len(raw_data) 
