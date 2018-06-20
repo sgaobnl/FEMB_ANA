@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jun 19 21:32:01 2018
+Last modified: Tue Jun 19 21:43:15 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -384,7 +384,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                     ax.xlim([0,np.max(x_np)])
 
         ax.tick_params(labelsize=8)
-        ax.ylim([-2000,2000])
+        ax.ylim([000,4100])
         ax.ylabel(ylabel, fontsize=12 )
         ax.xlabel("Time / us", fontsize=12 )
         ax.title(title , fontsize=12 )
