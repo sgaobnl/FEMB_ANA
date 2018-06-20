@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jun  9 12:10:52 2018
+Last modified: Tue Jun 19 23:18:46 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -73,11 +73,13 @@ def APA_sort(APAno = 9, onefemb_loc=0):
 def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2, max_limit=15, min_limit=5, frontpage = False, APAno = 3, r_wfm = "./"):
     fembinfo = []
 
+    egain = 235 #COTS ADC
     if gain == 3:
         #egain = 80
         egain = 130 #COTS ADC
     if gain == 2:
         egain = 145
+        egain = 235 #COTS ADC
     if gain == 1:
         egain = 250
     if gain == 0:
