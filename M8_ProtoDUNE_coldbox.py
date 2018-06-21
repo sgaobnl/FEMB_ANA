@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jun 19 23:18:46 2018
+Last modified: Wed Jun 20 23:45:16 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -499,7 +499,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
 #        ax.legend(patch, label, loc=1, fontsize=12 )
         ax.tick_params(labelsize=8)
         ax.xlim([0,total_chn])
-        ax.ylim([0,1000])
+#        ax.ylim([0,1000])
         ax.legend(loc=6)
         ax.text( (total_chn/40.0),4100, "Test started at  : " + loginfo[6] )
         if (len(loginfo[7]) > 5 ):
