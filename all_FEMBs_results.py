@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jun 21 18:26:04 2018
+Last modified: Wed Jun 27 13:12:06 2018
 """
 
 #defaut setting for scientific caculation
@@ -164,11 +164,11 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
             print "Error to create a folder"
             exit()
 
-#    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
-#    if (os.path.isfile(savefile)): 
-#        pass
-#    else:
-#        with open(savefile, "wb") as fp:
-#            pickle.dump(allresult, fp)
+    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
+    if (os.path.isfile(savefile)): 
+        pass
+    else:
+        with open(savefile, "wb") as fp:
+            pickle.dump(allresult, fp)
     return alldata
 

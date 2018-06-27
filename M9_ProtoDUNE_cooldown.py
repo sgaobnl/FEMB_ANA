@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun 01 Apr 2018 03:10:49 PM CEST
+Last modified: Wed Jun 27 14:39:15 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -57,7 +57,7 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     plt.figure(figsize=(16,9))
     ax = plt.subplot2grid((1, 1), (0, 0))
 
-    rtd_time_np = ( np.array(temperrtdts_np) - np.min(time_np) ) / 3600.0
+#    rtd_time_np = ( np.array(temperrtdts_np) - np.min(time_np) ) / 3600.0
     if FE_temper_flg == True :
         temper_time_np = ( np.array(temper_time_np) - np.min(time_np) ) / 3600.0
     time_np = ( np.array(time_np) - np.min(time_np) ) /3600.0
@@ -76,25 +76,28 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
         temper_femb2_np = (( np.array( temper_femb2_np ) * deg_per_mv ) + cconstant ) 
         temper_femb3_np = (( np.array( temper_femb3_np ) * deg_per_mv ) + cconstant ) 
 
-    if gain == 3:
-        if tp ==1 : #0.5us
-            egain = 83
-            strtp = "0.5"
-        elif tp ==0 : #1.0us
-            egain = 78
-            strtp = "1.0"
-        elif tp ==3 : #2.0us
-            egain = 77
-            strtp = "2.0"
-        else: #3.0us
-            egain = 76
-            strtp = "3.0"
-    if gain == 2:
-        egain = 145
-    if gain == 1:
-        egain = 250
-    if gain == 0:
-        egain = 425
+    if gain == 4:
+        egain = 245
+        strtp = "2.0"
+#    if gain == 3:
+#        if tp ==1 : #0.5us
+#            egain = 83
+#            strtp = "0.5"
+#        elif tp ==0 : #1.0us
+#            egain = 78
+#            strtp = "1.0"
+#        elif tp ==3 : #2.0us
+#            egain = 77
+#            strtp = "2.0"
+#        else: #3.0us
+#            egain = 76
+#            strtp = "3.0"
+#    if gain == 2:
+#        egain = 145
+#    if gain == 1:
+#        egain = 250
+#    if gain == 0:
+#        egain = 425
 
     if enc_flg == True:
         xrms_np        =     xrms_np        * egain 
@@ -103,7 +106,7 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
         vrms_errbar_np =     vrms_errbar_np * egain 
         urms_np        =     urms_np        * egain 
         urms_errbar_np =     urms_errbar_np * egain 
-        yrange = [0,2000]
+        yrange = [0,1000]
     else:
         yrange = [0,20]
 
@@ -122,48 +125,48 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     minurms_pos = np.where(urms_np == minurms)[0][0]
 
     markerno = 0
-    ax2 = ax.twinx()
-    ax2patch = []
-    ax2label = []
-    ax2.plot(rtd_time_np, temperrtd0_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd1_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd2_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd3_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd4_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd5_np, color = 'tab:orange' )
-    ax2.plot(rtd_time_np, temperrtd6_np, color = 'tab:orange' )
-    ax2.scatter(rtd_time_np, temperrtd0_np, color = 'b',           marker = '1', label = "TT0200 (K)")
-    ax2.scatter(rtd_time_np, temperrtd1_np, color = 'g',           marker = '2', label = "TT0201 (K)")
-    ax2.scatter(rtd_time_np, temperrtd2_np, color = 'c',           marker = '4', label = "TT0202 (K)")
-    ax2.scatter(rtd_time_np, temperrtd3_np, color = 'm',           marker = '8', label = "TT0203 (K)")
-    ax2.scatter(rtd_time_np, temperrtd4_np, color = 'y',           marker = 's', label = "TT0204 (K)")
-    ax2.scatter(rtd_time_np, temperrtd5_np, color = 'tab:orange',  marker = '+', label = "TT0205 (K)")
-    ax2.scatter(rtd_time_np, temperrtd6_np, color = 'r',           marker = 'x', label = "TT0206 (K)")
-    ax2.legend(loc = 4 )
-
-    if (FE_temper_flg == True):
-        ax2.scatter(temper_time_np, temper_femb0_np, color = 'tab:orange', marker = 'x')
-        ax2patch.append( mpatches.Patch(color = 'tab:orange') )
-        ax2label.append( "Temperature on WIB5FEMB0" )
-        ax2.scatter(temper_time_np, temper_femb1_np, color = 'tab:purple', marker = 'x')
-        ax2patch.append( mpatches.Patch(color = 'tab:purple') )
-        ax2label.append( "Temperature on WIB5FEMB1" )
-        ax2.scatter(temper_time_np, temper_femb2_np, color = 'tab:brown', marker = 'x')
-        ax2patch.append( mpatches.Patch(color = 'tab:brown') )
-        ax2label.append( "Temperature on WIB5FEMB2" )
-        ax2.scatter(temper_time_np, temper_femb3_np, color = 'tab:olive', marker = 'x')
-        ax2patch.append( mpatches.Patch(color = 'tab:olive') )
-        ax2label.append( "Temperature on WIB5FEMB3" )
-        ax2.legend(ax2patch, ax2label, loc=4, fontsize=12 )
-    
-        ax2.plot(temper_time_np, temper_femb0_np, color =  'tab:orange', marker = 'x')
-        ax2.plot(temper_time_np, temper_femb1_np, color =  'tab:purple', marker = 'x')
-        ax2.plot(temper_time_np, temper_femb2_np, color =  'tab:brown', marker = 'x')
-        ax2.plot(temper_time_np, temper_femb3_np, color =  'tab:olive', marker = 'x')
-    ax2.set_ylabel('Temperature / K', color='tab:orange', fontsize=12)
-    ax2.tick_params('y', colors='tab:orange')
-    ax2.set_ylim([-50, 350])
-    ax2.set_xlim([np.min(time_np)-1,np.max(time_np)+2])
+#    ax2 = ax.twinx()
+#    ax2patch = []
+#    ax2label = []
+#    ax2.plot(rtd_time_np, temperrtd0_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd1_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd2_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd3_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd4_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd5_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd6_np, color = 'tab:orange' )
+#    ax2.scatter(rtd_time_np, temperrtd0_np, color = 'b',           marker = '1', label = "TT0200 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd1_np, color = 'g',           marker = '2', label = "TT0201 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd2_np, color = 'c',           marker = '4', label = "TT0202 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd3_np, color = 'm',           marker = '8', label = "TT0203 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd4_np, color = 'y',           marker = 's', label = "TT0204 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd5_np, color = 'tab:orange',  marker = '+', label = "TT0205 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd6_np, color = 'r',           marker = 'x', label = "TT0206 (K)")
+#    ax2.legend(loc = 4 )
+#
+#    if (FE_temper_flg == True):
+#        ax2.scatter(temper_time_np, temper_femb0_np, color = 'tab:orange', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:orange') )
+#        ax2label.append( "Temperature on WIB5FEMB0" )
+#        ax2.scatter(temper_time_np, temper_femb1_np, color = 'tab:purple', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:purple') )
+#        ax2label.append( "Temperature on WIB5FEMB1" )
+#        ax2.scatter(temper_time_np, temper_femb2_np, color = 'tab:brown', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:brown') )
+#        ax2label.append( "Temperature on WIB5FEMB2" )
+#        ax2.scatter(temper_time_np, temper_femb3_np, color = 'tab:olive', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:olive') )
+#        ax2label.append( "Temperature on WIB5FEMB3" )
+#        ax2.legend(ax2patch, ax2label, loc=4, fontsize=12 )
+#    
+#        ax2.plot(temper_time_np, temper_femb0_np, color =  'tab:orange', marker = 'x')
+#        ax2.plot(temper_time_np, temper_femb1_np, color =  'tab:purple', marker = 'x')
+#        ax2.plot(temper_time_np, temper_femb2_np, color =  'tab:brown', marker = 'x')
+#        ax2.plot(temper_time_np, temper_femb3_np, color =  'tab:olive', marker = 'x')
+#    ax2.set_ylabel('Temperature / K', color='tab:orange', fontsize=12)
+#    ax2.tick_params('y', colors='tab:orange')
+#    ax2.set_ylim([-50, 350])
+#    ax2.set_xlim([np.min(time_np)-1,np.max(time_np)+2])
 
 
     for onewire in wire_np:
@@ -224,7 +227,8 @@ stryear = sys.argv[7] #"2018"
 FE_temper_flg = ( sys.argv[8] == True )
 
 if (server_flg == "server" ):
-    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/"
+    #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/"
+    rootpath = "/daqdata/BNL_LD_data/LArIAT/Rawdata/"
 else:
     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/"
 prepath = rootpath + "Rawdata_"
@@ -252,10 +256,11 @@ for rundate in rundatepaths:
     for root, dirs, files in os.walk(resultpath):
         break   
     for chkdir in dirs:
-        if (chkdir.find("chk") > 0 ):
+        if (chkdir.find("dat") > 0 ):
             strrunno = chkdir[3:5]
-            loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = rundate, runno = strrunno, runtype = "chk") 
+            loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = rundate, runno = strrunno, runtype = "dat") 
             run_temp = run_rtds(filepath=rtdsfile, runtime =loginfo[6]) 
+            run_temp = 0
             chkrun_ts = long( time.mktime(datetime.datetime.strptime(loginfo[6], "%Y-%m-%d %H:%M:%S").timetuple()) )
             chkruns.append( [resultpath, chkdir, loginfo, run_temp, chkrun_ts] ) 
 
@@ -339,12 +344,33 @@ sfurms_np = []
 sfurms_errbar_np = []
 
 del_run = [
-            ["Rawdata_02_06_2018",  "run13chk",] ,
-            ["Rawdata_02_06_2018",  "run19chk",] ,
-            ["Rawdata_02_07_2018",  "run03chk",] ,
-            ["Rawdata_02_07_2018",  "run04chk",] ,
-            ["Rawdata_02_07_2018",  "run05chk",] ,
-            ["Rawdata_02_07_2018",  "run06chk",] ,
+            ["Rawdata_06_27_2018",  "run01dat",] ,
+            ["Rawdata_06_27_2018",  "run02dat",] ,
+            ["Rawdata_06_27_2018",  "run03dat",] ,
+            ["Rawdata_06_27_2018",  "run04dat",] ,
+            ["Rawdata_06_27_2018",  "run05dat",] ,
+            ["Rawdata_06_27_2018",  "run06dat",] ,
+            ["Rawdata_06_27_2018",  "run07dat",] ,
+            ["Rawdata_06_27_2018",  "run08dat",] ,
+            ["Rawdata_06_27_2018",  "run09dat",] ,
+            ["Rawdata_06_27_2018",  "run10dat",] ,
+            ["Rawdata_06_27_2018",  "run11dat",] ,
+            ["Rawdata_06_27_2018",  "run12dat",] ,
+            ["Rawdata_06_27_2018",  "run13dat",] ,
+            ["Rawdata_06_27_2018",  "run14dat",] ,
+            ["Rawdata_06_27_2018",  "run15dat",] ,
+            ["Rawdata_06_27_2018",  "run16dat",] ,
+            ["Rawdata_06_27_2018",  "run17dat",] ,
+            ["Rawdata_06_27_2018",  "run18dat",] ,
+            ["Rawdata_06_27_2018",  "run19dat",] ,
+ 
+            ["Rawdata_06_27_2018",  "run58dat",] ,
+#            ["Rawdata_02_06_2018",  "run13chk",] ,
+#            ["Rawdata_02_06_2018",  "run19chk",] ,
+#            ["Rawdata_02_07_2018",  "run03chk",] ,
+#            ["Rawdata_02_07_2018",  "run04chk",] ,
+#            ["Rawdata_02_07_2018",  "run05chk",] ,
+#            ["Rawdata_02_07_2018",  "run06chk",] ,
         ]
 
 
@@ -374,14 +400,14 @@ for chkrun in chkruns:
                 all_chn_results = pickle.load(fp)
                 runts = time.mktime(datetime.datetime.strptime(chkrun[2][6], "%Y-%m-%d %H:%M:%S").timetuple())
                 time_np.append(runts)
-                temperrtdts_np.append(chkrun[3][0] ) 
-                temperrtd0_np.append(chkrun[3][1] ) 
-                temperrtd1_np.append(chkrun[3][2] ) 
-                temperrtd2_np.append(chkrun[3][3] ) 
-                temperrtd3_np.append(chkrun[3][4] ) 
-                temperrtd4_np.append(chkrun[3][5] ) 
-                temperrtd5_np.append(chkrun[3][6] ) 
-                temperrtd6_np.append(chkrun[3][7] ) 
+#                temperrtdts_np.append(chkrun[3][0] ) 
+#                temperrtd0_np.append(chkrun[3][1] ) 
+#                temperrtd1_np.append(chkrun[3][2] ) 
+#                temperrtd2_np.append(chkrun[3][3] ) 
+#                temperrtd3_np.append(chkrun[3][4] ) 
+#                temperrtd4_np.append(chkrun[3][5] ) 
+#                temperrtd5_np.append(chkrun[3][6] ) 
+#                temperrtd6_np.append(chkrun[3][7] ) 
                 strtime_np.append(chkrun[2][6])
                 tmp1, tmp2 = apa_noise(all_chn_results, wiretype="X", sf = False)
                 xrms_np.append(tmp1)
@@ -425,6 +451,6 @@ if (FE_temper_flg == True):
 noise_plot(rootpath, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, vrms_np, vrms_errbar_np, urms_np, urms_errbar_np, \
            temperrtdts_np, temperrtd0_np, temperrtd1_np, temperrtd2_np, temperrtd3_np, temperrtd4_np, temperrtd5_np, temperrtd6_np,\
            temper_time_np, temper_femb0_np, temper_femb1_np, temper_femb2_np, temper_femb3_np, \
-           gain=3, tp=tp,  enc_flg = True, sf_flg = False )
+           gain=gain, tp=tp,  enc_flg = True, sf_flg = False )
 
 
