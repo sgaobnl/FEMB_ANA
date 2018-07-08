@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed Jun 27 22:10:56 2018
+Last modified: Sat Jun 30 12:28:24 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -156,7 +156,17 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                         #    chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+300])
                         #else:
                         #    chn_wave.append(chndata[14][0:])
-                        chn_wave.append(chndata[14][0:10000])
+####                        cnt = len(chndata[14])
+####                        chndata_t = np.array(chndata[14])
+####                        chndata_a = np.array(chndata_t[0:500])
+####                        x = 0
+####                        for i in range(0,cnt-1000,500):
+####                            chndata_a = chndata_a + chndata_t[i:i+500]
+####                            x = x + 1.0
+####                        chndata_a = chndata_a / x
+####                        chn_wave.append(chndata_a)
+
+                        chn_wave.append(chndata[14][0:2000])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -340,7 +350,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
         ax.close()
-    
+
+
     if ( (plot_en&0x04) != 0 ):
     ####plot  pulse  wave      
         fig = plt.figure(figsize=(16,9))
@@ -373,7 +384,11 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
             chn_np = range(cur_chn, cur_chn+len(ped_np),1)
             cur_chn = cur_chn + len(ped_np)
             if len(ped_np)!= 0:
-                for chn in range(len(chn_wave)):
+                #for chn in range(0, len(chn_wave), 8):
+                for chn in range( len(chn_wave)):
+#                    fig = plt.figure(figsize=(16,9))
+#                    ax = plt
+ 
                     y_np = np.array(chn_wave[chn])
                     y_max = np.max(y_np)
                     #y_np = y_np - ped_np[chn]
@@ -382,10 +397,19 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                     x_np = smps_np * 0.5
                     ax.scatter( x_np, y_np)
                     ax.plot( x_np, y_np)
-                    ax.scatter( x_np, y_np)
-                    ax.plot( x_np, y_np)
                     ax.xlim([0,np.max(x_np)])
 
+#                    ax.tick_params(labelsize=8)
+#                    #ax.ylim([000,4100])
+#                    ax.ylabel(ylabel, fontsize=12 )
+#                    ax.xlabel("Time / us", fontsize=12 )
+#                    ax.title(title , fontsize=12 )
+#                    ax.grid()
+#                    ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+#                    r_wfm = result_dir + "%s_plane"%wiretype+ "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + str(chn) + "_results" +'.png'
+#                    ax.savefig(r_wfm, format='png')
+#                    ax.close()
+ 
         ax.tick_params(labelsize=8)
         ax.ylim([000,4100])
         ax.ylabel(ylabel, fontsize=12 )
@@ -399,6 +423,80 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
 #            save_cycle = save_cycle + 1
         ax.savefig(r_wfm, format='png')
         ax.close()
+    
+    if ( (plot_en&0x04) != 0 ):
+    ####plot  pulse  wave      
+        #fig = plt.figure(figsize=(16,9))
+        #ax = plt
+    
+        title = "%s plane: Pulse Waveform Overlap of %d "%( wiretype, total_chn)
+        ylabel = "ADC output /bin"
+        print "Pulse Waveform-->%s wires has %d channels in total"%(wiretype, total_chn)
+        print "WIB, FEMB, ASIC, CHN, PeakPos"
+        ped_label = "Positive Pulse Amplitude / ADC bin"
+
+        #for fembloc in range(20):
+        cur_chn = 0
+        for fembloc in range(5):
+            ped_np         = fembinfo[fembloc][1]
+            rms_np         = fembinfo[fembloc][2]
+            sf_ped_np      = fembinfo[fembloc][3]
+            sf_rms_np      = fembinfo[fembloc][4]
+            sf_ratio_np    = fembinfo[fembloc][5]
+            chn_peakp_avg  = fembinfo[fembloc][6]
+            chn_peakn_avg  = fembinfo[fembloc][7]
+            chn_wave       = fembinfo[fembloc][8]
+            chn_peakp_ped  = fembinfo[fembloc][9]
+            chn_peakn_ped  = fembinfo[fembloc][10]
+            chnwib_np      = fembinfo[fembloc][11]
+            chnfemb_np     = fembinfo[fembloc][12]
+            chnasic_np     = fembinfo[fembloc][13]
+            chnchn_np      = fembinfo[fembloc][14]
+
+            chn_np = range(cur_chn, cur_chn+len(ped_np),1)
+            cur_chn = cur_chn + len(ped_np)
+            if len(ped_np)!= 0:
+                for chn in range(len(chn_wave)):
+                    if (rms_np[chn] > 4 ) and (wiretype == "U" ):
+                        fig = plt.figure(figsize=(16,9))
+                        ax = plt
+ 
+                        y_np = np.array(chn_wave[chn])
+                        y_max = np.max(y_np)
+                        #y_np = y_np - ped_np[chn]
+                        y_np = y_np 
+                        smps_np = np.arange(len(chn_wave[chn])) 
+                        x_np = smps_np * 0.5
+                        ax.scatter( x_np, y_np)
+                        ax.plot( x_np, y_np)
+                        ax.xlim([0,np.max(x_np)])
+
+                        ax.tick_params(labelsize=8)
+                        ax.ylim([np.mean(y_np)-100,np.mean(y_np) + 100])
+                        ax.ylabel(ylabel, fontsize=12 )
+                        ax.xlabel("Time / us", fontsize=12 )
+                        ax.text( 10, max(y_np)+20, "WIB_" + str(chnwib_np[chn]) + "femb_" + str(chnfemb_np[chn]) + "asic_" + str(chnasic_np[chn]) +"chn_" + str(chnchn_np[chn]) )
+                        ax.title(title , fontsize=12 )
+                        ax.grid()
+                        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+                        r_wfm = result_dir + "%s_plane"%wiretype+ "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  \
+                                "tp" + str(tp) + "WIB_" + str(chnwib_np[chn]) + "femb_" + str(chnfemb_np[chn]) + "_chn" + str(chn) + "_results" +'.png'
+                        ax.savefig(r_wfm, format='png')
+                        ax.close()
+ 
+#        ax.tick_params(labelsize=8)
+#        ax.ylim([000,4100])
+#        ax.ylabel(ylabel, fontsize=12 )
+#        ax.xlabel("Time / us", fontsize=12 )
+#        ax.title(title , fontsize=12 )
+#        ax.grid()
+#        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+##        save_cycle = 0
+#        r_wfm = result_dir + "%s_plane"%wiretype+ "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" +'.png'
+##        while (os.path.isfile(r_wfm)):
+##            save_cycle = save_cycle + 1
+#        ax.savefig(r_wfm, format='png')
+#        ax.close()
     
     
     if ( (plot_en&0x08) != 0 ):
@@ -507,7 +605,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
 #        ax.legend(patch, label, loc=1, fontsize=12 )
         ax.tick_params(labelsize=8)
         ax.xlim([0,total_chn])
-        ax.ylim([0,2000])
+#        ax.ylim([0,1000])
         ax.legend(loc=6)
         ax.text( (total_chn/40.0),4100, "Test started at  : " + loginfo[6] )
 #        if (len(loginfo[7]) > 5 ):

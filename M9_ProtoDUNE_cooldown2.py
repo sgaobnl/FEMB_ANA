@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jun 30 18:11:35 2018
+Last modified: Sun Jul  1 00:09:45 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -117,13 +117,20 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     wire_type_np = [ "X", "U", "V"]
 
 ####    wire_np = [["X plane",xrms_np, xrms_errbar_np], ["V plane",vrms_np, vrms_errbar_np], ["U plane",urms_np, urms_errbar_np]]
-    wire_np = [["X plane",xrms_np, xrms_errbar_np], ["U plane", (urms_np/245.0)*225.0, (urms_errbar_np/245.0)*225.0]]
+    wire_np = [["X plane",xrms_np, xrms_errbar_np], ["U plane",(urms_np*225.0/245.0), (urms_errbar_np*225.0/245.0)]]
     minxrms = np.min(xrms_np)
     minxrms_pos = np.where(xrms_np == minxrms)[0][0]
     minvrms = np.min(vrms_np)
     minvrms_pos = np.where(vrms_np == minvrms)[0][0]
     minurms = np.min(urms_np)
     minurms_pos = np.where(urms_np == minurms)[0][0]
+
+    lxrms = xrms_np[-1]
+    lxrms_pos = len(xrms_np) - 1
+    lvrms = vrms_np[-1]
+    lvrms_pos = len(vrms_np) - 1
+    lurms = urms_np[1]
+    lurms_pos = len(urms_np) - 1
 
     markerno = 0
 #    ax2 = ax.twinx()
@@ -177,8 +184,16 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
                 ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.85, "Collection plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=10) 
             elif (onewire[0][0] == "U" ):                                                                                                          
                 ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.79, "Induction plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=10) 
-#####            elif (onewire[0][0] == "V" ):                                                                                                          
-#####                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "V plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
+            elif (onewire[0][0] == "V" ):                                                                                                          
+                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "Void channels lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
+
+            if (onewire[0][0] == "X" ):
+                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.85, "Collection plane latest noise = %d$\pm$%d e$^-$"%(onewire[1][lxrms_pos], onewire[2][lxrms_pos]), color = clor[markerno], fontsize=10) 
+            elif (onewire[0][0] == "U" ):                                                                                                          
+                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.79, "Induction plane latest noise = %d$\pm$%d e$^-$"%(onewire[1][lurms_pos], onewire[2][lurms_pos]), color = clor[markerno], fontsize=10) 
+            elif (onewire[0][0] == "V" ):                                                                                                          
+                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.82, "Void channels latest noise = %d$\pm$%d e$^-$"%(onewire[1][lvrms_pos], onewire[2][lvrms_pos]), color = clor[markerno], fontsize=10) 
+
 
         patch.append( mpatches.Patch(color = clor[markerno]))
         label.append("ENC of %s"%(onewire[0] ))
@@ -367,7 +382,7 @@ del_run = [
             ["Rawdata_06_27_2018",  "run17dat",] ,
             ["Rawdata_06_27_2018",  "run18dat",] ,
             ["Rawdata_06_27_2018",  "run19dat",] ,
- 
+            
             ["Rawdata_06_27_2018",  "run58dat",] ,
 
             ["Rawdata_06_28_2018",  "run98dat",] ,

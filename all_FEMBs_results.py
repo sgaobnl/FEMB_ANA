@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed Jun 27 13:12:06 2018
+Last modified: Sun Jul  8 09:15:02 2018
 """
 
 #defaut setting for scientific caculation
@@ -88,8 +88,9 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             if (apa_loc[1] == "WIB" + format(wib,"02d") + "_" + "FEMB" + str(femb) ):
                                 break
                         smps = (len_file-1024)/2/16 
-                        if (smps > 10000 ):
-                            smps = 10000
+                        #print smps
+                        if (smps > 200000 ):
+                            smps = 50000
                         else:
                             pass
                         chn_data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
@@ -103,17 +104,20 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             for oneloc in feed_loc:
                                 rms_data = rms_data + chn_data[chn][oneloc+100: oneloc+feed_freq]
 
-                            if (hp_filter == True ):
-                                flt_tmp_data = hp_flt_applied(chn_data[chn], fs = 2000000, passfreq = 1000, flt_order = 2)
-                                flt_tmp_data = np.array(flt_tmp_data) + np.mean(rms_data)
-                                rms_data_tmp = [] 
-                                for oneloc in feed_loc[0:-1]:
-                                    rms_data_tmp = rms_data_tmp + (flt_tmp_data[oneloc+100: oneloc+feed_freq].tolist() )
-                                rms_data = rms_data_tmp
-                                chn_full_data = flt_tmp_data
-                            else:
-                                rms_data = rms_data 
-                                chn_full_data = chn_data[chn]
+                            for oneloc in feed_loc:
+                                chn_full_data = chn_data[chn][oneloc:]
+                                break
+#                            if (hp_filter == True ):
+#                                flt_tmp_data = hp_flt_applied(chn_data[chn], fs = 2000000, passfreq = 1000, flt_order = 2)
+#                                flt_tmp_data = np.array(flt_tmp_data) + np.mean(rms_data)
+#                                rms_data_tmp = [] 
+#                                for oneloc in feed_loc[0:-1]:
+#                                    rms_data_tmp = rms_data_tmp + (flt_tmp_data[oneloc+100: oneloc+feed_freq].tolist() )
+#                                rms_data = rms_data_tmp
+#                                chn_full_data = flt_tmp_data
+#                            else:
+#                                rms_data = rms_data 
+#                                chn_full_data = chn_data[chn]
                             raw_mean = np.mean(rms_data)
                             raw_rms  = np.std (rms_data)
                                
@@ -134,7 +138,18 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
 
                             chn_peakp_avg = np.mean(chn_peakp[chn])
                             chn_peakn_avg = np.mean(chn_peakn[chn])
-                            alldata.append( [apa_loc, apa_info, wib, femb, chip, \
+                            if (wib==0) and (femb==0) and (
+                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
+                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
+                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
+                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
+                                pass 
+                            else:
+                                alldata.append( [apa_loc, apa_info, wib, femb, chip, \
                                              chn, raw_mean, raw_rms, sf_mean, sf_rms, \
                                              sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \
                                              feed_loc, chn_peakp[chn], chn_peakn[chn] ] )
@@ -147,7 +162,18 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             pulsemin_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemin_data)
                             npeak_oft_feed = pulsemin_data_loc[0][0]
 
-                            allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
+                            if (wib==0) and (femb==0) and (
+                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
+                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
+                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
+                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
+                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
+                                pass 
+                            else:
+                                allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
                                                wib, femb, chip, chn, raw_mean, raw_rms, sf_mean, sf_rms, sf_ratio, chn_peakp_avg, chn_peakn_avg,\
                                                ppeak_oft_feed, npeak_oft_feed ] )
             print "time passed = %d"% (timer()-start)

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jun 21 20:15:19 2018
+Last modified: Sun Jul  8 09:19:03 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -152,7 +152,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                         chn_peakn_avg.append(chndata[12] -  chndata[6])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[14])
-                        chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
+                        #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
+                        chn_wave.append(chndata[14][ 500 : 600])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -841,7 +842,7 @@ plot_en = int(sys.argv[8],16)
 print "Start run%schk"%strrunno
 rundir = "run%schk"%strrunno
 if (server_flg == "server" ):
-    rootpath = "/daqdata/BNL_LD_data/LArIAT/Rawdata/"
+    rootpath = "/daqdata/sbnd/BNL_LD_data/LArIAT/Rawdata/"
 else:
     rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
     #rootpath = "D:/APA40/Rawdata/"
