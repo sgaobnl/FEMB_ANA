@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Mon Jul  9 00:43:17 2018
+Last modified: Sun Jul  8 18:33:02 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -133,10 +133,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
             for chn_info in onefemb[1]: #find chn
                 for chndata in apa_results:
                     rchn  = int(chn_info[0][1:])
-                    if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) :
-                    #if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) and (rchn>=48) and (rchn<192) :
-                        print rchn
-                    #if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) :
+                    if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) and (rchn>=48) and (rchn<192) :
                         chnwire_np.append(chn_info[0][0])
                         chnwib_np.append(chndata[2])
                         chnfemb_np.append(chndata[3])
@@ -547,8 +544,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                 uchn_np = []
                 uy_np = []
                 for i in range(len(chn_np)):
-                    if (y_np[i] > 500) and  (ped_np[i] < 1000) : 
-                        print int(ped_np[i]), int(y_np[i]), chnwib_np    [i] , chnfemb_np   [i] , chnasic_np   [i] , chnchn_np    [i] , chnwire_np   [i]  
+                    #if (y_np[i] > 500) and  (ped_np[i] < 1000) : 
+                    #    print int(ped_np[i]), int(y_np[i]), chnwib_np    [i] , chnfemb_np   [i] , chnasic_np   [i] , chnchn_np    [i] , chnwire_np   [i]  
 
                     if chnwire_np[i] == "X" :
                         xchn_np.append(chn_np[i])

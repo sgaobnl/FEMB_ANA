@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Jul  1 00:09:45 2018
+Last modified: Sun Jul  8 21:36:57 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -39,7 +39,9 @@ from read_rtds import run_rtds
 def apa_noise(all_chn_results, wiretype="X", sf = False):
     rms_np = []
     for onechn_results in all_chn_results:
-        if (onechn_results[2][0] == wiretype ):
+        rchn = int(onechn_results[2][1:] )
+        #if (onechn_results[2][0] == wiretype ) and (rchn >= 48) and (rchn<192):
+        if (onechn_results[2][0] == wiretype ) :
             if (sf == False):
                 rms_np.append(onechn_results[11])
             else:
@@ -120,15 +122,15 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     wire_np = [["X plane",xrms_np, xrms_errbar_np], ["U plane",(urms_np*225.0/245.0), (urms_errbar_np*225.0/245.0)]]
     minxrms = np.min(xrms_np)
     minxrms_pos = np.where(xrms_np == minxrms)[0][0]
-    minvrms = np.min(vrms_np)
-    minvrms_pos = np.where(vrms_np == minvrms)[0][0]
+#    minvrms = np.min(vrms_np)
+#    minvrms_pos = np.where(vrms_np == minvrms)[0][0]
     minurms = np.min(urms_np)
     minurms_pos = np.where(urms_np == minurms)[0][0]
 
     lxrms = xrms_np[-1]
     lxrms_pos = len(xrms_np) - 1
-    lvrms = vrms_np[-1]
-    lvrms_pos = len(vrms_np) - 1
+#    lvrms = vrms_np[-1]
+#    lvrms_pos = len(vrms_np) - 1
     lurms = urms_np[1]
     lurms_pos = len(urms_np) - 1
 
@@ -181,18 +183,18 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
         ax.errorbar(time_np, onewire[1], onewire[2], color = clor[markerno], marker = mker[markerno])
         if enc_flg == True:
             if (onewire[0][0] == "X" ):
-                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.85, "Collection plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=10) 
+                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.85, "Collection lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=20) 
             elif (onewire[0][0] == "U" ):                                                                                                          
-                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.79, "Induction plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=10) 
-            elif (onewire[0][0] == "V" ):                                                                                                          
-                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "Void channels lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
+                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.79, "Induction lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=20) 
+#            elif (onewire[0][0] == "V" ):                                                                                                          
+#                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "Void channels lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
 
             if (onewire[0][0] == "X" ):
-                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.85, "Collection plane latest noise = %d$\pm$%d e$^-$"%(onewire[1][lxrms_pos], onewire[2][lxrms_pos]), color = clor[markerno], fontsize=10) 
+                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.85, "Collection latest noise: %d$\pm$%d e$^-$"%(onewire[1][lxrms_pos], onewire[2][lxrms_pos]), color = clor[markerno], fontsize=20) 
             elif (onewire[0][0] == "U" ):                                                                                                          
-                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.79, "Induction plane latest noise = %d$\pm$%d e$^-$"%(onewire[1][lurms_pos], onewire[2][lurms_pos]), color = clor[markerno], fontsize=10) 
-            elif (onewire[0][0] == "V" ):                                                                                                          
-                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.82, "Void channels latest noise = %d$\pm$%d e$^-$"%(onewire[1][lvrms_pos], onewire[2][lvrms_pos]), color = clor[markerno], fontsize=10) 
+                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.79, "Induction latest noise: %d$\pm$%d e$^-$"%(onewire[1][lurms_pos], onewire[2][lurms_pos]), color = clor[markerno], fontsize=20) 
+#            elif (onewire[0][0] == "V" ):                                                                                                          
+#                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.82, "Void channels latest noise = %d$\pm$%d e$^-$"%(onewire[1][lvrms_pos], onewire[2][lvrms_pos]), color = clor[markerno], fontsize=10) 
 
 
         patch.append( mpatches.Patch(color = clor[markerno]))
@@ -244,7 +246,7 @@ FE_temper_flg = ( sys.argv[8] == True )
 
 if (server_flg == "server" ):
     #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/"
-    rootpath = "/daqdata/BNL_LD_data/LArIAT/Rawdata/"
+    rootpath = "/daqdata/sbnd/BNL_LD_data/LArIAT/Rawdata/"
 else:
     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/"
 prepath = rootpath + "Rawdata_"
@@ -384,6 +386,8 @@ del_run = [
             ["Rawdata_06_27_2018",  "run19dat",] ,
             
             ["Rawdata_06_27_2018",  "run58dat",] ,
+
+            ["Rawdata_06_27_2018",  "run145dat",] ,
 
             ["Rawdata_06_28_2018",  "run98dat",] ,
             ["Rawdata_06_28_2018",  "run99dat",] ,

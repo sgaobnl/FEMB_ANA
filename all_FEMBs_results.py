@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Jul  8 09:15:02 2018
+Last modified: Sun Jul  8 18:30:31 2018
 """
 
 #defaut setting for scientific caculation
@@ -90,7 +90,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                         smps = (len_file-1024)/2/16 
                         #print smps
                         if (smps > 200000 ):
-                            smps = 50000
+                            smps = 10000
                         else:
                             pass
                         chn_data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
@@ -172,6 +172,8 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                                 ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
                                 ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
                                 pass 
+#                            if (wib==0) and (femb==0) and (
+#                                    if (int(apa_info[0][1:0]) < 48) or (int(apa_info[0][1:0]) >= 192) :
                             else:
                                 allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
                                                wib, femb, chip, chn, raw_mean, raw_rms, sf_mean, sf_rms, sf_ratio, chn_peakp_avg, chn_peakn_avg,\
