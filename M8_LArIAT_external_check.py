@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Mon Jul  9 00:43:17 2018
+Last modified: Tue Jul 10 13:29:14 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -135,7 +135,6 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                     rchn  = int(chn_info[0][1:])
                     if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) :
                     #if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) and (rchn>=48) and (rchn<192) :
-                        print rchn
                     #if (onefemb[0][0] == chndata[0][0] ) and (chn_info[0:4] == chndata[1][0:4]) :
                         chnwire_np.append(chn_info[0][0])
                         chnwib_np.append(chndata[2])
