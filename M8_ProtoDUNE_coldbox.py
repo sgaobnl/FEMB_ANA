@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jul 10 17:16:56 2018
+Last modified: Tue Jul 10 23:34:17 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -31,7 +31,7 @@ import matplotlib.patches as mpatches
 from apa_mapping import APA_MAP
 apamap = APA_MAP()
 from femb_position import femb_position
-from all_FEMBs_results import All_FEMBs_results
+from all_FEMBs_results_chk import All_FEMBs_results
 from readlog import readlog
 from read_rtds import run_rtds
 
@@ -146,7 +146,19 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[14])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
+
+                        #cnt = len(chndata[14]) 
+                        #chndata_t = np.array(chndata[14])
+                        #chndata_a = np.array(chndata_t[0:500])
+                        #x = 0
+                        #for i in range(0,cnt-1000,500):
+                        #    chndata_a = chndata_a + chndata_t[i:i+500]
+                        #    x = x + 1.0
+                        #chndata_a = chndata_a / x
+                        #chn_wave.append(chndata_a[0:100])
+
                         chn_wave.append(chndata[14][ 500 : 600])
+ 
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -167,17 +179,17 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
         ax = plt
         #ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.text(0.4,0.9, "Test Summary", fontsize = 32, color = 'g')
-        ax.text(0.05,0.80, "APA no.        : " + loginfo[0], fontsize=16 )
-        ax.text(0.05,0.75, "Enviroment     : " + loginfo[1], fontsize=16 )
-        ax.text(0.05,0.70, "Description    : " + loginfo[2], fontsize=16 )
+        ax.text(0.05,0.80, "APA no.        : " + loginfo[0], fontsize=20 )
+        ax.text(0.05,0.75, "Enviroment     : " + loginfo[1], fontsize=20 )
+        ax.text(0.05,0.70, "Description    : " + loginfo[2], fontsize=20 )
         if ( run_temp != None ):
             ax.text(0.05,0.65, "RTDs(TT0206 to TT0200) measured at %s: %3dK, %3dK, %3dK, %3dK, %3dK, %3dK, %3dK "%(run_temp[8],\
-                    run_temp[7],run_temp[6],run_temp[5],run_temp[4],run_temp[3],run_temp[2],run_temp[1] ), fontsize=16 )
+                    run_temp[7],run_temp[6],run_temp[5],run_temp[4],run_temp[3],run_temp[2],run_temp[1] ), fontsize=20 )
         else:
-            ax.text(0.05,0.65, "Temperature    : " + loginfo[3], fontsize=16 )
-        ax.text(0.05,0.60, "Test type      : " + loginfo[4], fontsize=16 )
-        ax.text(0.05,0.55, "Rawdata path   : " + loginfo[5], fontsize=16 )
-        ax.text(0.05,0.50, "Test started at : " + loginfo[6], fontsize=16 )
+            ax.text(0.05,0.65, "Temperature    : " + loginfo[3], fontsize=20 )
+        ax.text(0.05,0.60, "Test type      : " + loginfo[4], fontsize=20 )
+        ax.text(0.05,0.55, "Rawdata path   : " + loginfo[5], fontsize=20 )
+        ax.text(0.05,0.50, "Test started at : " + loginfo[6], fontsize=20 )
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
         ax.savefig(pp, format='pdf')
@@ -233,15 +245,15 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
 #        patch.append( mpatches.Patch(color=color))
 #        label.append(ped_label)
 #        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=16)
+        ax.tick_params(labelsize=20)
         ax.xlim([0,total_chn])
         ax.ylim([0,4100])
         ax.text( (total_chn/40.0),450, "Test started at : " + loginfo[6] )
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
-        ax.ylabel(ylabel, fontsize=16 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=16 )
-        ax.title(title , fontsize=16 )
+        ax.ylabel(ylabel, fontsize=20 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=20 )
+        ax.title(title , fontsize=20 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -311,16 +323,16 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
 #        patch.append( mpatches.Patch(color='b'))
 #        label.append(ped_label)
 #        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=16)
+        ax.tick_params(labelsize=20)
         ax.xlim([0,total_chn])
         ax.ylim([-2000,3000])
         ax.text( (total_chn/40.0),-1500, "Test started at  : " + loginfo[6] )
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
  
-        ax.ylabel(ylabel, fontsize=16 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=16 )
-        ax.title(title , fontsize=16 )
+        ax.ylabel(ylabel, fontsize=20 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=20 )
+        ax.title(title , fontsize=20 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -361,7 +373,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                 for chn in range(len(chn_wave)):
                     y_np = np.array(chn_wave[chn])
                     y_max = np.max(y_np)
-                    y_np = y_np - ped_np[chn]
+                    #y_np = y_np - ped_np[chn]
+                    y_np = y_np
                     smps_np = np.arange(len(chn_wave[chn])) 
                     x_np = smps_np * 0.5
                     ax.scatter( x_np, y_np)
@@ -370,11 +383,12 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                     ax.plot( x_np, y_np)
                     ax.xlim([0,np.max(x_np)])
 
-        ax.tick_params(labelsize=16)
-        ax.ylim([-2000,2000])
-        ax.ylabel(ylabel, fontsize=16 )
-        ax.xlabel("Time / us", fontsize=16 )
-        ax.title(title , fontsize=16 )
+        ax.tick_params(labelsize=20)
+        #ax.ylim([-2000,2000])
+        ax.ylim([0,4100])
+        ax.ylabel(ylabel, fontsize=20 )
+        ax.xlabel("Time / us", fontsize=20 )
+        ax.title(title , fontsize=20 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         r_wfm = result_dir + "%s_plane"%wiretype+ "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" +'.png'
@@ -384,7 +398,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
     
     if ( (plot_en&0x08) != 0 ):
     ##rms pedestal        
-        max_y = 100
+        max_y = 500
         fig = plt.figure(figsize=(16,9))
         ax = plt
         rms_np = np.array(rms_np)
@@ -468,7 +482,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
             else:
                 pass
 
-        ax.tick_params(labelsize=16)
+        ax.tick_params(labelsize=20)
         ax.xlim([0,total_chn])
         ax.ylim([0,max_y])
         ax.legend(loc=6)
@@ -476,9 +490,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
  
-        ax.ylabel(ylabel, fontsize=16 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=16 )
-        ax.title(title , fontsize=16 )
+        ax.ylabel(ylabel, fontsize=20 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=20 )
+        ax.title(title , fontsize=20 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')

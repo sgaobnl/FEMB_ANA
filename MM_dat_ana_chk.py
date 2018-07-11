@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jul 10 15:51:55 2018
+Last modified: Tue Jul 10 21:10:41 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -149,7 +149,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
                         chn_peakn_avg.append(chndata[12] -  chndata[6])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[14])
-                        chn_wave.append(chndata[14][500:600])
+                        chn_wave.append(chndata[14][500:1000])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -343,16 +343,14 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np_flg, pp, gain=2,
             cur_chn = cur_chn + len(ped_np)
             if len(ped_np)!= 0:
                 for chn in range( len(chn_wave)):
-
-                    if( chn_peakp_avg[chn] < 100 ): 
-                        y_np = np.array(chn_wave[chn])
-                        y_max = np.max(y_np)
-                        y_np = y_np 
-                        smps_np = np.arange(len(chn_wave[chn])) 
-                        x_np = smps_np * 0.5
-                        ax.scatter( x_np, y_np)
-                        ax.plot( x_np, y_np)
-                        ax.xlim([0,np.max(x_np)])
+                    y_np = np.array(chn_wave[chn])
+                    y_max = np.max(y_np)
+                    y_np = y_np 
+                    smps_np = np.arange(len(chn_wave[chn])) 
+                    x_np = smps_np * 0.5
+                    ax.scatter( x_np, y_np)
+                    ax.plot( x_np, y_np)
+                    ax.xlim([0,np.max(x_np)])
  
         ax.tick_params(labelsize=8)
 #        ax.ylim([000,4100])
