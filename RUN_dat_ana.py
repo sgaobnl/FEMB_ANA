@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 16:03:35 2018
+Last modified: Thu Jul 19 17:34:31 2018
 """
 import matplotlib
 #matplotlib.use('Agg')
@@ -162,7 +162,12 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlabel = "Channel No."
         title  = "Noise Measurement" 
         xlims = [0,len(chns)]
-        ylims = [0,200]
+        rmsmax = np.max(paras)
+        if rmsmax > 10:
+            ymax = 100
+        else:
+            ymax = 10
+        ylims = [0,ymax]
         labels = ["RMS(ADC)"]
         oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)
 

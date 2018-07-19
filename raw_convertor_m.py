@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 14:12:54 2018
+Last modified: Thu Jul 19 17:40:27 2018
 """
 
 #defaut setting for scientific caculation
@@ -113,7 +113,7 @@ def raw_convertor_feedloc(raw_data, smps, jumbo_flag = True):
                 pass
             i = i + 13 
     if (len(feed_loc) == 0 ):
-        feed_loc = [0]
+        feed_loc = range(0, len(chn_data[0])-1000, 500)
     return chn_data, feed_loc
 
 def raw_convertor(raw_data, smps, jumbo_flag = True):
