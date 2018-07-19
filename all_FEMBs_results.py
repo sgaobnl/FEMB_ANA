@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jul 10 22:17:06 2018
+Last modified: Thu Jul 19 16:11:19 2018
 """
 
 #defaut setting for scientific caculation
@@ -31,8 +31,8 @@ from apa_mapping import APA_MAP
 apamap = APA_MAP()
 from femb_position import femb_position
 from raw_convertor_m import raw_convertor_peak
-from highpass_filter import hp_flt_applied
-from highpass_filter import hp_FIR_applied
+#from highpass_filter import hp_flt_applied
+#from highpass_filter import hp_FIR_applied
 
 def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False):
     apamap.APA = APA
@@ -154,49 +154,47 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                                              sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \
                                              feed_loc, chn_peakp[chn], chn_peakn[chn] ] )
 
-                            pulsemax_data = np.max(chn_full_data[feed_loc[0]:feed_loc[0]+100])
-                            pulsemax_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemax_data)
-                            ppeak_oft_feed = pulsemax_data_loc[0][0] 
-
-                            pulsemin_data = np.min(chn_full_data[feed_loc[0]:feed_loc[0]+100])
-                            pulsemin_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemin_data)
-                            npeak_oft_feed = pulsemin_data_loc[0][0]
-
-                            if (wib==0) and (femb==0) and (
-                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
-                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
-                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
-                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
-                                pass 
+#                            pulsemax_data = np.max(chn_full_data[feed_loc[0]:feed_loc[0]+100])
+#                            pulsemax_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemax_data)
+#                            ppeak_oft_feed = pulsemax_data_loc[0][0] 
+#
+#                            pulsemin_data = np.min(chn_full_data[feed_loc[0]:feed_loc[0]+100])
+#                            pulsemin_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemin_data)
+#                            npeak_oft_feed = pulsemin_data_loc[0][0]
+#
 #                            if (wib==0) and (femb==0) and (
-#                                    if (int(apa_info[0][1:0]) < 48) or (int(apa_info[0][1:0]) >= 192) :
-                            else:
-                                allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
-                                               wib, femb, chip, chn, raw_mean, raw_rms, sf_mean, sf_rms, sf_ratio, chn_peakp_avg, chn_peakn_avg,\
-                                               ppeak_oft_feed, npeak_oft_feed ] )
+#                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
+#                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
+#                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
+#                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
+#                                pass 
+#                            else:
+#                                allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
+#                                               wib, femb, chip, chn, raw_mean, raw_rms, sf_mean, sf_rms, sf_ratio, chn_peakp_avg, chn_peakn_avg,\
+#                                               ppeak_oft_feed, npeak_oft_feed ] )
             print "time passed = %d"% (timer()-start)
 
-    import pickle
-    resultpath = path + "results/" + rundir + "/" 
+#    import pickle
+#    resultpath = path + "results/" + rundir + "/" 
 
-    if (os.path.exists(resultpath)):
-        pass
-    else:
-        try: 
-            os.makedirs(resultpath)
-        except OSError:
-            print "Error to create a folder"
-            exit()
+#    if (os.path.exists(resultpath)):
+#        pass
+#    else:
+#        try: 
+#            os.makedirs(resultpath)
+#        except OSError:
+#            print "Error to create a folder"
+#            exit()
 
-    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
-    if (os.path.isfile(savefile)): 
-        pass
-    else:
-        with open(savefile, "wb") as fp:
-            pickle.dump(allresult, fp)
+#    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
+#    if (os.path.isfile(savefile)): 
+#        pass
+#    else:
+#        with open(savefile, "wb") as fp:
+#            pickle.dump(allresult, fp)
     return alldata
 

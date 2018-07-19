@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Jun 19 10:20:23 2018
+Last modified: Thu Jul 19 14:12:54 2018
 """
 
 #defaut setting for scientific caculation
@@ -132,10 +132,11 @@ def raw_convertor_peak(raw_data, smps, jumbo_flag = True):
     else:
         chn_peakp=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],]
         chn_peakn=[[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],[],]
-        for tmp in range(len(feed_loc)-1):
-            for chn in range(16):
-                chn_peakp[chn].append ( np.max(chn_data[chn][0:10000 ]) )
-                chn_peakn[chn].append ( np.min(chn_data[chn][0:10000 ]) )
+        #for tmp in range(len(feed_loc)-1):
+        for chn in range(16):
+            chn_peakp[chn].append ( np.max(chn_data[chn][0:10000 ]) )
+            chn_peakn[chn].append ( np.min(chn_data[chn][0:10000 ]) )
+
     return  chn_data, feed_loc, chn_peakp, chn_peakn
 
 
