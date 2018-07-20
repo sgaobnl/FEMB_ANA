@@ -5,10 +5,10 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 22:38:53 2018
+Last modified: Fri Jul 20 09:34:20 2018
 """
 import matplotlib
-#matplotlib.use('Agg')
+matplotlib.use('Agg')
 #defaut setting for scientific caculation
 #import numpy
 #import scipy
@@ -57,8 +57,8 @@ else:
     rundir = "run%scfg"%strrunno
 
 if (server_flg == "server" ):
-    rootpath = "/daqdata/sbnd/BNL_LD_data/LArIAT/Rawdata/"
-    rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
+    rootpath = "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/"
+    #rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
 else:
     rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
 path =rootpath + "Rawdata_"+ strdate + "/" 
@@ -151,11 +151,11 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
     if ( (plot_en&0x02) != 0 ):
         print "Noise Measurement"
         chnparas = []
+        print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
-                if chndata[7] > 50:
-                    print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
+                if chndata[7] > 10:
                     print chndata[1], int(chndata[7])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)

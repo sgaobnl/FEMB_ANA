@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 22:37:47 2018
+Last modified: Fri Jul 20 09:57:10 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -35,14 +35,16 @@ apamap = APA_MAP()
 if __name__ == '__main__':
     APAno = int(sys.argv[1])
     rmsdate = sys.argv[2]
-    fpgdate = sys.argv[3]
-    asidate = sys.argv[4]
-    rmsrunno = sys.argv[5]
-    fpgarunno = sys.argv[6]
-    asicrunno = sys.argv[7]
-    apafolder = sys.argv[8]
-    tpcchn_no  = int(sys.argv[9])
-
+#    fpgdate = sys.argv[3]
+#    asidate = sys.argv[4]
+    rmsrunno = sys.argv[3]
+#    fpgarunno = sys.argv[6]
+#    asicrunno = sys.argv[7]
+    apafolder = sys.argv[4]
+    tpcchn_no  = int(sys.argv[5])
+    fpgarunno = "run99fpg" 
+    asicrunno = "run99asi" 
+ 
     tpcinfo = apamap.mapping_rd()
     for onechn in tpcinfo:
         if int(onechn[0]) == int(tpcchn_no):
@@ -52,9 +54,14 @@ if __name__ == '__main__':
 
     #if (apafolder == "APA40"):
     if (apafolder == "LArIAT"):
-        rms_rootpath =  "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + asidate + "/"
+        rms_rootpath =  "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
+        fpga_rootpath = rms_rootpath 
+        asic_rootpath = rms_rootpath 
+        #fpga_rootpath = "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + fpgdate + "/"
+        #asic_rootpath = "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + asidate + "/"
+#        rms_rootpath =  "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + rmsdate + "/"
+#        fpga_rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + fpgdate + "/"
+#        asic_rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + asidate + "/"
         
     elif (apafolder != "APA"):
         rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + rmsdate + "/"
