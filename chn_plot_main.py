@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 21:27:56 2018
+Last modified: Thu Jul 19 22:37:47 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -52,9 +52,9 @@ if __name__ == '__main__':
 
     #if (apafolder == "APA40"):
     if (apafolder == "LArIAT"):
-        rms_rootpath =  "/Users/shanshangao/tmp/dat0719/Rawdata/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "/Users/shanshangao/tmp/dat0719/Rawdata/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "/Users/shanshangao/tmp/dat0719/Rawdata/Rawdata_" + asidate + "/"
+        rms_rootpath =  "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + rmsdate + "/"
+        fpga_rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + fpgdate + "/"
+        asic_rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/Rawdata_" + asidate + "/"
         
     elif (apafolder != "APA"):
         rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + rmsdate + "/"

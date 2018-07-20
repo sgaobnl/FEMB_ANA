@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 20:57:25 2018
+Last modified: Thu Jul 19 22:38:53 2018
 """
 import matplotlib
 #matplotlib.use('Agg')
@@ -58,7 +58,7 @@ else:
 
 if (server_flg == "server" ):
     rootpath = "/daqdata/sbnd/BNL_LD_data/LArIAT/Rawdata/"
-    rootpath = "/Users/shanshangao/tmp/dat0719/Rawdata/"
+    rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
 else:
     rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
 path =rootpath + "Rawdata_"+ strdate + "/" 
@@ -167,7 +167,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlims = [0,len(chns)]
         rmsmax = np.max(paras)
         if rmsmax > 10:
-            ymax = 100
+            ymax = 10
         else:
             ymax = 10
         ylims = [0,ymax]
