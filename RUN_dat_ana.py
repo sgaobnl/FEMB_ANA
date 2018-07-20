@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 17:34:31 2018
+Last modified: Thu Jul 19 20:57:25 2018
 """
 import matplotlib
 #matplotlib.use('Agg')
@@ -154,6 +154,9 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
+                if chndata[7] > 50:
+                    print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
+                    print chndata[1], int(chndata[7])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
         paras = [paras]
@@ -170,6 +173,8 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         ylims = [0,ymax]
         labels = ["RMS(ADC)"]
         oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)
+        
+        
 
 
     if ( (plot_en&0x04) != 0 ):

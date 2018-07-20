@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 17:10:12 2018
+Last modified: Thu Jul 19 21:27:56 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -27,6 +27,9 @@ import math
 
 import multiprocessing as mp
 from chn_plot_out import plot_a_chn
+from apa_mapping import APA_MAP
+apamap = APA_MAP()
+
 
 
 if __name__ == '__main__':
@@ -38,9 +41,14 @@ if __name__ == '__main__':
     fpgarunno = sys.argv[6]
     asicrunno = sys.argv[7]
     apafolder = sys.argv[8]
-    wibno  = int(sys.argv[9])
-    fembno  = int(sys.argv[10])
-    chnno  = int(sys.argv[11])
+    tpcchn_no  = int(sys.argv[9])
+
+    tpcinfo = apamap.mapping_rd()
+    for onechn in tpcinfo:
+        if int(onechn[0]) == int(tpcchn_no):
+            wibno  = int(onechn[10])
+            fembno = int(onechn[9]) % 4
+            chnno  = int(onechn[8])
 
     #if (apafolder == "APA40"):
     if (apafolder == "LArIAT"):
@@ -71,15 +79,15 @@ if __name__ == '__main__':
         wibno = wfc[0]
         fembno = wfc[1]
         chnno = wfc[2]
-        out_path = rms_rootpath + "/" + "results/" + "Chns_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno+"/"
-        if (os.path.exists(out_path)):
-            pass
-        else:
-            try: 
-                os.makedirs(out_path)
-            except OSError:
-                print "Can't create a folder, exit"
-                exit()
+        out_path = rms_rootpath + "/" + "results/" + "TPC%d_"%tpcchn_no + rmsrunno 
+        #if (os.path.exists(out_path)):
+        #    pass
+        #else:
+        #    try: 
+        #        os.makedirs(out_path)
+        #    except OSError:
+        #        print "Can't create a folder, exit"
+        #        exit()
         mps = []
         for gain in gains: 
             for tp in tps:

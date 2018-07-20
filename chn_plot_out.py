@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 17:11:52 2018
+Last modified: Thu Jul 19 20:13:30 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -245,8 +245,7 @@ def ped_wf_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras):
     sfped =  chn_noise_paras[14]
     unstk_ratio  =  chn_noise_paras[15]
 
-    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" + \
-            "Stuck Free: mean = %d, rms = %2.3f, unstuck=%%%d" % (int(sfped), sfrms, int(unstk_ratio*100) )
+    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" 
 
     hflabel = "After HPF:  mean = %d, rms = %2.3f" % (int(hfped), hfrms) 
 
@@ -337,8 +336,7 @@ def ped_fft_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras, peaks_note = 
     sfped =  chn_noise_paras[14]
     unstk_ratio  =  chn_noise_paras[15]
 
-    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" + \
-            "Stuck Free: mean = %d, rms = %2.3f, unstuck=%%%d" % (int(sfped), sfrms, int(unstk_ratio*100) )
+    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" 
 
     hflabel = "After HPF:  mean = %d, rms = %2.3f" % (int(hfped), hfrms) 
  
