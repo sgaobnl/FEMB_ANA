@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Jul 20 09:34:20 2018
+Last modified: Fri Jul 20 13:52:35 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -57,7 +57,7 @@ else:
     rundir = "run%scfg"%strrunno
 
 if (server_flg == "server" ):
-    rootpath = "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/"
+    rootpath = "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/"
     #rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
 else:
     rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
@@ -89,6 +89,17 @@ pp = PdfPages(result_pdf)
 wib_np = [0,1]
 feed_freq=500
 wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter)
+
+result_fp = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.rms'
+rms_o5 = []
+for chndata in wibsdata:
+    if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
+        #               chninfo          ped           rms       pos amp       neg amp
+        rms_o5.append ([chndata[1], chndata[6], (chndata[7]), (chndata[11]), (chndata[12])]  )
+
+import pickle
+with open(result_fp, "wb") as fp:
+    pickle.dump(rms_o5, fp)
 
 def oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels):
     fig = plt.figure(figsize=(16,9))
@@ -151,12 +162,16 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
     if ( (plot_en&0x02) != 0 ):
         print "Noise Measurement"
         chnparas = []
+        rms5 = []
         print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
                 if chndata[7] > 10:
                     print chndata[1], int(chndata[7])
+                yth = 10
+                if chndata[7] > yth:
+                    rms5.append(chndata[7])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
         paras = [paras]
@@ -167,11 +182,13 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlims = [0,len(chns)]
         rmsmax = np.max(paras)
         if rmsmax > 10:
-            ymax = 10
+            ymax = 500
         else:
             ymax = 10
+        #ymax = 500
         ylims = [0,ymax]
-        labels = ["RMS(ADC)"]
+        print "RMS(ADC)>%d: Avg=%.2f, Chns =%d"%(yth, np.mean(rms5), len(rms5))
+        labels = ["RMS(ADC)>%d: Avg=%.2f, Chns =%d"%(yth, np.mean(rms5), len(rms5))]
         oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)
         
         
