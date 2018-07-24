@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Jul 20 13:52:35 2018
+Last modified: Sat Jul 21 22:45:00 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -48,13 +48,16 @@ min_limit = 800
 hp_filter  = False
 plot_en = int(sys.argv[8],16)
 mode = sys.argv[9]
+runtype= sys.argv[10]
+CFGpat= sys.argv[11]
+
 
 if mode == "F":
     print "Start run%sdat"%strrunno
     rundir = "run%sdat"%strrunno
 else:
-    print "Start run%scfg"%strrunno
-    rundir = "run%scfg"%strrunno
+    print "run%s%s"%(strrunno, runtype)
+    rundir = "run%s%s"%(strrunno, runtype)
 
 if (server_flg == "server" ):
     rootpath = "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/"
@@ -66,7 +69,7 @@ apamap.APA = "LArIAT"
 if mode == "F":
     loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = strdate, runno = strrunno, runtype = "dat") 
 else:
-    loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = strdate, runno = strrunno, runtype = "cfg") 
+    loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = strdate, runno = strrunno, runtype = runtype) 
 
 run_temp = None
 
@@ -81,14 +84,14 @@ else:
         print "Error to create a folder"
         exit()
 
-result_pdf = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.pdf'
+result_pdf = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+ CFGpat + '.pdf'
 result_waveform = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
 
 pp = PdfPages(result_pdf)
 
 wib_np = [0,1]
 feed_freq=500
-wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter)
+wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter, CFGpat=CFGpat)
 
 result_fp = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.rms'
 rms_o5 = []
@@ -228,6 +231,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
 
 plots(plot_en, wibsdata, loginfo, run_temp,   pp, gain, frontpage = True , APAno = APAno )
 pp.close()
+print result_pdf
 print "Done, please punch \" Enter \" or \"return\" key !"
 
 

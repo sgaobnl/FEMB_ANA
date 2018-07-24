@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 16:11:19 2018
+Last modified: Sat Jul 21 22:24:59 2018
 """
 
 #defaut setting for scientific caculation
@@ -34,7 +34,7 @@ from raw_convertor_m import raw_convertor_peak
 #from highpass_filter import hp_flt_applied
 #from highpass_filter import hp_FIR_applied
 
-def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False):
+def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False, CFGpat = "CFG_DATA"):
     apamap.APA = APA
     runpath = path + rundir + "/"
     start = timer()
@@ -72,7 +72,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                     wib  = int( rawfilep[(rawfilep.find("WIB") + 3):(rawfilep.find("WIB") + 5)])
                     femb = int( rawfilep[rawfilep.find("FEMB") + 4])
                     chip = int( rawfilep[rawfilep.find("CHIP") + 4])
-                    CFG_flg = (rawfilep.find("CFG_DATA") > 0 )
+                    CFG_flg = (rawfilep.find(CFGpat) > 0 )
                     if (CFG_flg):
                         filetp = tp
                     else:

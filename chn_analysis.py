@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 17:08:19 2018
+Last modified: Mon Jul 23 16:41:32 2018
 """
 
 #defaut setting for scientific caculation
@@ -63,13 +63,13 @@ def fe_cfg(gain="250", tp="30" ):
 def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain="250", tp="30" ): #calirun="run01fpg", 
     fecfg_reg0, sg, st = fe_cfg(gain=gain, tp=tp )
     
-    if runno[5:8] == "rms" :
+    if runno.find( "rms" ) >= 0:
         runcode = "1"
-    elif runno[5:8] == "fpg" :
+    elif runno.find( "fpg" ) >= 0 :
         runcode = "2"
-    elif runno[5:8] == "asi" :
+    elif runno.find( "asi" ) >= 0 :
         runcode = "4"
-    elif runno[5:8] == "dat" :
+    elif runno.find( "dat" ) >= 0 :
         runcode = "F"
 
     if sg == 3:
@@ -142,6 +142,13 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
     ped = np.mean(chnrmsdata[0:100000])
     data_slice = chnrmsdata[feed_loc[0]:feed_loc[1]]
     data_200ms_slice = chnrmsdata[0:200000:200]
+
+    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[1]])
+    avg_cycles = len(feed_loc) - 2
+    for loci in range(avg_cycles - 1):
+        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[loci+1]:feed_loc[loci+2]])
+    avg_data_slice = avg_data_slice / (avg_cycles*1.0)
+    data_200ms_slice = avg_data_slice
 
     avg_cycle_l = 1
     if (len(chnrmsdata) >= 400000):
