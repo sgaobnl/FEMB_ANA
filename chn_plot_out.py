@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed Jul 25 17:09:00 2018
+Last modified: Mon Jul 23 16:53:09 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -151,7 +151,6 @@ def cali_linear_fitplot(pp, apainfo, wireinfo, cali_info, chn_cali_paras, ploten
 def cali_wf_subplot(ax, chn_cali_paras, t=100, pulse = "positive", avg_fg = False ):
     N = int(t/0.5)
     x = np.arange(N) * 0.5
-    y4200 = False 
     for onecp in chn_cali_paras:
         if pulse == "positive" :
             pos = onecp[8]
@@ -169,13 +168,8 @@ def cali_wf_subplot(ax, chn_cali_paras, t=100, pulse = "positive", avg_fg = Fals
             ax.set_title("Waveforms" )
         ax.scatter(x, y)
         ax.plot(x, y)
-        if np.max(y) > 2500:
-            y4200 = True
     ax.set_xlim([0,t])
-    if y4200 == True:
-        ax.set_ylim([0,4200])
-    else:
-        pass
+    ax.set_ylim([0,4200])
     ax.grid()
     ax.set_ylabel("ADC output / LSB")
     ax.set_xlabel("t / $\mu$s")
@@ -214,7 +208,8 @@ def ped_wf_subplot(ax, data_slice, ped, rms,  t_rate=0.5, title="Waveforms of ra
    
     ax.set_title(title )
     ax.set_xlim([0,int(N*t_rate)])
-    ax.set_ylim([ped-5*(int(rms+1)),ped+5*(int(rms+1))])
+    #ax.set_ylim([ped-5*(int(rms+1)),ped+5*(int(rms+1))])
+    ax.set_ylim([0,4200])
     ax.grid()
     ax.set_ylabel("ADC output / LSB")
     ax.set_xlabel("t / $\mu$s")
@@ -263,7 +258,8 @@ def ped_wf_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras):
     ax4 = plt.subplot2grid((4, 4), (2, 2), colspan=2, rowspan=2)
     ped_wf_subplot(ax1, data_slice,         ped,   rms,    t_rate=0.5, title="Waveforms of raw data", label=label )
     ped_wf_subplot(ax2, hfdata_slice,       hfped, hfrms,  t_rate=0.5, title="Waveforms of data after HPF", label=hflabel )
-    ped_wf_subplot(ax3, data_100us_slice,   ped,   rms,    t_rate=100, title="Waveforms of raw data", label=label )
+    #ped_wf_subplot(ax3, data_100us_slice,   ped,   rms,    t_rate=100, title="Waveforms of raw data", label=label )
+    ped_wf_subplot(ax3, data_100us_slice,   ped,   rms,    t_rate=0.5, title="Waveforms of raw data(Averaging)", label=label )
     ped_wf_subplot(ax4, hfdata_100us_slice, hfped, hfrms,  t_rate=100, title="Waveforms of data after HPF", label=hflabel )
 
     apainfo_str = apainfo[0] + ", " + apainfo[1] + ", " + apainfo[2]  + "  ;  "
