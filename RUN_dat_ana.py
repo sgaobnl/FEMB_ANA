@@ -58,6 +58,7 @@ else:
 
 if (server_flg == "server" ):
     rootpath = "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/"
+    #rootpath = "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/"
     #rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
 else:
     rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
@@ -155,7 +156,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
-                if chndata[7] > 10:
+                if chndata[7] > 4:
                     print chndata[1], int(chndata[7])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
@@ -167,7 +168,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlims = [0,len(chns)]
         rmsmax = np.max(paras)
         if rmsmax > 10:
-            ymax = 10
+            ymax = 500
         else:
             ymax = 10
         ylims = [0,ymax]
