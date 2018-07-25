@@ -55,6 +55,7 @@ if __name__ == '__main__':
     #if (apafolder == "APA40"):
     if (apafolder == "LArIAT"):
         rms_rootpath =  "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
+        #rms_rootpath =  "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
         fpga_rootpath = rms_rootpath 
         asic_rootpath = rms_rootpath 
         #fpga_rootpath = "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + fpgdate + "/"

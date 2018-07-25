@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Jul 19 20:13:30 2018
+Last modified: Wed Jul 25 17:09:00 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -151,6 +151,7 @@ def cali_linear_fitplot(pp, apainfo, wireinfo, cali_info, chn_cali_paras, ploten
 def cali_wf_subplot(ax, chn_cali_paras, t=100, pulse = "positive", avg_fg = False ):
     N = int(t/0.5)
     x = np.arange(N) * 0.5
+    y4200 = False 
     for onecp in chn_cali_paras:
         if pulse == "positive" :
             pos = onecp[8]
@@ -168,8 +169,13 @@ def cali_wf_subplot(ax, chn_cali_paras, t=100, pulse = "positive", avg_fg = Fals
             ax.set_title("Waveforms" )
         ax.scatter(x, y)
         ax.plot(x, y)
+        if np.max(y) > 2500:
+            y4200 = True
     ax.set_xlim([0,t])
-    ax.set_ylim([0,4200])
+    if y4200 == True:
+        ax.set_ylim([0,4200])
+    else:
+        pass
     ax.grid()
     ax.set_ylabel("ADC output / LSB")
     ax.set_xlabel("t / $\mu$s")
