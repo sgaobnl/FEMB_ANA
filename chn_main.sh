@@ -1,5 +1,16 @@
 #!/bin/bash
 ####################### apano,   rmsdate,    rmsrunno, apafolder tpcwire(0~479)
+python chn_plot_main.py  9     "07_23_2018" "run27dat"    LArIAT     48 
+python chn_plot_main.py  9     "07_23_2018" "run28dat"    LArIAT     48 
+python chn_plot_main.py  9     "07_23_2018" "run29dat"    LArIAT     48 
+python chn_plot_main.py  9     "07_23_2018" "run30dat"    LArIAT     48 
+python chn_plot_main.py  9     "07_23_2018" "run35dat"    LArIAT     48 
+python chn_plot_main.py  9     "07_23_2018" "run36dat"    LArIAT     48 
+python chn_plot_main.py  9     "07_23_2018" "run37dat"    LArIAT     48 
+python chn_plot_main.py  9     "07_23_2018" "run38dat"    LArIAT     48 
+
+
+
 #python chn_plot_main.py  9     "07_25_2018"  run01dat   LArIAT     48 
 #python chn_plot_main.py  9     "07_25_2018"  run02dat   LArIAT     48 
 #python chn_plot_main.py  9     "07_25_2018"  run03dat   LArIAT     48 
@@ -20,94 +31,94 @@
 #python chn_plot_main.py  9     "07_25_2018"  run18dat   LArIAT     48 
 #python chn_plot_main.py  9     "07_25_2018"  run19dat   LArIAT     48 
 #python chn_plot_main.py  9     "07_25_2018"  run20dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run21dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run22dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run23dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run24dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run25dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run26dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run27dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run28dat   LArIAT     47 
-
-
-python chn_plot_main.py  9     "07_25_2018"  run21dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run22dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run23dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run24dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run25dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run26dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run27dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run28dat   LArIAT     48 
-
-python chn_plot_main.py  9     "07_25_2018"  run21dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run22dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run23dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run24dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run25dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run26dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run27dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run28dat   LArIAT     49 
-
-python chn_plot_main.py  9     "07_25_2018"  run29dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run30dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run31dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run32dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run21dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run22dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run23dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run24dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run25dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run26dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run27dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run28dat   LArIAT     47 
 #
-python chn_plot_main.py  9     "07_25_2018"  run29dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run30dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run31dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run32dat   LArIAT     48 
 #
-python chn_plot_main.py  9     "07_25_2018"  run29dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run30dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run31dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run32dat   LArIAT     49 
-
-python chn_plot_main.py  9     "07_25_2018"  run33dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run34dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run35dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run36dat   LArIAT     47 
-
-python chn_plot_main.py  9     "07_25_2018"  run33dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run34dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run35dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run36dat   LArIAT     48 
-
-python chn_plot_main.py  9     "07_25_2018"  run33dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run34dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run35dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run36dat   LArIAT     49 
-
-python chn_plot_main.py  9     "07_25_2018"  run37dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run38dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run39dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run40dat   LArIAT     47 
-
-python chn_plot_main.py  9     "07_25_2018"  run37dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run38dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run39dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run40dat   LArIAT     48 
-
-python chn_plot_main.py  9     "07_25_2018"  run37dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run38dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run39dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run40dat   LArIAT     49 
-
-
-python chn_plot_main.py  9     "07_25_2018"  run41dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run42dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run43dat   LArIAT     47 
-python chn_plot_main.py  9     "07_25_2018"  run44dat   LArIAT     47 
-
-python chn_plot_main.py  9     "07_25_2018"  run41dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run42dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run43dat   LArIAT     48 
-python chn_plot_main.py  9     "07_25_2018"  run44dat   LArIAT     48 
-
-python chn_plot_main.py  9     "07_25_2018"  run41dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run42dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run43dat   LArIAT     49 
-python chn_plot_main.py  9     "07_25_2018"  run44dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run21dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run22dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run23dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run24dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run25dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run26dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run27dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run28dat   LArIAT     48 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run21dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run22dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run23dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run24dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run25dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run26dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run27dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run28dat   LArIAT     49 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run29dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run30dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run31dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run32dat   LArIAT     47 
+##
+#python chn_plot_main.py  9     "07_25_2018"  run29dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run30dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run31dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run32dat   LArIAT     48 
+##
+#python chn_plot_main.py  9     "07_25_2018"  run29dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run30dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run31dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run32dat   LArIAT     49 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run33dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run34dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run35dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run36dat   LArIAT     47 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run33dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run34dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run35dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run36dat   LArIAT     48 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run33dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run34dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run35dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run36dat   LArIAT     49 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run37dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run38dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run39dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run40dat   LArIAT     47 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run37dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run38dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run39dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run40dat   LArIAT     48 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run37dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run38dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run39dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run40dat   LArIAT     49 
+#
+#
+#python chn_plot_main.py  9     "07_25_2018"  run41dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run42dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run43dat   LArIAT     47 
+#python chn_plot_main.py  9     "07_25_2018"  run44dat   LArIAT     47 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run41dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run42dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run43dat   LArIAT     48 
+#python chn_plot_main.py  9     "07_25_2018"  run44dat   LArIAT     48 
+#
+#python chn_plot_main.py  9     "07_25_2018"  run41dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run42dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run43dat   LArIAT     49 
+#python chn_plot_main.py  9     "07_25_2018"  run44dat   LArIAT     49 
 
 
 

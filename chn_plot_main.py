@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Jul 20 09:57:10 2018
+Last modified: Wed Jul 25 22:03:12 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -87,7 +87,7 @@ if __name__ == '__main__':
         wibno = wfc[0]
         fembno = wfc[1]
         chnno = wfc[2]
-        out_path = rms_rootpath + "/" + "results/" + "TPC%d_"%tpcchn_no + rmsrunno 
+        out_path = rms_rootpath + "/" + "e2results/" + "TPC%d_"%tpcchn_no + rmsrunno 
         #if (os.path.exists(out_path)):
         #    pass
         #else:

@@ -1,6 +1,17 @@
 #!/bin/bash
 ####         argv[0]                  argv[1]        argv[2] argv[3] argv[4]  argv[5] argv[6] argv[7]  argv[8] 
 ####                     mon_date_year, run_no, APAno,    jumbo   gain,    tp,    server,  plot_en   mode
+
+#python  RUN_dat_ana.py    "07_23_2018"    "27"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_23_2018"    "28"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_23_2018"    "29"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_23_2018"    "30"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_23_2018"    "35"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_23_2018"    "36"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_23_2018"    "37"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_23_2018"    "38"       9      False    4       3     "server"  "0x0F"   "F"  
+
+
 #python  RUN_dat_ana.py    "07_25_2018"    "01"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "02"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "03"       9      False    4       3     "server"  "0x0F"   "F"  
@@ -9,10 +20,10 @@
 #python  RUN_dat_ana.py    "07_25_2018"    "06"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "07"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "08"       9      False    4       3     "server"  "0x0F"   "F"  
-#python  RUN_dat_ana.py    "07_25_2018"    "09"       9      False    4       3     "server"  "0x0F"   "F"  
-#python  RUN_dat_ana.py    "07_25_2018"    "10"       9      False    4       3     "server"  "0x0F"   "F"  
-#python  RUN_dat_ana.py    "07_25_2018"    "11"       9      False    4       3     "server"  "0x0F"   "F"  
-#python  RUN_dat_ana.py    "07_25_2018"    "12"       9      False    4       3     "server"  "0x0F"   "F"  
+python  RUN_dat_ana.py    "07_25_2018"    "09"       9      False    4       3     "server"  "0x0F"   "F"  
+python  RUN_dat_ana.py    "07_25_2018"    "10"       9      False    4       3     "server"  "0x0F"   "F"  
+python  RUN_dat_ana.py    "07_25_2018"    "11"       9      False    4       3     "server"  "0x0F"   "F"  
+python  RUN_dat_ana.py    "07_25_2018"    "12"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "13"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "14"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "15"       9      False    4       3     "server"  "0x0F"   "F"  
@@ -44,10 +55,10 @@
 #python  RUN_dat_ana.py    "07_25_2018"    "39"       9      False    4       3     "server"  "0x0F"   "F"  
 #python  RUN_dat_ana.py    "07_25_2018"    "40"       9      False    4       3     "server"  "0x0F"   "F"  
 #
-python  RUN_dat_ana.py    "07_25_2018"    "41"       9      False    4       3     "server"  "0x0F"   "F"  
-python  RUN_dat_ana.py    "07_25_2018"    "42"       9      False    4       3     "server"  "0x0F"   "F"  
-python  RUN_dat_ana.py    "07_25_2018"    "43"       9      False    4       3     "server"  "0x0F"   "F"  
-python  RUN_dat_ana.py    "07_25_2018"    "44"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_25_2018"    "41"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_25_2018"    "42"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_25_2018"    "43"       9      False    4       3     "server"  "0x0F"   "F"  
+#python  RUN_dat_ana.py    "07_25_2018"    "44"       9      False    4       3     "server"  "0x0F"   "F"  
 #
 #
 #
