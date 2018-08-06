@@ -45,7 +45,8 @@ tp = int(sys.argv[6])
 server_flg = sys.argv[7]
 max_limit = 3650
 min_limit = 800
-hp_filter  = False
+#hp_filter  = False
+hp_filter  = True 
 plot_en = int(sys.argv[8],16)
 mode = sys.argv[9]
 
@@ -156,8 +157,10 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
-                if chndata[7] > 4:
-                    print chndata[1], int(chndata[7])
+                if chndata[7] > 3:
+                    print chndata[1], (chndata[7])
+                if chndata[7] < 1:
+                    print chndata[1], (chndata[7])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
         paras = [paras]
@@ -168,15 +171,41 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlims = [0,len(chns)]
         rmsmax = np.max(paras)
         if rmsmax > 10:
-            ymax = 500
+            ymax = 10
         else:
             ymax = 10
         ylims = [0,ymax]
         labels = ["RMS(ADC)"]
         oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)
         
-        
+    if ( (plot_en&0x08) != 0 ):
+        print "Noise Measurement After HPF"
+        chnparas = []
+        print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
+        for chndata in apa_results:
+            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
+                chnparas.append( [int(chndata[1][0][1:]), chndata[9] ])
+                if chndata[9] > 3:
+                    print chndata[1], (chndata[9])
+                if chndata[9] < 1:
+                    print chndata[1], (chndata[9])
+        chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
+        chns, paras = zip(*chnparas)
+        paras = [paras]
 
+        ylabel = "RMS(ADC) /bin"
+        xlabel = "Channel No."
+        title  = "Noise Measurement After HPF" 
+        xlims = [0,len(chns)]
+        rmsmax = np.max(paras)
+        if rmsmax > 10:
+            ymax = 10
+        else:
+            ymax = 10
+        ylims = [0,ymax]
+        labels = ["RMS(ADC)"]
+        oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)
+        
 
     if ( (plot_en&0x04) != 0 ):
         print "Pulse amplitude"

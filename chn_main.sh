@@ -1,15 +1,129 @@
 #!/bin/bash
 ####################### apano,   rmsdate,    rmsrunno, apafolder tpcwire(0~479)
-python chn_plot_main.py  9     "07_23_2018" "run27dat"    LArIAT     48 
-python chn_plot_main.py  9     "07_23_2018" "run28dat"    LArIAT     48 
-python chn_plot_main.py  9     "07_23_2018" "run29dat"    LArIAT     48 
-python chn_plot_main.py  9     "07_23_2018" "run30dat"    LArIAT     48 
-python chn_plot_main.py  9     "07_23_2018" "run35dat"    LArIAT     48 
-python chn_plot_main.py  9     "07_23_2018" "run36dat"    LArIAT     48 
-python chn_plot_main.py  9     "07_23_2018" "run37dat"    LArIAT     48 
-python chn_plot_main.py  9     "07_23_2018" "run38dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_27_2018" "run29dat"    LArIAT     61 
+#python chn_plot_main.py  9     "07_27_2018" "run37dat"    LArIAT     61 
+#python chn_plot_main.py  9     "07_27_2018" "run53dat"    LArIAT     61
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      287 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      288 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      286 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      289 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      61 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      62 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      63 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      64 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      286 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      287 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      288 
+#python chn_plot_main.py  9     "08_03_2018" "run37dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT       74 
+python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT      74 
+#python chn_plot_main.py  9     "08_03_2018" "run41dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run42dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run43dat"    LArIAT       74 
+python chn_plot_main.py  9     "08_03_2018" "run44dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run45dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run46dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run47dat"    LArIAT       74 
+python chn_plot_main.py  9     "08_03_2018" "run48dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run49dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run50dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run51dat"    LArIAT       74 
+python chn_plot_main.py  9     "08_03_2018" "run52dat"    LArIAT        74 
+#python chn_plot_main.py  9     "08_03_2018" "run53dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run54dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run55dat"    LArIAT       74 
+python chn_plot_main.py  9     "08_03_2018" "run56dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run57dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run58dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run59dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run60dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run40dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run44dat"    LArIAT       74
+#python chn_plot_main.py  9     "08_03_2018" "run48dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run52dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run56dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run60dat"    LArIAT       74 
+#python chn_plot_main.py  9     "08_03_2018" "run37dat"    LArIAT      53 
+#python chn_plot_main.py  9     "08_03_2018" "run37dat"    LArIAT      56 
+#python chn_plot_main.py  9     "08_03_2018" "run37dat"    LArIAT      75 
+#python chn_plot_main.py  9     "08_03_2018" "run37dat"    LArIAT      78 
+
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT      61 
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT      62 
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT      63 
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT      64 
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT      286 
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT      287 
+#python chn_plot_main.py  9     "08_03_2018" "run38dat"    LArIAT      288 
 
 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT      61 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT      62 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT      63 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT      64 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT      286 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT      287 
+#python chn_plot_main.py  9     "08_03_2018" "run39dat"    LArIAT      288 
+
+
+#python chn_plot_main.py  9     "08_01_2018" "run04dat"    LArIAT      286 
+#python chn_plot_main.py  9     "08_01_2018" "run04dat"    LArIAT      287 
+#python chn_plot_main.py  9     "08_01_2018" "run04dat"    LArIAT      288 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      482 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      0 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      100 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      150 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      200 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      250
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      287 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      288 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      289 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      292 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      300
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      350 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      400 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      428 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      430 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      431 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      432 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      433 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      435 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      436 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT      437 
+#python chn_plot_main.py  9     "07_31_2018" "run09dat"    LArIAT      0 
+#python chn_plot_main.py  9     "07_31_2018" "run09dat"    LArIAT      400 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     61
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     62
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     63
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     64
+
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     287 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     288 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     289 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     290 
+#
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     433 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     434 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     435 
+#python chn_plot_main.py  9     "07_31_2018" "run10dat"    LArIAT     430 
+
+
+
+
+
+
+#python chn_plot_main.py  9     "07_26_2018" "run01dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_26_2018" "run02dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_26_2018" "run03dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_26_2018" "run04dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_23_2018" "run35dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_23_2018" "run36dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_23_2018" "run37dat"    LArIAT     48 
+#python chn_plot_main.py  9     "07_23_2018" "run38dat"    LArIAT     48 
 
 #python chn_plot_main.py  9     "07_25_2018"  run01dat   LArIAT     48 
 #python chn_plot_main.py  9     "07_25_2018"  run02dat   LArIAT     48 

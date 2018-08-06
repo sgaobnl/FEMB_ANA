@@ -140,22 +140,22 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
     len_chnrmsdata = len(chnrmsdata)
     rms =  np.std(chnrmsdata[0:100000])
     ped = np.mean(chnrmsdata[0:100000])
-    data_slice = chnrmsdata[feed_loc[0]:feed_loc[1]]
+    data_slice = chnrmsdata[feed_loc[0]:feed_loc[100]]
     data_200ms_slice = chnrmsdata[0:200000:200]
 
-#    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[1]])
-#    avg_cycles = len(feed_loc) - 2
-#    for loci in range(avg_cycles - 1):
-#        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[loci+1]:feed_loc[loci+2]])
-#    avg_data_slice = avg_data_slice / (avg_cycles*1.0)
-#    data_200ms_slice = avg_data_slice
-
-    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[2]])
-    avg_cycles = (len(feed_loc) - 6)//2
+    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[1]])
+    avg_cycles = len(feed_loc) - 2
     for loci in range(avg_cycles - 1):
-        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[2*loci+2]:feed_loc[2*loci+4]])
+        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[loci+1]:feed_loc[loci+2]])
     avg_data_slice = avg_data_slice / (avg_cycles*1.0)
     data_200ms_slice = avg_data_slice
+
+#    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[2]])
+#    avg_cycles = (len(feed_loc) - 6)//2
+#    for loci in range(avg_cycles - 1):
+#        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[2*loci+2]:feed_loc[2*loci+4]])
+#    avg_data_slice = avg_data_slice / (avg_cycles*1.0)
+#    data_200ms_slice = avg_data_slice
 
 
     avg_cycle_l = 1

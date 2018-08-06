@@ -31,8 +31,8 @@ from apa_mapping import APA_MAP
 apamap = APA_MAP()
 from femb_position import femb_position
 from raw_convertor_m import raw_convertor_peak
-#from highpass_filter import hp_flt_applied
-#from highpass_filter import hp_FIR_applied
+from highpass_filter import hp_flt_applied
+from highpass_filter import hp_FIR_applied
 
 def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False):
     apamap.APA = APA
@@ -90,7 +90,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                         smps = (len_file-1024)/2/16 
                         #print smps
                         if (smps > 200000 ):
-                            smps = 10000
+                            smps = 100000
                         else:
                             pass
                         chn_data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
@@ -121,20 +121,35 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             raw_mean = np.mean(rms_data)
                             raw_rms  = np.std (rms_data)
                                
-
-                            sf_raw_rms = []
-                            for tmp in rms_data:
-                                if ( tmp % 64 == 63 ) or ( tmp % 64 == 0 ) or ( tmp % 64 == 1 ) or ( tmp % 64 == 62 )  or ( tmp % 64 == 2 ):
-                                    pass
-                                else:
-                                    sf_raw_rms.append(tmp)
-                            if (len(sf_raw_rms) > 2 ):
-                                sf_mean = np.mean(sf_raw_rms)
-                                sf_rms  = np.std(sf_raw_rms)
+                            if (hp_filter == True ):
+                                flt_tmp_data = hp_flt_applied(chn_data[chn], fs = 2000000, passfreq = 1000, flt_order = 2)
+                                flt_tmp_data = np.array(flt_tmp_data) + np.mean(rms_data)
+                                rms_data_tmp = [] 
+                                for oneloc in feed_loc[0:-1]:
+                                    rms_data_tmp = rms_data_tmp + (flt_tmp_data[oneloc+100: oneloc+feed_freq].tolist() )
+                                hf_rms_data = rms_data_tmp
+                                hf_chn_full_data = flt_tmp_data
                             else:
-                                sf_rms = raw_rms
-                                sf_mean = raw_mean
-                            sf_ratio = (len(sf_raw_rms))*1.0/(len(rms_data) )
+                                hf_rms_data = rms_data 
+                                hf_chn_full_data = chn_data[chn]
+
+                            hf_mean = np.mean(hf_rms_data)
+                            hf_rms  = np.std (hf_rms_data)
+                            hf_ratio = 1
+ 
+#                            sf_raw_rms = []
+#                            for tmp in rms_data:
+#                                if ( tmp % 64 == 63 ) or ( tmp % 64 == 0 ) or ( tmp % 64 == 1 ) or ( tmp % 64 == 62 )  or ( tmp % 64 == 2 ):
+#                                    pass
+#                                else:
+#                                    sf_raw_rms.append(tmp)
+#                            if (len(sf_raw_rms) > 2 ):
+#                                sf_mean = np.mean(sf_raw_rms)
+#                                sf_rms  = np.std(sf_raw_rms)
+##                            else:
+#                                sf_rms = raw_rms
+#                                sf_mean = raw_mean
+#                            sf_ratio = (len(sf_raw_rms))*1.0/(len(rms_data) )
 
                             chn_peakp_avg = np.mean(chn_peakp[chn])
                             chn_peakn_avg = np.mean(chn_peakn[chn])
@@ -150,8 +165,8 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                                 pass 
                             else:
                                 alldata.append( [apa_loc, apa_info, wib, femb, chip, \
-                                             chn, raw_mean, raw_rms, sf_mean, sf_rms, \
-                                             sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \
+                                             chn, raw_mean, raw_rms, hf_mean, hf_rms, \
+                                             hf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \
                                              feed_loc, chn_peakp[chn], chn_peakn[chn] ] )
 
 #                            pulsemax_data = np.max(chn_full_data[feed_loc[0]:feed_loc[0]+100])

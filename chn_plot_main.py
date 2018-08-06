@@ -79,7 +79,23 @@ if __name__ == '__main__':
     jumbo_flag = False
     wib_femb_chns = [  
                         #wib(0-4), femb(0-3), chn(0~127)
-                        #[0, 2, 120   ],
+#                        [0, 0, 0   ],
+#                        [0, 0, 1   ],
+#                        [0, 0, 14   ],
+#                        [0, 0, 15   ],
+#                        [0, 0, 16   ],
+#                        [0, 0, 17   ],
+#                        [0, 0, 30   ],
+#                        [0, 0, 31   ],
+#                        [0, 0, 64   ],
+#                        [0, 0, 79   ],
+#                        [0, 0, 80   ],
+#                        [0, 0, 95   ],
+                        #[0, 0, 100   ],
+                        #[1, 0, 0   ],
+                        #[1, 0, 2   ],
+                        #[1, 0, 64   ],
+                        #[1, 0, 65   ],
                         [wibno, fembno, chnno]
                     ]    
     
@@ -87,7 +103,7 @@ if __name__ == '__main__':
         wibno = wfc[0]
         fembno = wfc[1]
         chnno = wfc[2]
-        out_path = rms_rootpath + "/" + "e2results/" + "TPC%d_"%tpcchn_no + rmsrunno 
+        out_path = rms_rootpath + "/" + "results/" + "TPC%d_"%tpcchn_no + rmsrunno 
         #if (os.path.exists(out_path)):
         #    pass
         #else:
