@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Apr 15 16:18:59 2018
+Last modified: Mon Aug  6 15:25:08 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -49,18 +49,20 @@ if __name__ == '__main__':
     asicrunno = sys.argv[7]
     apafolder = sys.argv[8]
 
-    if (apafolder == "APA40"):
-        rms_rootpath =  "D:/APA40/Rawdata/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "D:/APA40/Rawdata/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "D:/APA40/Rawdata/Rawdata_" + asidate + "/"
+    #if (apafolder == "APA40"):
+    if (apafolder == "LArIAT"):
+        rms_rootpath =  "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
+        #rms_rootpath =  "/lariat/data/users/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
+        #rms_rootpath =  "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
+        fpga_rootpath = rms_rootpath 
+        asic_rootpath = rms_rootpath 
+       
     elif (apafolder != "APA"):
         rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + rmsdate + "/"
         fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + fpgdate + "/"
         asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + asidate + "/"
-    else:
-        rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + rmsdate + "/"
-        fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + fpgdate + "/"
-        asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + asidate + "/"
+
+
  
     from timeit import default_timer as timer
     s0= timer()
@@ -71,7 +73,7 @@ if __name__ == '__main__':
     jumbo_flag = False
     wire_type = "V"
     #only allow one gain and one peak time run at a time, otherwise memory excess error may happen
-    gains = ["250"]  #["250", "140"]
+    gains = ["140"]  #["250", "140"]
     tps = ["20"]#["05", "10", "20", "30"]
     psd_en = False
     psd = 0
@@ -87,7 +89,6 @@ if __name__ == '__main__':
             sys.exit()
     
     apa_map = APA_MAP()
-    All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
 
     ffts = []
     for gain in gains:
@@ -97,16 +98,12 @@ if __name__ == '__main__':
             for wibno in wibnos:
                 for fembno in fembnos:
                     if (True):
-                    #if (not ((wibno == 0) and (fembno == 0) ) ) : #APA5
-                    #if (not ((wibno == 2) and (fembno == 2) ) ) : #APA2
-                    #if (not ((wibno == 1) and (fembno == 1) ) ) : #APA4
-                    #if (not ((wibno == 0) and (fembno == 3) ) ) and \
-                    #   (not ((wibno == 2) and (fembno == 0) ) ) and \
-                    #   (not ((wibno == 2) and (fembno == 1) ) ) and \
-                    #   (not ((wibno == 3) and (fembno == 0) ) ) : #APA3
                         log_str = log_str +str(wibno)+str(fembno)+"_" 
-                        #V plane
                         chns = []
+                        apa_map.femb = wibno*4 + fembno
+                        print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+                        print apa_map.femb
+                        All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
                         for chn_loc in All_sort:
                             if ( chn_loc[0][0] == wire_type ):
                                 chns.append(int(chn_loc[1]))
