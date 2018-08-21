@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Jul 20 09:34:20 2018
+Last modified: Mon Aug  6 15:32:30 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -59,6 +59,7 @@ else:
 
 if (server_flg == "server" ):
     rootpath = "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/"
+    rootpath = "/lariat/data/users/sbnd/BNL_LD_data/LArIAT/Rawdata/"
     #rootpath = "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/"
     #rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
 else:

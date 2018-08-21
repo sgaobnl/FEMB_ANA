@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Mon Aug  6 15:25:08 2018
+Last modified: Mon Aug  6 20:00:05 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -42,8 +42,10 @@ import pickle
 if __name__ == '__main__':
     APAno = int(sys.argv[1])
     rmsdate = sys.argv[2]
-    fpgdate = sys.argv[3]
-    asidate = sys.argv[4]
+    #fpgdate = sys.argv[3]
+    wire_type = sys.argv[3] 
+    #asidate = sys.argv[4]
+    tp_in = sys.argv[4]
     rmsrunno = sys.argv[5]
     fpgarunno = sys.argv[6]
     asicrunno = sys.argv[7]
@@ -51,8 +53,8 @@ if __name__ == '__main__':
 
     #if (apafolder == "APA40"):
     if (apafolder == "LArIAT"):
-        rms_rootpath =  "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
-        #rms_rootpath =  "/lariat/data/users/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
+        #rms_rootpath =  "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
+        rms_rootpath =  "/lariat/data/users/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
         #rms_rootpath =  "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
         fpga_rootpath = rms_rootpath 
         asic_rootpath = rms_rootpath 
@@ -68,13 +70,13 @@ if __name__ == '__main__':
     s0= timer()
     print "Start...please wait..."
     
-    wibnos = [0,1,2,3,4]
+    wibnos = [0,1]
     fembnos = [0,1,2,3] #0~3
     jumbo_flag = False
-    wire_type = "V"
+    wire_type = sys.argv[3] 
     #only allow one gain and one peak time run at a time, otherwise memory excess error may happen
     gains = ["140"]  #["250", "140"]
-    tps = ["20"]#["05", "10", "20", "30"]
+    tps = [tp_in]#["05", "10", "20", "30"]
     psd_en = False
     psd = 0
     
@@ -97,12 +99,10 @@ if __name__ == '__main__':
             chn_cnt = 0
             for wibno in wibnos:
                 for fembno in fembnos:
-                    if (True):
+                    if (wibno*4 + fembno) <= 4:
+                        apa_map.femb = wibno*4 + fembno
                         log_str = log_str +str(wibno)+str(fembno)+"_" 
                         chns = []
-                        apa_map.femb = wibno*4 + fembno
-                        print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-                        print apa_map.femb
                         All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
                         for chn_loc in All_sort:
                             if ( chn_loc[0][0] == wire_type ):

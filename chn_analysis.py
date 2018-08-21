@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed Jul 25 21:57:07 2018
+Last modified: Mon Aug  6 20:11:23 2018
 """
 
 #defaut setting for scientific caculation
@@ -44,7 +44,7 @@ def fe_cfg(gain="250", tp="30" ):
         sg = 0
     else:
         print "Wrong gain input, exit anyway"
-        eixt ()
+        exit ()
         
     if (tp=="30"):
         st = 2
@@ -56,7 +56,7 @@ def fe_cfg(gain="250", tp="30" ):
         st = 1
     else:
         print "Wrong Tp input, exit anyway"
-        eixt ()
+        exit ()
     fecfg_reg0 = st*16 + sg*4
     return fecfg_reg0, sg, st
  
