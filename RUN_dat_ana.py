@@ -146,7 +146,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         ylabel = "ADC output /bin"
         xlabel = "Channel No."
         title  = "Pedestal Measurement" 
-        xlims = [0,len(chns)]
+        xlims = [min(chns),max(chns)]
         ylims = [0,4100]
         labels = ["Pedestal"]
         oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)
@@ -158,7 +158,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
-                if chndata[7] > 3:
+                if chndata[7] > 20:
                     print chndata[1], (chndata[7])
                 if chndata[7] < 1:
                     print chndata[1], (chndata[7])
@@ -170,6 +170,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlabel = "Channel No."
         title  = "Noise Measurement" 
         xlims = [0,len(chns)]
+        xlims = [min(chns),max(chns)]
         rmsmax = np.max(paras)
         if rmsmax > 10:
             ymax = 10
@@ -183,13 +184,16 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         print "Noise Measurement After HPF"
         chnparas = []
         print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
+        cnt_tmp = 0
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 chnparas.append( [int(chndata[1][0][1:]), chndata[9] ])
-                if chndata[9] > 3:
+                #if chndata[9] > 10:
+                #    print chndata[1], (chndata[9])
+                if chndata[9] < 0.9:
                     print chndata[1], (chndata[9])
-                if chndata[9] < 1:
-                    print chndata[1], (chndata[9])
+                    cnt_tmp = cnt_tmp + 1
+        print cnt_tmp
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
         paras = [paras]
@@ -198,6 +202,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlabel = "Channel No."
         title  = "Noise Measurement After HPF" 
         xlims = [0,len(chns)]
+        xlims = [min(chns),max(chns)]
         rmsmax = np.max(paras)
         if rmsmax > 10:
             ymax = 10
@@ -236,6 +241,7 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         xlabel = "Channel No."
         title  = "Pulse Amplitude" 
         xlims = [0,len(chns)]
+        xlims = [min(chns),max(chns)]
         ylims = [0,4100]
         labels = ["Positive Amplitude", "Pedestal", "Negative Amplitude"]
         oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)

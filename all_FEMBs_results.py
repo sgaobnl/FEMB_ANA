@@ -90,7 +90,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                         smps = (len_file-1024)/2/16 
                         #print smps
                         if (smps > 200000 ):
-                            smps = 50000
+                            smps = 20000
                         else:
                             pass
                         chn_data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
