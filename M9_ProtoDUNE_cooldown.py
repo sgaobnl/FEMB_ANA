@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Aug 23 18:39:41 2018
+Last modified: Sun Sep  2 23:37:28 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -59,7 +59,6 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     plt.figure(figsize=(16,9))
     ax = plt.subplot2grid((1, 1), (0, 0))
 
-#    rtd_time_np = ( np.array(temperrtdts_np) - np.min(time_np) ) / 3600.0
     if FE_temper_flg == True :
         temper_time_np = ( np.array(temper_time_np) - np.min(time_np) ) / 3600.0
     time_np = ( np.array(time_np) - np.min(time_np) ) /3600.0
@@ -135,50 +134,6 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     lurms_pos = len(urms_np) - 1
 
     markerno = 0
-#    ax2 = ax.twinx()
-#    ax2patch = []
-#    ax2label = []
-#    ax2.plot(rtd_time_np, temperrtd0_np, color = 'tab:orange' )
-#    ax2.plot(rtd_time_np, temperrtd1_np, color = 'tab:orange' )
-#    ax2.plot(rtd_time_np, temperrtd2_np, color = 'tab:orange' )
-#    ax2.plot(rtd_time_np, temperrtd3_np, color = 'tab:orange' )
-#    ax2.plot(rtd_time_np, temperrtd4_np, color = 'tab:orange' )
-#    ax2.plot(rtd_time_np, temperrtd5_np, color = 'tab:orange' )
-#    ax2.plot(rtd_time_np, temperrtd6_np, color = 'tab:orange' )
-#    ax2.scatter(rtd_time_np, temperrtd0_np, color = 'b',           marker = '1', label = "TT0200 (K)")
-#    ax2.scatter(rtd_time_np, temperrtd1_np, color = 'g',           marker = '2', label = "TT0201 (K)")
-#    ax2.scatter(rtd_time_np, temperrtd2_np, color = 'c',           marker = '4', label = "TT0202 (K)")
-#    ax2.scatter(rtd_time_np, temperrtd3_np, color = 'm',           marker = '8', label = "TT0203 (K)")
-#    ax2.scatter(rtd_time_np, temperrtd4_np, color = 'y',           marker = 's', label = "TT0204 (K)")
-#    ax2.scatter(rtd_time_np, temperrtd5_np, color = 'tab:orange',  marker = '+', label = "TT0205 (K)")
-#    ax2.scatter(rtd_time_np, temperrtd6_np, color = 'r',           marker = 'x', label = "TT0206 (K)")
-#    ax2.legend(loc = 4 )
-#
-#    if (FE_temper_flg == True):
-#        ax2.scatter(temper_time_np, temper_femb0_np, color = 'tab:orange', marker = 'x')
-#        ax2patch.append( mpatches.Patch(color = 'tab:orange') )
-#        ax2label.append( "Temperature on WIB5FEMB0" )
-#        ax2.scatter(temper_time_np, temper_femb1_np, color = 'tab:purple', marker = 'x')
-#        ax2patch.append( mpatches.Patch(color = 'tab:purple') )
-#        ax2label.append( "Temperature on WIB5FEMB1" )
-#        ax2.scatter(temper_time_np, temper_femb2_np, color = 'tab:brown', marker = 'x')
-#        ax2patch.append( mpatches.Patch(color = 'tab:brown') )
-#        ax2label.append( "Temperature on WIB5FEMB2" )
-#        ax2.scatter(temper_time_np, temper_femb3_np, color = 'tab:olive', marker = 'x')
-#        ax2patch.append( mpatches.Patch(color = 'tab:olive') )
-#        ax2label.append( "Temperature on WIB5FEMB3" )
-#        ax2.legend(ax2patch, ax2label, loc=4, fontsize=12 )
-#    
-#        ax2.plot(temper_time_np, temper_femb0_np, color =  'tab:orange', marker = 'x')
-#        ax2.plot(temper_time_np, temper_femb1_np, color =  'tab:purple', marker = 'x')
-#        ax2.plot(temper_time_np, temper_femb2_np, color =  'tab:brown', marker = 'x')
-#        ax2.plot(temper_time_np, temper_femb3_np, color =  'tab:olive', marker = 'x')
-#    ax2.set_ylabel('Temperature / K', color='tab:orange', fontsize=12)
-#    ax2.tick_params('y', colors='tab:orange')
-#    ax2.set_ylim([-50, 350])
-#    ax2.set_xlim([np.min(time_np)-1,np.max(time_np)+2])
-
-
     for onewire in wire_np:
         ax.errorbar(time_np, onewire[1], onewire[2], color = clor[markerno], marker = mker[markerno])
         if enc_flg == True:
@@ -378,6 +333,49 @@ del_run = [
             ["Rawdata_08_20_2018",  "run09dat",] ,
             ["Rawdata_06_20_2018",  "run10dat",] ,
 
+            ["Rawdata_08_20_2018",  "run11dat",] ,
+            ["Rawdata_08_20_2018",  "run12dat",] ,
+            ["Rawdata_08_20_2018",  "run13dat",] ,
+            ["Rawdata_08_20_2018",  "run14dat",] ,
+            ["Rawdata_08_20_2018",  "run15dat",] ,
+            ["Rawdata_08_20_2018",  "run16dat",] ,
+            ["Rawdata_08_20_2018",  "run17dat",] ,
+            ["Rawdata_08_20_2018",  "run18dat",] ,
+            ["Rawdata_08_20_2018",  "run19dat",] ,
+            ["Rawdata_06_20_2018",  "run20dat",] ,
+
+#            ["Rawdata_08_20_2018",  "run11dat",] ,
+#            ["Rawdata_08_20_2018",  "run12dat",] ,
+#            ["Rawdata_08_20_2018",  "run13dat",] ,
+#            ["Rawdata_08_20_2018",  "run14dat",] ,
+#            ["Rawdata_08_20_2018",  "run15dat",] ,
+#            ["Rawdata_08_20_2018",  "run16dat",] ,
+#            ["Rawdata_08_20_2018",  "run17dat",] ,
+#            ["Rawdata_08_20_2018",  "run18dat",] ,
+#            ["Rawdata_08_20_2018",  "run19dat",] ,
+
+            ["Rawdata_08_22_2018",  "run20dat",] ,
+            ["Rawdata_08_22_2018",  "run21dat",] ,
+            ["Rawdata_08_22_2018",  "run22dat",] ,
+            ["Rawdata_08_22_2018",  "run23dat",] ,
+            ["Rawdata_08_22_2018",  "run24dat",] ,
+            ["Rawdata_08_22_2018",  "run25dat",] ,
+            ["Rawdata_08_22_2018",  "run26dat",] ,
+            ["Rawdata_08_22_2018",  "run27dat",] ,
+            ["Rawdata_08_22_2018",  "run28dat",] ,
+            ["Rawdata_08_22_2018",  "run29dat",] ,
+
+            ["Rawdata_08_22_2018",  "run30dat",] ,
+            ["Rawdata_08_22_2018",  "run31dat",] ,
+            ["Rawdata_08_22_2018",  "run32dat",] ,
+            ["Rawdata_08_22_2018",  "run33dat",] ,
+            ["Rawdata_08_22_2018",  "run34dat",] ,
+            ["Rawdata_08_22_2018",  "run35dat",] ,
+            ["Rawdata_08_22_2018",  "run36dat",] ,
+            ["Rawdata_08_22_2018",  "run37dat",] ,
+            ["Rawdata_08_22_2018",  "run38dat",] ,
+            ["Rawdata_08_22_2018",  "run39dat",] ,
+
             ["Rawdata_08_22_2018",  "run40dat",] ,
             ["Rawdata_08_22_2018",  "run41dat",] ,
             ["Rawdata_08_22_2018",  "run42dat",] ,
@@ -389,7 +387,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run48dat",] ,
             ["Rawdata_08_22_2018",  "run49dat",] ,
 
-            ["Rawdata_06_22_2018",  "run50dat",] ,
+            ["Rawdata_08_22_2018",  "run50dat",] ,
             ["Rawdata_08_22_2018",  "run51dat",] ,
             ["Rawdata_08_22_2018",  "run52dat",] ,
             ["Rawdata_08_22_2018",  "run53dat",] ,
@@ -400,7 +398,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run58dat",] ,
             ["Rawdata_08_22_2018",  "run59dat",] ,
 
-            ["Rawdata_06_22_2018",  "run60dat",] ,
+            ["Rawdata_08_22_2018",  "run60dat",] ,
             ["Rawdata_08_22_2018",  "run61dat",] ,
             ["Rawdata_08_22_2018",  "run62dat",] ,
             ["Rawdata_08_22_2018",  "run63dat",] ,
@@ -411,7 +409,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run68dat",] ,
             ["Rawdata_08_22_2018",  "run69dat",] ,
 
-            ["Rawdata_06_22_2018",  "run70dat",] ,
+            ["Rawdata_08_22_2018",  "run70dat",] ,
             ["Rawdata_08_22_2018",  "run71dat",] ,
             ["Rawdata_08_22_2018",  "run72dat",] ,
             ["Rawdata_08_22_2018",  "run73dat",] ,
@@ -422,8 +420,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run78dat",] ,
             ["Rawdata_08_22_2018",  "run79dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run80dat",] ,
+            ["Rawdata_08_22_2018",  "run80dat",] ,
             ["Rawdata_08_22_2018",  "run81dat",] ,
             ["Rawdata_08_22_2018",  "run82dat",] ,
             ["Rawdata_08_22_2018",  "run83dat",] ,
@@ -434,8 +431,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run88dat",] ,
             ["Rawdata_08_22_2018",  "run89dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run90dat",] ,
+            ["Rawdata_08_22_2018",  "run90dat",] ,
             ["Rawdata_08_22_2018",  "run91dat",] ,
             ["Rawdata_08_22_2018",  "run92dat",] ,
             ["Rawdata_08_22_2018",  "run93dat",] ,
@@ -446,8 +442,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run98dat",] ,
             ["Rawdata_08_22_2018",  "run99dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run100dat",] ,
+            ["Rawdata_08_22_2018",  "run100dat",] ,
             ["Rawdata_08_22_2018",  "run101dat",] ,
             ["Rawdata_08_22_2018",  "run102dat",] ,
             ["Rawdata_08_22_2018",  "run103dat",] ,
@@ -458,8 +453,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run108dat",] ,
             ["Rawdata_08_22_2018",  "run109dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run110dat",] ,
+            ["Rawdata_08_22_2018",  "run110dat",] ,
             ["Rawdata_08_22_2018",  "run111dat",] ,
             ["Rawdata_08_22_2018",  "run112dat",] ,
             ["Rawdata_08_22_2018",  "run113dat",] ,
@@ -470,8 +464,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run118dat",] ,
             ["Rawdata_08_22_2018",  "run119dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run120dat",] ,
+            ["Rawdata_08_22_2018",  "run120dat",] ,
             ["Rawdata_08_22_2018",  "run121dat",] ,
             ["Rawdata_08_22_2018",  "run122dat",] ,
             ["Rawdata_08_22_2018",  "run123dat",] ,
@@ -482,8 +475,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run128dat",] ,
             ["Rawdata_08_22_2018",  "run129dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run130dat",] ,
+            ["Rawdata_08_22_2018",  "run130dat",] ,
             ["Rawdata_08_22_2018",  "run131dat",] ,
             ["Rawdata_08_22_2018",  "run132dat",] ,
             ["Rawdata_08_22_2018",  "run133dat",] ,
@@ -494,8 +486,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run138dat",] ,
             ["Rawdata_08_22_2018",  "run139dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run140dat",] ,
+            ["Rawdata_08_22_2018",  "run140dat",] ,
             ["Rawdata_08_22_2018",  "run141dat",] ,
             ["Rawdata_08_22_2018",  "run142dat",] ,
             ["Rawdata_08_22_2018",  "run143dat",] ,
@@ -506,8 +497,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run148dat",] ,
             ["Rawdata_08_22_2018",  "run149dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run150dat",] ,
+            ["Rawdata_08_22_2018",  "run150dat",] ,
             ["Rawdata_08_22_2018",  "run151dat",] ,
             ["Rawdata_08_22_2018",  "run152dat",] ,
             ["Rawdata_08_22_2018",  "run153dat",] ,
@@ -518,8 +508,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run158dat",] ,
             ["Rawdata_08_22_2018",  "run159dat",] ,
 
-
-            ["Rawdata_06_22_2018",  "run160dat",] ,
+            ["Rawdata_08_22_2018",  "run160dat",] ,
             ["Rawdata_08_22_2018",  "run161dat",] ,
             ["Rawdata_08_22_2018",  "run162dat",] ,
             ["Rawdata_08_22_2018",  "run163dat",] ,
@@ -531,7 +520,7 @@ del_run = [
             ["Rawdata_08_22_2018",  "run169dat",] ,
 
 
-            ["Rawdata_06_22_2018",  "run170dat",] ,
+            ["Rawdata_08_22_2018",  "run170dat",] ,
             ["Rawdata_08_22_2018",  "run171dat",] ,
             ["Rawdata_08_22_2018",  "run172dat",] ,
             ["Rawdata_08_22_2018",  "run173dat",] ,
@@ -629,7 +618,11 @@ if (FE_temper_flg == True):
 noise_plot(rootpath, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, vrms_np, vrms_errbar_np, urms_np, urms_errbar_np, \
            temperrtdts_np, temperrtd0_np, temperrtd1_np, temperrtd2_np, temperrtd3_np, temperrtd4_np, temperrtd5_np, temperrtd6_np,\
            temper_time_np, temper_femb0_np, temper_femb1_np, temper_femb2_np, temper_femb3_np, \
-#           gain=gain, tp=tp,  enc_flg = True, sf_flg = False )
+           gain=gain, tp=tp,  enc_flg = True, sf_flg = False )
+
+noise_plot(rootpath, chkruns_cs, time_np, strtime_np, sfxrms_np, sfxrms_errbar_np, sfvrms_np, sfvrms_errbar_np, sfurms_np, sfurms_errbar_np, \
+           temperrtdts_np, temperrtd0_np, temperrtd1_np, temperrtd2_np, temperrtd3_np, temperrtd4_np, temperrtd5_np, temperrtd6_np,\
+           temper_time_np, temper_femb0_np, temper_femb1_np, temper_femb2_np, temper_femb3_np, \
            gain=gain, tp=tp,  enc_flg = True, sf_flg = True )
 
 

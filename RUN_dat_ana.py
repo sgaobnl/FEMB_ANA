@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Mon Aug  6 15:32:30 2018
+Last modified: Mon Sep  3 14:59:01 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -143,6 +143,41 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         chns, paras = zip(*chnparas)
         paras = [paras]
 
+        print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        print np.mean(paras[0][0:31]),    np.std(paras[0][0:31])
+        print np.mean(paras[0][32:63]),   np.std(paras[0][32:63])
+        print np.mean(paras[0][64:95]),   np.std(paras[0][64:95])
+        print np.mean(paras[0][96:127]),  np.std(paras[0][96:127])
+        print np.mean(paras[0][128:159]), np.std(paras[0][128:159])
+        print np.mean(paras[0][160:191]), np.std(paras[0][160:191])
+        print np.mean(paras[0][192:223]), np.std(paras[0][192:223])
+        print np.mean(paras[0][224:239]), np.std(paras[0][224:239])
+        print np.mean(paras[0][240:271]), np.std(paras[0][240:271])
+        print np.mean(paras[0][272:287]), np.std(paras[0][272:287])
+        print np.mean(paras[0][288:319]), np.std(paras[0][288:319])
+        print np.mean(paras[0][320:351]), np.std(paras[0][320:351])
+        print np.mean(paras[0][352:383]), np.std(paras[0][352:383])
+        print np.mean(paras[0][384:415]), np.std(paras[0][384:415])
+        print np.mean(paras[0][416:447]), np.std(paras[0][416:447])
+        print np.mean(paras[0][448:479]), np.std(paras[0][448:479])
+        print "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
+        print np.mean(paras[0][0:31])*2.040/4096
+        print np.mean(paras[0][32:63])*2.040/4096
+        print np.mean(paras[0][64:95])*2.040/4096
+        print np.mean(paras[0][96:127])*2.040/4096
+        print np.mean(paras[0][128:159])*2.040/4096
+        print np.mean(paras[0][160:191])*2.040/4096
+        print np.mean(paras[0][192:223])*2.040/4096
+        print np.mean(paras[0][224:239])*2.040/4096
+        print np.mean(paras[0][240:271])*2.040/4096
+        print np.mean(paras[0][272:287])*2.040/4096
+        print np.mean(paras[0][288:319])*2.040/4096
+        print np.mean(paras[0][320:351])*2.040/4096
+        print np.mean(paras[0][352:383])*2.040/4096
+        print np.mean(paras[0][384:415])*2.040/4096
+        print np.mean(paras[0][416:447])*2.040/4096
+        print np.mean(paras[0][448:479])*2.040/4096
+ 
         ylabel = "ADC output /bin"
         xlabel = "Channel No."
         title  = "Pedestal Measurement" 
