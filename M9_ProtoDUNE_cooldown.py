@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Sep  2 23:37:28 2018
+Last modified: Wed Sep  5 10:37:36 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -137,17 +137,17 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     for onewire in wire_np:
         ax.errorbar(time_np, onewire[1], onewire[2], color = clor[markerno], marker = mker[markerno])
         if enc_flg == True:
-            if (onewire[0][0] == "X" ):
-                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.85, "Collection lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=20) 
-            elif (onewire[0][0] == "U" ):                                                                                                          
-                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.79, "Induction lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=20) 
-#            elif (onewire[0][0] == "V" ):                                                                                                          
-#                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "Void channels lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
-
-            if (onewire[0][0] == "X" ):
-                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.85, "Collection latest noise: %d$\pm$%d e$^-$"%(onewire[1][lxrms_pos], onewire[2][lxrms_pos]), color = clor[markerno], fontsize=20) 
-            elif (onewire[0][0] == "U" ):                                                                                                          
-                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.79, "Induction latest noise: %d$\pm$%d e$^-$"%(onewire[1][lurms_pos], onewire[2][lurms_pos]), color = clor[markerno], fontsize=20) 
+#            if (onewire[0][0] == "X" ):
+#                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.85, "Collection lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=20) 
+#            elif (onewire[0][0] == "U" ):                                                                                                          
+#                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.79, "Induction lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=20) 
+##            elif (onewire[0][0] == "V" ):                                                                                                          
+##                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "Void channels lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
+#
+#            if (onewire[0][0] == "X" ):
+#                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.85, "Collection latest noise: %d$\pm$%d e$^-$"%(onewire[1][lxrms_pos], onewire[2][lxrms_pos]), color = clor[markerno], fontsize=20) 
+#            elif (onewire[0][0] == "U" ):                                                                                                          
+#                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.79, "Induction latest noise: %d$\pm$%d e$^-$"%(onewire[1][lurms_pos], onewire[2][lurms_pos]), color = clor[markerno], fontsize=20) 
 #            elif (onewire[0][0] == "V" ):                                                                                                          
 #                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.82, "Void channels latest noise = %d$\pm$%d e$^-$"%(onewire[1][lvrms_pos], onewire[2][lvrms_pos]), color = clor[markerno], fontsize=10) 
 
@@ -331,7 +331,7 @@ del_run = [
             ["Rawdata_08_20_2018",  "run07dat",] ,
             ["Rawdata_08_20_2018",  "run08dat",] ,
             ["Rawdata_08_20_2018",  "run09dat",] ,
-            ["Rawdata_06_20_2018",  "run10dat",] ,
+            ["Rawdata_08_20_2018",  "run10dat",] ,
 
             ["Rawdata_08_20_2018",  "run11dat",] ,
             ["Rawdata_08_20_2018",  "run12dat",] ,
@@ -343,38 +343,30 @@ del_run = [
             ["Rawdata_08_20_2018",  "run18dat",] ,
             ["Rawdata_08_20_2018",  "run19dat",] ,
             ["Rawdata_06_20_2018",  "run20dat",] ,
+            ["Rawdata_06_20_2018",  "run21dat",] ,
 
-#            ["Rawdata_08_20_2018",  "run11dat",] ,
-#            ["Rawdata_08_20_2018",  "run12dat",] ,
-#            ["Rawdata_08_20_2018",  "run13dat",] ,
-#            ["Rawdata_08_20_2018",  "run14dat",] ,
-#            ["Rawdata_08_20_2018",  "run15dat",] ,
-#            ["Rawdata_08_20_2018",  "run16dat",] ,
-#            ["Rawdata_08_20_2018",  "run17dat",] ,
-#            ["Rawdata_08_20_2018",  "run18dat",] ,
-#            ["Rawdata_08_20_2018",  "run19dat",] ,
 
-            ["Rawdata_08_22_2018",  "run20dat",] ,
-            ["Rawdata_08_22_2018",  "run21dat",] ,
-            ["Rawdata_08_22_2018",  "run22dat",] ,
-            ["Rawdata_08_22_2018",  "run23dat",] ,
-            ["Rawdata_08_22_2018",  "run24dat",] ,
-            ["Rawdata_08_22_2018",  "run25dat",] ,
-            ["Rawdata_08_22_2018",  "run26dat",] ,
-            ["Rawdata_08_22_2018",  "run27dat",] ,
-            ["Rawdata_08_22_2018",  "run28dat",] ,
-            ["Rawdata_08_22_2018",  "run29dat",] ,
-
-            ["Rawdata_08_22_2018",  "run30dat",] ,
-            ["Rawdata_08_22_2018",  "run31dat",] ,
-            ["Rawdata_08_22_2018",  "run32dat",] ,
-            ["Rawdata_08_22_2018",  "run33dat",] ,
-            ["Rawdata_08_22_2018",  "run34dat",] ,
-            ["Rawdata_08_22_2018",  "run35dat",] ,
-            ["Rawdata_08_22_2018",  "run36dat",] ,
-            ["Rawdata_08_22_2018",  "run37dat",] ,
-            ["Rawdata_08_22_2018",  "run38dat",] ,
-            ["Rawdata_08_22_2018",  "run39dat",] ,
+#            ["Rawdata_08_22_2018",  "run20dat",] ,
+#            ["Rawdata_08_22_2018",  "run21dat",] ,
+#            ["Rawdata_08_22_2018",  "run22dat",] ,
+#            ["Rawdata_08_22_2018",  "run23dat",] ,
+#            ["Rawdata_08_22_2018",  "run24dat",] ,
+#            ["Rawdata_08_22_2018",  "run25dat",] ,
+#            ["Rawdata_08_22_2018",  "run26dat",] ,
+#            ["Rawdata_08_22_2018",  "run27dat",] ,
+#            ["Rawdata_08_22_2018",  "run28dat",] ,
+#            ["Rawdata_08_22_2018",  "run29dat",] ,
+#
+#            ["Rawdata_08_22_2018",  "run30dat",] ,
+#            ["Rawdata_08_22_2018",  "run31dat",] ,
+#            ["Rawdata_08_22_2018",  "run32dat",] ,
+#            ["Rawdata_08_22_2018",  "run33dat",] ,
+#            ["Rawdata_08_22_2018",  "run34dat",] ,
+#            ["Rawdata_08_22_2018",  "run35dat",] ,
+#            ["Rawdata_08_22_2018",  "run36dat",] ,
+#            ["Rawdata_08_22_2018",  "run37dat",] ,
+#            ["Rawdata_08_22_2018",  "run38dat",] ,
+#            ["Rawdata_08_22_2018",  "run39dat",] ,
 
             ["Rawdata_08_22_2018",  "run40dat",] ,
             ["Rawdata_08_22_2018",  "run41dat",] ,
