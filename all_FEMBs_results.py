@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun 15 Apr 2018 04:34:51 PM CEST
+Last modified: Sun 16 Sep 2018 07:10:03 PM CEST
 """
 
 #defaut setting for scientific caculation
@@ -52,11 +52,11 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
         if os.path.isdir(path_wib_rt):
             wibinfo = wibinfo_rt
             path_wib = path_wib_rt
-            print "%s"%path_wib
+            #print "%s"%path_wib
         elif os.path.isdir(path_wib_ln):
             wibinfo = wibinfo_ln
             path_wib = path_wib_ln
-            print "%s"%path_wib
+            #print "%s"%path_wib
         else:
             path_wib = path_wib_ln
             print "%s, path doesn't exist!!!"%path_wib
@@ -65,10 +65,13 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
         if (missing_wib == False):
             for root1, dirs1, rawfiles in os.walk(path_wib):
                 break
+            #print("APAno",APAno)
             femb_pos_np = femb_position(APAno)
+            #print("femb_pos_np",femb_pos_np)
             apa_femb_loc, X_sort, V_sort, U_sort = apamap.apa_femb_mapping_pd()
             for rawfile in rawfiles:
                 rawfilep = path_wib + rawfile
+                #print("rawfilep",rawfilep)
                 if (rawfilep.find(".bin") >= 0 ) and (rawfilep.find(wibinfo) >=0) :
                     wib  = int( rawfilep[(rawfilep.find("WIB") + 3):(rawfilep.find("WIB") + 5)])
                     femb = int( rawfilep[rawfilep.find("FEMB") + 4])
@@ -108,9 +111,30 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             else:
                                 rms_data = rms_data 
                                 chn_full_data = chn_data[chn]
+
+                            rms_len = len(rms_data)
+                            raw_rms0  = np.std (rms_data[0: int(rms_len/2)])
+                            raw_rms1  = np.std (rms_data[int(rms_len/2): rms_len])
+                            if (raw_rms0 < raw_rms1):
+                                rms_data = rms_data[0: int(rms_len/2)]
+                            else:
+                                rms_data = rms_data[ int(rms_len/2): rms_len ]
                             raw_mean = np.mean(rms_data)
                             raw_rms  = np.std (rms_data)
-                               
+ 
+                            #raw_rms0  = np.std (rms_data[0:2000])
+                            #raw_rms1  = np.std (rms_data[2000:4000])
+                            #raw_rms2  = np.std (rms_data[4000:6000])
+                            #raw_rms3  = np.std (rms_data[6000:8000])
+                            #raw_rms4  = np.std (rms_data[8000:10000])
+                            #rms_x = [ raw_rms0, raw_rms1,raw_rms2,raw_rms3,raw_rms4]
+                            #print rms_x
+                            #maxpos = np.where(rms_x == np.max(rms_x))[0][0]
+                            #rms_x = rms_x.remove(max(rms_x))
+                            #rms_x = rms_x.remove(min(rms_x))
+                            #raw_rms = np.mean(rms_x)
+                            #minpos = np.where(rms_x == np.min(rms_x))[0][0]
+                            #rms_x = rms_x.remove(minpos)
 
                             sf_raw_rms = []
                             for tmp in rms_data:

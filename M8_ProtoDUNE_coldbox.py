@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun 16 Sep 2018 04:52:43 AM CEST
+Last modified: Sun 16 Sep 2018 06:14:25 PM CEST
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -130,7 +130,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                         chn_peakn_avg.append(chndata[12] -  chndata[6])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[13])
-                        chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+100])
+                        #chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+100])
+                        chn_wave.append(chndata[14][ chndata[15][0] : chndata[15][2]+10000])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -335,15 +336,16 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             chnchn_np      = fembinfo[fembloc][14]
 
             chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
-            #cs_chns = [176 ,476 ,618 ,634 ,639 ,1343 ,1344 ,2000 ,2084 ,2291 ,2438 ,2440 ,2462 ,2467]
+            cs_chns = [176 ,476 ,618 ,634 ,639 ,1343 ,1344 ,2000 ,2084 ,2291 ,2438 ,2440 ,2462 ,2467]
             #cs_chns =range(500,700,1)
-            cs_chns =range(2560)
+            #cs_chns =range(2560)
 
             if len(ped_np)!= 0:
                 for achn in cs_chns:
                     if (achn in chn_np): 
                         chn = achn - chnsum * fembloc
-                        if (achn in chn_np) and (sf_rms_np[chn] > 20):
+                        #if (achn in chn_np) and (sf_rms_np[chn] > 20):
+                        if (achn in chn_np) :
                             print achn, rms_np[chn],sf_rms_np[chn]
                             fig = plt.figure(figsize=(12,8))
                             ax = plt
@@ -809,7 +811,7 @@ print "Start run%schk"%strrunno
 rundir = "run%schk"%strrunno
 if (server_flg == "server" ):
     rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
-    rootpath = "/nfs/sw/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
+    #rootpath = "/nfs/sw/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
     #rootpath = "/nfs/sw/wib/Rawdata/" + "APA" + format(APAno, '1d') + "/"
 #    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "Coldbox" + "/"
 else:
