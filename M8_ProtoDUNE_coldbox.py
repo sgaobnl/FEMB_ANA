@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Sep 14 23:08:25 2018
+Last modified: Sun 16 Sep 2018 04:52:43 AM CEST
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -130,7 +130,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                         chn_peakn_avg.append(chndata[12] -  chndata[6])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[13])
-                        chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+5000])
+                        chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+100])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -335,37 +335,40 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             chnchn_np      = fembinfo[fembloc][14]
 
             chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
-            cs_chns = [176 ,476 ,618 ,634 ,639 ,1343 ,1344 ,2000 ,2084 ,2291 ,2438 ,2440 ,2462 ,2467]
+            #cs_chns = [176 ,476 ,618 ,634 ,639 ,1343 ,1344 ,2000 ,2084 ,2291 ,2438 ,2440 ,2462 ,2467]
+            #cs_chns =range(500,700,1)
+            cs_chns =range(2560)
 
             if len(ped_np)!= 0:
                 for achn in cs_chns:
-                    if achn in chn_np:
-                        fig = plt.figure(figsize=(12,8))
-                        ax = plt
+                    if (achn in chn_np): 
                         chn = achn - chnsum * fembloc
-                        y_np = np.array(chn_wave[chn])
-                        y_max = np.max(y_np)
-                        y_np = y_np - ped_np[chn]
-                        smps_np = np.arange(len(chn_wave[chn])) 
-                        x_np = smps_np * 0.5
-                        ax.scatter( x_np, y_np)
-                        ax.plot( x_np, y_np)
-                        ax.scatter( x_np, y_np)
-                        ax.plot( x_np, y_np)
-                        ax.xlim([0,np.max(x_np)])
-                        ax.tick_params(labelsize=16)
-                        ax.ylim([-2000,2000])
-                        ax.ylabel(ylabel, fontsize=16 )
-                        ax.xlabel("Time / us", fontsize=16 )
-                        ax.title(title , fontsize=16 )
-                        ax.grid()
-                        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
-                        save_cycle = 0
-                        while (os.path.isfile(r_wfm)):
-                            save_cycle = save_cycle + 1
+                        if (achn in chn_np) and (sf_rms_np[chn] > 20):
+                            print achn, rms_np[chn],sf_rms_np[chn]
+                            fig = plt.figure(figsize=(12,8))
+                            ax = plt
+                            y_np = np.array(chn_wave[chn])
+                            y_max = np.max(y_np)
+                        #y_np = y_np - ped_np[chn]
+                        
+                            smps_np = np.arange(len(chn_wave[chn])) 
+                            x_np = smps_np * 0.5
+                            ax.scatter( x_np, y_np)
+                            ax.plot( x_np, y_np)
+                            ax.scatter( x_np, y_np)
+                            ax.plot( x_np, y_np)
+                            ax.xlim([0,np.max(x_np)])
+                            ax.tick_params(labelsize=16)
+                            ax.ylim([000,4100])
+                            ax.ylabel(ylabel, fontsize=16 )
+                            ax.xlabel("Time / us", fontsize=16 )
+                            ax.title(title , fontsize=16 )
+                            ax.grid()
+                            ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+                            save_cycle = 0
                             r_wfm = result_dir + "TPC%04d_"%achn +  "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+"_" + str(fembloc)+'.png'
-                        ax.savefig(r_wfm, format='png')
-                        ax.close()
+                            ax.savefig(r_wfm, format='png')
+                            ax.close()
   
  
 #        ax.tick_params(labelsize=16)
@@ -806,6 +809,7 @@ print "Start run%schk"%strrunno
 rundir = "run%schk"%strrunno
 if (server_flg == "server" ):
     rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
+    rootpath = "/nfs/sw/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
     #rootpath = "/nfs/sw/wib/Rawdata/" + "APA" + format(APAno, '1d') + "/"
 #    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "Coldbox" + "/"
 else:
