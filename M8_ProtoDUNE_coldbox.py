@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jun  9 19:29:11 2018
+Last modified: Fri Sep 14 23:08:25 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -73,9 +73,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 
     if gain == 3:
         egain = 80
-    if gain == 2:
-        egain = 145
     if gain == 1:
+        egain = 145
+    if gain == 2:
         egain = 250
     if gain == 0:
         egain = 425
@@ -130,7 +130,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                         chn_peakn_avg.append(chndata[12] -  chndata[6])
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[13])
-                        chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+100])
+                        chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+5000])
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
@@ -216,16 +216,16 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 
 #        patch.append( mpatches.Patch(color=color))
 #        label.append(ped_label)
-#        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=8)
+#        ax.legend(patch, label, loc=1, fontsize=18 )
+        ax.tick_params(labelsize=24)
         ax.xlim([0,total_chn])
         ax.ylim([0,4100])
         ax.text( (total_chn/40.0),450, "Test started at : " + loginfo[6] )
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
-        ax.ylabel(ylabel, fontsize=12 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
-        ax.title(title , fontsize=12 )
+        ax.ylabel(ylabel, fontsize=18 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
+        ax.title(title , fontsize=18 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -289,17 +289,17 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 #        label.append(ped_label)
 #        patch.append( mpatches.Patch(color='b'))
 #        label.append(ped_label)
-#        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=8)
+#        ax.legend(patch, label, loc=1, fontsize=18 )
+        ax.tick_params(labelsize=24)
         ax.xlim([0,total_chn])
         ax.ylim([-2000,3000])
         ax.text( (total_chn/40.0),-1500, "Test started at  : " + loginfo[6] )
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
  
-        ax.ylabel(ylabel, fontsize=12 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
-        ax.title(title , fontsize=12 )
+        ax.ylabel(ylabel, fontsize=18 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
+        ax.title(title , fontsize=18 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -318,9 +318,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ped_label = "Positive Pulse Amplitude / ADC bin"
 
         for fembloc in range(20):
-            fig = plt.figure(figsize=(12,8))
-            ax = plt
- 
+
             ped_np         = fembinfo[fembloc][1]
             rms_np         = fembinfo[fembloc][2]
             sf_ped_np      = fembinfo[fembloc][3]
@@ -336,42 +334,50 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             chnasic_np     = fembinfo[fembloc][13]
             chnchn_np      = fembinfo[fembloc][14]
 
+            chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
+            cs_chns = [176 ,476 ,618 ,634 ,639 ,1343 ,1344 ,2000 ,2084 ,2291 ,2438 ,2440 ,2462 ,2467]
+
             if len(ped_np)!= 0:
-                for chn in range(len(chn_wave)):
-                    y_np = np.array(chn_wave[chn])
-                    y_max = np.max(y_np)
-                    y_np = y_np - ped_np[chn]
-                    smps_np = np.arange(len(chn_wave[chn])) 
-                    x_np = smps_np * 0.5
-                    ax.scatter( x_np, y_np)
-                    ax.plot( x_np, y_np)
-                    ax.scatter( x_np, y_np)
-                    ax.plot( x_np, y_np)
-                    ax.xlim([0,np.max(x_np)])
-            ax.tick_params(labelsize=16)
-            ax.ylim([-2000,2000])
-            ax.ylabel(ylabel, fontsize=16 )
-            ax.xlabel("Time / us", fontsize=16 )
-            ax.title(title , fontsize=16 )
-            ax.grid()
-            ax.tight_layout( rect=[0, 0.05, 1, 0.95])
-            save_cycle = 0
-            while (os.path.isfile(r_wfm)):
-                save_cycle = save_cycle + 1
-                r_wfm = result_dir + "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+"_" + str(fembloc)+'.png'
-            ax.savefig(r_wfm, format='png')
-            ax.close()
+                for achn in cs_chns:
+                    if achn in chn_np:
+                        fig = plt.figure(figsize=(12,8))
+                        ax = plt
+                        chn = achn - chnsum * fembloc
+                        y_np = np.array(chn_wave[chn])
+                        y_max = np.max(y_np)
+                        y_np = y_np - ped_np[chn]
+                        smps_np = np.arange(len(chn_wave[chn])) 
+                        x_np = smps_np * 0.5
+                        ax.scatter( x_np, y_np)
+                        ax.plot( x_np, y_np)
+                        ax.scatter( x_np, y_np)
+                        ax.plot( x_np, y_np)
+                        ax.xlim([0,np.max(x_np)])
+                        ax.tick_params(labelsize=16)
+                        ax.ylim([-2000,2000])
+                        ax.ylabel(ylabel, fontsize=16 )
+                        ax.xlabel("Time / us", fontsize=16 )
+                        ax.title(title , fontsize=16 )
+                        ax.grid()
+                        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+                        save_cycle = 0
+                        while (os.path.isfile(r_wfm)):
+                            save_cycle = save_cycle + 1
+                            r_wfm = result_dir + "TPC%04d_"%achn +  "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+"_" + str(fembloc)+'.png'
+                        ax.savefig(r_wfm, format='png')
+                        ax.close()
+  
  
 #        ax.tick_params(labelsize=16)
 #        ax.ylim([-2000,2000])
-#        ax.ylabel(ylabel, fontsize=16 )
-#        ax.xlabel("Time / us", fontsize=16 )
-#        ax.title(title , fontsize=16 )
+#        ax.ylabel(ylabel, fontsize=24 )
+#        ax.xlabel("Time / us", fontsize=24 )
+#        ax.title(title , fontsize=24 )
 #        ax.grid()
 #        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
 #        save_cycle = 0
 #        while (os.path.isfile(r_wfm)):
-#            save_cycle = save_cycle + 1
+##            save_cycle = save_cycle + 1
 #            r_wfm = result_dir + "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
 #        ax.savefig(r_wfm, format='png')
 #        ax.close()
@@ -413,6 +419,12 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 #color = 'b'
                 plabel = "RMS Noise / e-"
                 y_np = rms_np*egain
+                sf_y_np = sf_rms_np*egain
+                for i in range(len(chn_np)):
+                    if (sf_y_np[i] >=1000 ):
+                        print "%d, %d, %d, %d, %d, %d, %s, %d, %d"%(chn_np[i], chnwib_np[i], chnfemb_np[i], i, chnasic_np[i], chnchn_np[i], chnwire_np[i], sf_y_np[i], y_np[i])
+                    elif (sf_y_np[i] <350 ):
+                        print "%d, %d, %d, %d, %d, %d, %s, %d, %d"%(chn_np[i], chnwib_np[i], chnfemb_np[i], i, chnasic_np[i], chnchn_np[i], chnwire_np[i], sf_y_np[i], y_np[i])
 
                 xchn_np = []
                 xy_np = []
@@ -460,11 +472,11 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                     ax.text (chn_np[0], 100, "B" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
                 else:
                     ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
-                ax.text (chn_np[0]+2, 4800, "Alive", color = 'g' )
-                ax.text (chn_np[0]+2, 4600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
-                ax.text (chn_np[0]+2, 4400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
+                ax.text (chn_np[0]+2, 1800, "Alive", color = 'g' )
+                ax.text (chn_np[0]+2, 1600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
+                ax.text (chn_np[0]+2, 1400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
                 ax.vlines(chn_np[0], 0, 5000, color='m', linestyles="dotted", linewidth=0.8)
-                print "APA_LOC"+(format(fembloc+1, "2d"))
+#                print "APA_LOC"+(format(fembloc+1, "2d"))
             else:
                 ax.text (chn_np[0], 4800, "Dead", color = 'r' )
 #                ax.text (chn_np[0], 4400, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
@@ -472,10 +484,10 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 
 #        patch.append( mpatches.Patch(color=color))
 #        label.append(plabel)
-#        ax.legend(patch, label, loc=1, fontsize=12 )
+#        ax.legend(patch, label, loc=1, fontsize=18 )
         ax.tick_params(labelsize=24)
         ax.xlim([0,total_chn])
-        ax.ylim([0,5000])
+        ax.ylim([0,2000])
         ax.legend(loc=6)
         ax.text( (total_chn/40.0),4100, "Test started at  : " + loginfo[6] )
         if (len(loginfo[7]) > 5 ):
@@ -524,11 +536,11 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 for i in range(2):
                     if ( i == 0 ):
                         color = 'm'
-                        plabel = "RMS Noise / e-"
+                        plabel0 = "RMS Noise / e-"
                         y_np = rms_np*egain
                     elif ( i == 1 ):
                         color = 'b'
-                        plabel = "SF RMS Noise / e-"
+                        plabel1 = "SF RMS Noise / e-"
                         y_np = sf_rms_np*egain
                     ax.scatter( chn_np, y_np, color = color)
                     ax.plot( chn_np, y_np, color = color)
@@ -538,29 +550,29 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 else:
                     ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
 
-                ax.text (chn_np[0], 4800, "Alive", color = 'g' )
-                ax.text (chn_np[0], 4600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
-                ax.text (chn_np[0], 4400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
+                ax.text (chn_np[0], 1800, "Alive", color = 'g' )
+                ax.text (chn_np[0], 1600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
+                ax.text (chn_np[0], 1400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
             else:
                 ax.text (chn_np[0], 4800, "Dead", color = 'r' )
                 #ax.text (chn_np[0], 4400, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
                 #ax.text (chn_np[0], 4000, "FEMB%d"%(chnfemb_np[0]), color = 'r'  )
 
         patch.append( mpatches.Patch(color='m'))
-        label.append(plabel)
+        label.append(plabel0)
         patch.append( mpatches.Patch(color='b'))
-        label.append(plabel)
-        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=8)
+        label.append(plabel1)
+        ax.legend(patch, label, loc=1, fontsize=18 )
+        ax.tick_params(labelsize=24)
         ax.xlim([0,total_chn])
-        ax.ylim([0,5000])
+        ax.ylim([0,2000])
         ax.text( (total_chn/40.0),700, "Test started at  : " + loginfo[6] )
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
  
-        ax.ylabel(ylabel, fontsize=12 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
-        ax.title(title , fontsize=12 )
+        ax.ylabel(ylabel, fontsize=18 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
+        ax.title(title , fontsize=18 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -599,11 +611,11 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 for i in range(2):
                     if ( i == 0 ):
                         color = 'm'
-                        plabel = "RMS Noise / e-"
+                        plabel0 = "RMS Noise / e-"
                         y_np = rms_np*egain
                     elif ( i == 1 ):
                         color = 'b'
-                        plabel = "SF RMS Noise / e-"
+                        plabel1 = "SF RMS Noise / e-"
                         y_np = sf_rms_np*egain
                     ax.scatter( chn_np, y_np, color = color)
                     ax.plot( chn_np, y_np, color = color)
@@ -613,25 +625,25 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 else:
                     ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
 
-                ax.text (chn_np[0], 4800, "Alive", color = 'g' )
-                ax.text (chn_np[0], 4600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
-                ax.text (chn_np[0], 4400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
+                ax.text (chn_np[0], 1800, "Alive", color = 'g' )
+                ax.text (chn_np[0], 1600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
+                ax.text (chn_np[0], 1400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
             else:
-                ax.text (chn_np[0], 4800, "Dead", color = 'r' )
+                ax.text (chn_np[0], 1800, "Dead", color = 'r' )
 #                ax.text (chn_np[0], 4400, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
 #                ax.text (chn_np[0], 4000, "FEMB%d"%(chnfemb_np[0]), color = 'r'  )
 
             patch.append( mpatches.Patch(color='m'))
-            label.append(plabel)
+            label.append(plabel0)
             patch.append( mpatches.Patch(color='b'))
-            label.append(plabel)
-            ax.legend(patch, label, loc=1, fontsize=12 )
-            ax.tick_params(labelsize=8)
+            label.append(plabel1)
+            ax.legend(patch, label, loc=1, fontsize=18 )
+            ax.tick_params(labelsize=24)
             ax.xlim([chn_np[0], chn_np[-1] ])
-            ax.ylim([0,5000])
-            ax.ylabel(ylabel, fontsize=12 )
-            ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
-            ax.title(title , fontsize=12 )
+            ax.ylim([0,2000])
+            ax.ylabel(ylabel, fontsize=18 )
+            ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
+            ax.title(title , fontsize=18 )
             ax.grid()
             ax.tight_layout( rect=[0, 0.05, 1, 0.95])
             ax.savefig(pp, format='pdf')
@@ -688,8 +700,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 
         patch.append( mpatches.Patch(color=color))
         label.append(plabel)
-        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=8)
+        ax.legend(patch, label, loc=1, fontsize=18 )
+        ax.tick_params(labelsize=24)
         ax.xlim([0,total_chn])
         ax.ylim([0,1])
 
@@ -697,9 +709,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
  
-        ax.ylabel(ylabel, fontsize=12 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
-        ax.title(title , fontsize=12 )
+        ax.ylabel(ylabel, fontsize=18 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
+        ax.title(title , fontsize=18 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -755,8 +767,8 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
 
 #        patch.append( mpatches.Patch(color=color))
 #        label.append(ped_label)
-#        ax.legend(patch, label, loc=1, fontsize=12 )
-        ax.tick_params(labelsize=8)
+#        ax.legend(patch, label, loc=1, fontsize=18 )
+        ax.tick_params(labelsize=24)
         ax.xlim([0,total_chn])
         ax.ylim([0,64])
         if ( run_temp != None ):
@@ -768,9 +780,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         if (len(loginfo[7]) > 5 ):
             ax.text( (total_chn/40.0),300, "Inactive FEMBs : " + loginfo[7] )
  
-        ax.ylabel(ylabel, fontsize=12 )
-        ax.xlabel("APA %s Channel No."%wiretype, fontsize=12 )
-        ax.title(title , fontsize=12 )
+        ax.ylabel(ylabel, fontsize=18 )
+        ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
+        ax.title(title , fontsize=18 )
         ax.grid()
         ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
@@ -793,8 +805,8 @@ plot_en = int(sys.argv[11],16)
 print "Start run%schk"%strrunno
 rundir = "run%schk"%strrunno
 if (server_flg == "server" ):
-    #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
     rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
+    #rootpath = "/nfs/sw/wib/Rawdata/" + "APA" + format(APAno, '1d') + "/"
 #    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "Coldbox" + "/"
 else:
     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/APA3/"
@@ -836,9 +848,9 @@ fig = plt.figure(figsize=(16,9))
 APA_sort, APA_X_sort, APA_V_sort, APA_U_sort = APA_sort(APAno)
 
 plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_sort,   pp, gain, max_limit, min_limit, frontpage = True , APAno = APAno, r_wfm = result_waveform)
-plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_X_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
-plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_V_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
-plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_U_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
+#plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_X_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
+#plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_V_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
+#plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_U_sort, pp, gain, max_limit, min_limit, frontpage = False, APAno = APAno, r_wfm = result_waveform)
 
 
 pp.close()
