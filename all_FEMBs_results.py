@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun 16 Sep 2018 07:10:03 PM CEST
+Last modified: Sun Sep 16 14:02:32 2018
 """
 
 #defaut setting for scientific caculation
@@ -122,20 +122,6 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             raw_mean = np.mean(rms_data)
                             raw_rms  = np.std (rms_data)
  
-                            #raw_rms0  = np.std (rms_data[0:2000])
-                            #raw_rms1  = np.std (rms_data[2000:4000])
-                            #raw_rms2  = np.std (rms_data[4000:6000])
-                            #raw_rms3  = np.std (rms_data[6000:8000])
-                            #raw_rms4  = np.std (rms_data[8000:10000])
-                            #rms_x = [ raw_rms0, raw_rms1,raw_rms2,raw_rms3,raw_rms4]
-                            #print rms_x
-                            #maxpos = np.where(rms_x == np.max(rms_x))[0][0]
-                            #rms_x = rms_x.remove(max(rms_x))
-                            #rms_x = rms_x.remove(min(rms_x))
-                            #raw_rms = np.mean(rms_x)
-                            #minpos = np.where(rms_x == np.min(rms_x))[0][0]
-                            #rms_x = rms_x.remove(minpos)
-
                             sf_raw_rms = []
                             for tmp in rms_data:
                                 if ( tmp % 64 == 63 ) or ( tmp % 64 == 0 ) or ( tmp % 64 == 1 ) or ( tmp % 64 == 62 )  or ( tmp % 64 == 2 ):

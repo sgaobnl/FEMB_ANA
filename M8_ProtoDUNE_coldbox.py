@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun 16 Sep 2018 06:14:25 PM CEST
+Last modified: Sun Sep 16 15:00:05 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -89,6 +89,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         chn_peakp_avg  = []
         chn_peakn_avg  = []
         chn_wave       = []
+        chn_pedwave       = []
         chn_peakp_ped  = []
         chn_peakn_ped  = []
         chnwib_np      = []
@@ -131,14 +132,15 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                         #chn_wave.append(chndata[14][ chndata[15][1] : chndata[15][1]+100])
                         smp_length = len(chndata[13])
                         #chn_wave.append(chndata[14][ chndata[15][2] : chndata[15][2]+100])
-                        chn_wave.append(chndata[14][ chndata[15][0] : chndata[15][2]+10000])
+                        chn_wave.append(chndata[14][ chndata[15][0] : chndata[15][2]+10000]) #full waveform with calibration pulse
+                        chn_pedwave.append(chndata[13][ chndata[15][0] : chndata[15][2]+10000]) #detector signals & pedestal
                         chn_peakp_ped.append(chndata[11])
                         chn_peakn_ped.append(chndata[12])
 
 
         fembinfo.append([onefemb_loc, np.array(ped_np)        , np.array(rms_np)        , np.array(sf_ped_np)     , np.array(sf_rms_np)     , \
                     np.array(sf_ratio_np)   , np.array(chn_peakp_avg), np.array(chn_peakn_avg), chn_wave      , np.array(chn_peakp_ped) , \
-                    np.array(chn_peakn_ped) , chnwib_np     , chnfemb_np    , chnasic_np    , chnchn_np, chnwire_np    ] )
+                    np.array(chn_peakn_ped) , chnwib_np     , chnfemb_np    , chnasic_np    , chnchn_np, chnwire_np, chn_pedwave    ] )
 
     for fembloc in range(20):
         ped_np         = fembinfo[fembloc][1]
@@ -308,18 +310,11 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
     
     if ( (plot_en&0x04) != 0 ):
     ####plot  pulse  wave      
-        fig = plt.figure(figsize=(12,8))
-        ax = plt
-    
         #title = "%s planes: Pulse Waveform Overlap of %d wires"%( wiretype, total_chn)
-        title = "Pulse Waveform Overlap of %d wires"%(total_chn)
+        #title = "Pulse Waveform Overlap of %d wires"%(total_chn)
         ylabel = "ADC output /bin"
-        print "Pulse Waveform-->%s wires has %d channels in total"%(wiretype, total_chn)
-        print "WIB, FEMB, ASIC, CHN, PeakPos"
-        ped_label = "Positive Pulse Amplitude / ADC bin"
 
         for fembloc in range(20):
-
             ped_np         = fembinfo[fembloc][1]
             rms_np         = fembinfo[fembloc][2]
             sf_ped_np      = fembinfo[fembloc][3]
@@ -334,12 +329,12 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             chnfemb_np     = fembinfo[fembloc][12]
             chnasic_np     = fembinfo[fembloc][13]
             chnchn_np      = fembinfo[fembloc][14]
+            chnwire_np     = fembinfo[fembloc][15]
 
             chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
             cs_chns = [176 ,476 ,618 ,634 ,639 ,1343 ,1344 ,2000 ,2084 ,2291 ,2438 ,2440 ,2462 ,2467]
             #cs_chns =range(500,700,1)
             #cs_chns =range(2560)
-
             if len(ped_np)!= 0:
                 for achn in cs_chns:
                     if (achn in chn_np): 
@@ -351,8 +346,6 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                             ax = plt
                             y_np = np.array(chn_wave[chn])
                             y_max = np.max(y_np)
-                        #y_np = y_np - ped_np[chn]
-                        
                             smps_np = np.arange(len(chn_wave[chn])) 
                             x_np = smps_np * 0.5
                             ax.scatter( x_np, y_np)
@@ -364,29 +357,78 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                             ax.ylim([000,4100])
                             ax.ylabel(ylabel, fontsize=16 )
                             ax.xlabel("Time / us", fontsize=16 )
+                            title = "APA" + str(APAno) + "_" + "TPC%04d_"%achn + "_" + chnwire_np[chn] + "_LOC" + str(fembloc) + "WIB%d"%chnwib_np[chn] + "FEMB%d"%chnfemb_np[chn] + "CHN%d"%chn  
                             ax.title(title , fontsize=16 )
                             ax.grid()
                             ax.tight_layout( rect=[0, 0.05, 1, 0.95])
-                            save_cycle = 0
-                            r_wfm = result_dir + "TPC%04d_"%achn +  "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+"_" + str(fembloc)+'.png'
+                            r_wfm = result_dir + title + '_gain' + str(gain) +  "tp" + str(tp) +'.png'
                             ax.savefig(r_wfm, format='png')
                             ax.close()
   
- 
-#        ax.tick_params(labelsize=16)
-#        ax.ylim([-2000,2000])
-#        ax.ylabel(ylabel, fontsize=24 )
-#        ax.xlabel("Time / us", fontsize=24 )
-#        ax.title(title , fontsize=24 )
-#        ax.grid()
-#        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
-#        save_cycle = 0
-#        while (os.path.isfile(r_wfm)):
-##            save_cycle = save_cycle + 1
-#            r_wfm = result_dir + "X" + format(plot_en, "02X") + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
-#        ax.savefig(r_wfm, format='png')
-#        ax.close()
-    
+    if ( (plot_en&0x80) != 0 ):
+        ylabel = "ADC output /bin"
+        for fembloc in range(20):
+            ped_np         = fembinfo[fembloc][1]
+            rms_np         = fembinfo[fembloc][2]
+            sf_ped_np      = fembinfo[fembloc][3]
+            sf_rms_np      = fembinfo[fembloc][4]
+            sf_ratio_np    = fembinfo[fembloc][5]
+            chn_peakp_avg  = fembinfo[fembloc][6]
+            chn_peakn_avg  = fembinfo[fembloc][7]
+            chn_wave       = fembinfo[fembloc][8]
+            chn_peakp_ped  = fembinfo[fembloc][9]
+            chn_peakn_ped  = fembinfo[fembloc][10]
+            chnwib_np      = fembinfo[fembloc][11]
+            chnfemb_np     = fembinfo[fembloc][12]
+            chnasic_np     = fembinfo[fembloc][13]
+            chnchn_np      = fembinfo[fembloc][14]
+            chnwire_np     = fembinfo[fembloc][15]
+            chn_pedwave  = fembinfo[fembloc][16]
+
+            chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
+            #cs_chns = [176 ,476 ,618 ,634 ,639 ,1343 ,1344 ,2000 ,2084 ,2291 ,2438 ,2440 ,2462 ,2467]
+            #cs_chns =range(500,700,1)
+            cs_chns =range(2560)
+            if len(ped_np)!= 0:
+                for achn in cs_chns:
+                    if (achn in chn_np): 
+                        chn = achn - chnsum * fembloc
+                        #if (achn in chn_np) and (sf_rms_np[chn] > 20):
+                        max_sample = np.max(chn_pedwave[chn])
+                        min_sample = np.max(chn_pedwave[chn])
+                        set_amp = 200
+                        if ( (max_sample - ped_np[chn]) > set_amp ):
+                            pos = np.where(chn_pedwave[chn] == max_sample)[0][0]
+                        elif ( abs(min_sample - ped_np[chn]) > set_amp ):
+                            pos = np.where(chn_pedwave[chn] == min_sample)[0][0]
+                        else:
+                            pos = -1
+
+                        if (achn in chn_np) and ( pos>=100 ):
+                            print achn, rms_np[chn],sf_rms_np[chn]
+                            fig = plt.figure(figsize=(16,9))
+                            ax = plt
+                            plot_wave = chn_pedwave[chn][pos-100, pos+100]
+                            y_np = np.array(plot_wave)
+                            y_max = np.max(y_np)
+                            smps_np = np.arange(len(plot_wave)) 
+                            x_np = smps_np * 0.5
+                            ax.scatter( x_np, y_np)
+                            ax.plot( x_np, y_np)
+                            ax.scatter( x_np, y_np)
+                            ax.plot( x_np, y_np)
+                            ax.xlim([0,np.max(x_np)])
+                            ax.tick_params(labelsize=20)
+                            ax.ylim([000,4100])
+                            ax.ylabel(ylabel, fontsize=20 )
+                            ax.xlabel("Time / us", fontsize=20 )
+                            title = "APA" + str(APAno) + "_" + "TPC%04d_"%achn + "_" + chnwire_np[chn] + "_LOC" + str(fembloc) + "WIB%d"%chnwib_np[chn] + "FEMB%d"%chnfemb_np[chn] + "CHN%d"%chn  
+                            ax.title("Detector Signal Waveform \n" + title , fontsize=16 )
+                            ax.grid()
+                            ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+                            r_wfm = result_dir + title + '_gain' + str(gain) +  "tp" + str(tp) +'.png'
+                            ax.savefig(r_wfm, format='png')
+                            ax.close()
     
     if ( (plot_en&0x08) != 0 ):
     ##rms pedestal        
@@ -583,76 +625,76 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.savefig(pp, format='pdf')
         ax.close()
    
-    if ( (plot_en&0x80) != 0 ):
-    ##rms pedestal        
-        for fembloc in range(20):
-            fig = plt.figure(figsize=(16,9))
-            ax = plt
-    
-            rms_np = np.array(rms_np)
-            sf_rms_np = np.array(sf_rms_np)
-            patch = []
-            label = []
-            title = "%s plane: Noise Measurement" %wiretype
-            ylabel = "%s plane: RMS noise / e-"%wiretype
-
-            ped_np         = fembinfo[fembloc][1]
-            rms_np         = fembinfo[fembloc][2]
-            sf_ped_np      = fembinfo[fembloc][3]
-            sf_rms_np      = fembinfo[fembloc][4]
-            sf_ratio_np    = fembinfo[fembloc][5]
-            chn_peakp_avg  = fembinfo[fembloc][6]
-            chn_peakn_avg  = fembinfo[fembloc][7]
-            chn_wave       = fembinfo[fembloc][8]
-            chn_peakp_ped  = fembinfo[fembloc][9]
-            chn_peakn_ped  = fembinfo[fembloc][10]
-            chnwib_np      = fembinfo[fembloc][11]
-            chnfemb_np     = fembinfo[fembloc][12]
-            chnasic_np     = fembinfo[fembloc][13]
-            chnchn_np      = fembinfo[fembloc][14]
-
-            chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
-            if len(ped_np)!= 0:
-                for i in range(2):
-                    if ( i == 0 ):
-                        color = 'm'
-                        plabel0 = "RMS Noise / e-"
-                        y_np = rms_np*egain
-                    elif ( i == 1 ):
-                        color = 'b'
-                        plabel1 = "SF RMS Noise / e-"
-                        y_np = sf_rms_np*egain
-                    ax.scatter( chn_np, y_np, color = color)
-                    ax.plot( chn_np, y_np, color = color)
-
-                if (fembloc < 10 ):
-                    ax.text (chn_np[0], 100, "B" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
-                else:
-                    ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
-
-                ax.text (chn_np[0], 1800, "Alive", color = 'g' )
-                ax.text (chn_np[0], 1600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
-                ax.text (chn_np[0], 1400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
-            else:
-                ax.text (chn_np[0], 1800, "Dead", color = 'r' )
-#                ax.text (chn_np[0], 4400, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
-#                ax.text (chn_np[0], 4000, "FEMB%d"%(chnfemb_np[0]), color = 'r'  )
-
-            patch.append( mpatches.Patch(color='m'))
-            label.append(plabel0)
-            patch.append( mpatches.Patch(color='b'))
-            label.append(plabel1)
-            ax.legend(patch, label, loc=1, fontsize=18 )
-            ax.tick_params(labelsize=24)
-            ax.xlim([chn_np[0], chn_np[-1] ])
-            ax.ylim([0,2000])
-            ax.ylabel(ylabel, fontsize=18 )
-            ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
-            ax.title(title , fontsize=18 )
-            ax.grid()
-            ax.tight_layout( rect=[0, 0.05, 1, 0.95])
-            ax.savefig(pp, format='pdf')
-            ax.close()
+#    if ( (plot_en&0x80) != 0 ):
+#    ##rms pedestal        
+#        for fembloc in range(20):
+#            fig = plt.figure(figsize=(16,9))
+#            ax = plt
+#    
+#            rms_np = np.array(rms_np)
+#            sf_rms_np = np.array(sf_rms_np)
+#            patch = []
+#            label = []
+#            title = "%s plane: Noise Measurement" %wiretype
+#            ylabel = "%s plane: RMS noise / e-"%wiretype
+#
+#            ped_np         = fembinfo[fembloc][1]
+#            rms_np         = fembinfo[fembloc][2]
+#            sf_ped_np      = fembinfo[fembloc][3]
+#            sf_rms_np      = fembinfo[fembloc][4]
+#            sf_ratio_np    = fembinfo[fembloc][5]
+#            chn_peakp_avg  = fembinfo[fembloc][6]
+#            chn_peakn_avg  = fembinfo[fembloc][7]
+#            chn_wave       = fembinfo[fembloc][8]
+#            chn_peakp_ped  = fembinfo[fembloc][9]
+#            chn_peakn_ped  = fembinfo[fembloc][10]
+#            chnwib_np      = fembinfo[fembloc][11]
+#            chnfemb_np     = fembinfo[fembloc][12]
+#            chnasic_np     = fembinfo[fembloc][13]
+#            chnchn_np      = fembinfo[fembloc][14]
+#
+#            chn_np = range(chnsum * fembloc, chnsum * (fembloc+1),1)
+#            if len(ped_np)!= 0:
+#                for i in range(2):
+#                    if ( i == 0 ):
+#                        color = 'm'
+#                        plabel0 = "RMS Noise / e-"
+#                        y_np = rms_np*egain
+#                    elif ( i == 1 ):
+#                        color = 'b'
+#                        plabel1 = "SF RMS Noise / e-"
+#                        y_np = sf_rms_np*egain
+#                    ax.scatter( chn_np, y_np, color = color)
+#                    ax.plot( chn_np, y_np, color = color)
+#
+#                if (fembloc < 10 ):
+#                    ax.text (chn_np[0], 100, "B" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
+#                else:
+#                    ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
+#
+#                ax.text (chn_np[0], 1800, "Alive", color = 'g' )
+#                ax.text (chn_np[0], 1600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
+#                ax.text (chn_np[0], 1400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
+#            else:
+#                ax.text (chn_np[0], 1800, "Dead", color = 'r' )
+##                ax.text (chn_np[0], 4400, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
+##                ax.text (chn_np[0], 4000, "FEMB%d"%(chnfemb_np[0]), color = 'r'  )
+#
+#            patch.append( mpatches.Patch(color='m'))
+#            label.append(plabel0)
+#            patch.append( mpatches.Patch(color='b'))
+#            label.append(plabel1)
+#            ax.legend(patch, label, loc=1, fontsize=18 )
+#            ax.tick_params(labelsize=24)
+#            ax.xlim([chn_np[0], chn_np[-1] ])
+#            ax.ylim([0,2000])
+#            ax.ylabel(ylabel, fontsize=18 )
+#            ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
+#            ax.title(title , fontsize=18 )
+#            ax.grid()
+#            ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+#            ax.savefig(pp, format='pdf')
+#            ax.close()
    
     if ( (plot_en&0x20) != 0 ):
     #stuck code ratio pedestal        
@@ -700,8 +742,6 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 ax.text (chn_np[0], 0.30, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
             else:
                 ax.text (chn_np[0], 0.40, "Dead", color = 'r' )
-#                ax.text (chn_np[0], 0.35, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
-#                ax.text (chn_np[0], 0.30, "FEMB%d"%(chnfemb_np[0]), color = 'r'  )
 
         patch.append( mpatches.Patch(color=color))
         label.append(plabel)
