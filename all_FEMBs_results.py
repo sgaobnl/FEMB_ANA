@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Sep 16 14:02:32 2018
+Last modified: Sun Sep 16 16:24:32 2018
 """
 
 #defaut setting for scientific caculation
@@ -65,7 +65,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
         if (missing_wib == False):
             for root1, dirs1, rawfiles in os.walk(path_wib):
                 break
-            #print("APAno",APAno)
+            print("APAno",APAno)
             femb_pos_np = femb_position(APAno)
             #print("femb_pos_np",femb_pos_np)
             apa_femb_loc, X_sort, V_sort, U_sort = apamap.apa_femb_mapping_pd()
@@ -85,6 +85,8 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             if (apa_loc[1] == "WIB" + format(wib,"02d") + "_" + "FEMB" + str(femb) ):
                                 break
                         smps = (len_file-1024)/2/16 
+                        if (smps > 100000 ):
+                            smps = 20000
                         if (smps > 10000 ):
                             smps = 10000
                         else:
@@ -111,6 +113,8 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             else:
                                 rms_data = rms_data 
                                 chn_full_data = chn_data[chn]
+
+                            rms_data_raw = rms_data 
 
                             rms_len = len(rms_data)
                             raw_rms0  = np.std (rms_data[0: int(rms_len/2)])
@@ -140,7 +144,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             chn_peakn_avg = np.mean(chn_peakn[chn])
                             alldata.append( [apa_loc, apa_info, wib, femb, chip, \
                                              chn, raw_mean, raw_rms, sf_mean, sf_rms, \
-                                             sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \
+                                             sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data_raw, chn_full_data, \
                                              feed_loc, chn_peakp[chn], chn_peakn[chn] ] )
 
                             pulsemax_data = np.max(chn_full_data[feed_loc[0]:feed_loc[0]+100])
