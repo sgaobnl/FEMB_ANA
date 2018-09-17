@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Sep 16 16:23:15 2018
+ast modified: Sun Sep 16 17:05:45 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -390,6 +390,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
             ax1 = plt.subplot2grid((1, 3), (0, 0))
             ax2 = plt.subplot2grid((1, 3), (0, 1))
             ax3 = plt.subplot2grid((1, 3), (0, 2))
+            set_x = 50
 
             if len(ped_np)!= 0:
                 for achn in cs_chns:
@@ -397,25 +398,24 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                         chn = achn - chnsum * fembloc
                         max_sample = np.max(chn_wave[chn])
                         min_sample = np.max(chn_wave[chn])
-                        set_amp = 200
+                        if ( chnwire_np[chn] == "X" ):
+                            ax = ax1
+                            set_amp = 100
+                        elif ( chnwire_np[chn] == "V" ):
+                            ax = ax2
+                            set_amp = 50
+                        elif ( chnwire_np[chn] == "U" ):
+                            ax = ax3
+                            set_amp = 50
+
                         if ( (max_sample - ped_np[chn]) > set_amp ):
                             pos = np.where(chn_wave[chn] == max_sample)[0][0]
                         elif ( abs(min_sample - ped_np[chn]) > set_amp ):
                             pos = np.where(chn_wave[chn] == min_sample)[0][0]
                         else:
                             pos = -1
-                        if ( chnwire_np[chn] == "X" ):
-                            ax = ax1
-                            xtitle = "Detector Singals of X Plane on " + "WIB%d"%chnwib_np[chn] + "FEMB%d"%chnfemb_np[chn] 
-                        elif ( chnwire_np[chn] == "V" ):
-                            ax = ax2
-                            vtitle = "Detector Singals of X Plane on " + "WIB%d"%chnwib_np[chn] + "FEMB%d"%chnfemb_np[chn] 
-                        elif ( chnwire_np[chn] == "U" ):
-                            ax = ax3
-                            utitle = "Detector Singals of X Plane on " + "WIB%d"%chnwib_np[chn] + "FEMB%d"%chnfemb_np[chn] 
-
-                        if (achn in chn_np) and ( pos>=100 ):
-                            plot_wave = chn_wave[chn][pos-100, pos+100]
+                        if (achn in chn_np) and ( pos>=set_x ) and (sf_ratio_np[chn] > 0.98):
+                            plot_wave = chn_wave[chn][pos-set_x: pos+set_x]
                             y_np = np.array(plot_wave)
                             y_max = np.max(y_np)
                             smps_np = np.arange(len(plot_wave)) 
@@ -423,31 +423,34 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                             ax.scatter( x_np, y_np)
                             ax.plot( x_np, y_np)
 
-            ax1.set_xlim([0,50])
-            ax1.set_ylim([000,4100])
+            ax1.set_xlim([0,set_x])
+            #ax1.set_ylim([000,4100])
             ax1.tick_params(labelsize=20)
+            xtitle = "Detector Singals of X Plane on " + "WIB%d"%chnwib_np[0] + "FEMB%d"%chnfemb_np[0] 
             ax1.set_title(xtitle, fontsize=20 )
             ax1.set_ylabel(ylabel, fontsize=20 )
             ax1.set_xlabel("Time / us", fontsize=20 )
             ax1.grid()
 
-            ax2.set_xlim([0,50])
-            ax2.set_ylim([000,4100])
+            ax2.set_xlim([0,set_x])
+            #ax2.set_ylim([000,4100])
             ax2.tick_params(labelsize=20)
-            ax1.set_title(vtitle, fontsize=20 )
+            vtitle = "Detector Singals of X Plane on " + "WIB%d"%chnwib_np[0] + "FEMB%d"%chnfemb_np[0] 
+            ax2.set_title(vtitle, fontsize=20 )
             ax2.set_ylabel(ylabel, fontsize=20 )
             ax2.set_xlabel("Time / us", fontsize=20 )
             ax2.grid()
 
-            ax3.set_xlim([0,50])
-            ax3.set_ylim([000,4100])
+            ax3.set_xlim([0,set_x])
+            #ax3.set_ylim([000,4100])
             ax3.tick_params(labelsize=20)
-            ax1.set_title(utitle, fontsize=20 )
+            utitle = "Detector Singals of X Plane on " + "WIB%d"%chnwib_np[0] + "FEMB%d"%chnfemb_np[0] 
+            ax3.set_title(utitle, fontsize=20 )
             ax3.set_ylabel(ylabel, fontsize=20 )
             ax3.set_xlabel("Time / us", fontsize=20 )
             ax3.grid()
  
-            title = "APA" + str(APAno) + "_" + "_LOC_" + str(fembloc) + "WIB%d"%chnwib_np[chn] + "FEMB%d"%chnfemb_np[chn]   
+            title = rundir + "_APA" + str(APAno)  + "_LOC_" + str(fembloc) + "WIB%d"%chnwib_np[0] + "FEMB%d"%chnfemb_np[0]   
             plt.title("Detector Signal Waveform \n" + title , fontsize=16 )
             plt.tight_layout( rect=[0, 0.05, 1, 0.95])
             r_wfm = result_dir + title + '_gain' + str(gain) +  "tp" + str(tp) +'.png'
@@ -938,15 +941,13 @@ result_pdf = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.
 result_waveform = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) +  "tp" + str(tp) + "_results" + str(save_cycle)+'.png'
 pp = PdfPages(result_pdf)
 
-mode = 0
+mode = 1
 wib_np = [0,1,2,3,4]
 jumbo_flag = False
 feed_freq=500
 wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter)
 
-fig = plt.figure(figsize=(16,9))
 APA_sort, APA_X_sort, APA_V_sort, APA_U_sort = APA_sort(APAno)
-
 plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_sort,   pp, gain, max_limit, min_limit, frontpage = True , APAno = APAno, r_wfm = result_waveform)
 
 pp.close()
