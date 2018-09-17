@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Sep 16 15:00:05 2018
+Last modified: Sun Sep 16 21:02:10 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -519,9 +519,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                     ax.text (chn_np[0], 100, "B" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
                 else:
                     ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
-                ax.text (chn_np[0]+2, 1800, "Alive", color = 'g' )
-                ax.text (chn_np[0]+2, 1600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
-                ax.text (chn_np[0]+2, 1400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
+                ax.text (chn_np[0]+2, 1900, "Alive", color = 'g' )
+                ax.text (chn_np[0]+2, 1800, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
+                ax.text (chn_np[0]+2, 1700, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
                 ax.vlines(chn_np[0], 0, 5000, color='m', linestyles="dotted", linewidth=0.8)
 #                print "APA_LOC"+(format(fembloc+1, "2d"))
             else:
@@ -597,9 +597,9 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
                 else:
                     ax.text (chn_np[0], 100, "A" + format(APAno, "1d") + format(fembloc+1, "02d"), color = 'b' )
 
-                ax.text (chn_np[0], 1800, "Alive", color = 'g' )
-                ax.text (chn_np[0], 1600, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
-                ax.text (chn_np[0], 1400, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
+                ax.text (chn_np[0], 1900, "Alive", color = 'g' )
+                ax.text (chn_np[0], 1800, "WIB%d"%(chnwib_np[0]+1 ), color = 'g'  )
+                ax.text (chn_np[0], 1700, "FEMB%d"%(chnfemb_np[0]), color = 'g'  )
             else:
                 ax.text (chn_np[0], 4800, "Dead", color = 'r' )
                 #ax.text (chn_np[0], 4400, "WIB%d"%(chnwib_np[0] ), color = 'r'  )
