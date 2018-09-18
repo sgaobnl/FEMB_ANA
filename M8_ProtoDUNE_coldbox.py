@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Sep 16 21:02:10 2018
+Last modified: Tue Sep 18 10:51:42 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -152,7 +152,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
     if (frontpage == True ):
         fig = plt.figure(figsize=(16,9))
         ax = plt
-        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+        #ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.text(0.4,0.9, "Test Summary", fontsize = 32, color = 'g')
         ax.text(0.05,0.80, "APA no.        : " + loginfo[0], fontsize=16 )
         ax.text(0.05,0.75, "Enviroment     : " + loginfo[1], fontsize=16 )
@@ -230,7 +230,7 @@ def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max
         ax.xlabel("APA %s Channel No."%wiretype, fontsize=18 )
         ax.title(title , fontsize=18 )
         ax.grid()
-        ax.tight_layout( rect=[0, 0.05, 1, 0.95])
+        #ax.tight_layout( rect=[0, 0.05, 1, 0.95])
         ax.savefig(pp, format='pdf')
         ax.close()
 
@@ -853,7 +853,9 @@ if (server_flg == "server" ):
     rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
     #rootpath = "/nfs/sw/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
     #rootpath = "/nfs/sw/wib/Rawdata/" + "APA" + format(APAno, '1d') + "/"
-#    rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "Coldbox" + "/"
+    #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "Coldbox" + "/"
+    #rootpath = "/nfs/sw/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
+    rootpath = "/Volumes/ProtoDUNE/Cryostat/rscratch/" + "APA" + format(APAno, '1d') + "/"
 else:
     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/APA3/"
 path =rootpath + "Rawdata_"+ strdate + "/" 

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Sep 16 16:24:32 2018
+Last modified: Tue Sep 18 13:35:11 2018
 """
 
 #defaut setting for scientific caculation
@@ -86,8 +86,10 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                                 break
                         smps = (len_file-1024)/2/16 
                         if (smps > 100000 ):
+                            smps = 100000
+                        elif (smps > 20000 ):
                             smps = 20000
-                        if (smps > 10000 ):
+                        elif (smps > 10000 ):
                             smps = 10000
                         else:
                             pass
@@ -156,8 +158,10 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             npeak_oft_feed = pulsemin_data_loc[0][0]
 
                             allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
-                                               wib, femb, chip, chn, raw_mean, raw_rms, sf_mean, sf_rms, sf_ratio, chn_peakp_avg, chn_peakn_avg,\
-                                               ppeak_oft_feed, npeak_oft_feed ] )
+                                               wib, femb, chip, chn, \
+                                               raw_mean, raw_rms, len(rms_data), \
+                                               sf_mean, sf_rms, len(sf_raw_rms), sf_ratio, \
+                                               chn_peakp_avg, chn_peakn_avg, ppeak_oft_feed, npeak_oft_feed ] )
             print "time passed = %d"% (timer()-start)
 
     import pickle
@@ -172,11 +176,52 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
             print "Error to create a folder"
             exit()
 
-#    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
-#    if (os.path.isfile(savefile)): 
-#        pass
-#    else:
-#        with open(savefile, "wb") as fp:
-#            pickle.dump(allresult, fp)
+    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
+    if (os.path.isfile(savefile)): 
+        pass
+    else:
+        with open(savefile, "wb") as fp:
+            pickle.dump(allresult, fp)
+
+    if gain == 3:
+        str_gain = 25.0
+        egain = 78 
+    elif gain == 1:
+        str_gain = 14.0 
+        egain = 145 
+    elif gain == 2:
+        str_gain = 7.8 
+        egain = 250
+    elif gain == 0:
+        str_gain = 4.7 
+        egain = 425
+    
+    if tp == 3:
+        str_tp = 2.0
+    elif tp == 1:
+        str_tp = 3.0 
+    elif tp == 2:
+        str_tp = 0.5 
+    elif tp == 0:
+        str_tp = 1.0 
+    
+    item_n = ["APA_LOC", "WIB_FEMB", "Wire", "FEMBchn(0-127)", "FEMBasic(1-8)", "ASICchn(0-15)", \
+              "WIB(0-4)", "FEMB(0-4)", "ASIC(0-7)", "ASICchn(0-15)", \
+              "Baseline (Raw data) \ bin", "RMS(raw data) \ bin", "Sample count (raw data)", \
+              "Baseline (SF data) \ bin", "RMS(SF data) \ bin", "Sample count (SF data)", "SF ratio", \
+              "Pos_Amplitude \ bin", "Neg_Amplitude \ bin", "1st_PPeak_LOC \ bin", "1st_NPeak_LOC \ bin", \
+              "Gain \ mV/fC", "Shape Time / us", "Inverted gain \ e-/bin" ]
+    
+    fe_paras = [str_gain, str_tp, egain]
+    strdate_pos =resultpath.find("Rawdata_")
+    strdate =resultpath[strdate_pos: strdate_pos+18]
+    csvfile = resultpath + strdate + "_" + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.csv'
+    
+    with open (csvfile, 'wb') as fp:
+        fp.write(",".join(str(i) for i in item_n) + "," + "\n")
+        for x in allresult:
+            fp.write(",".join(str(i) for i in x) + ","  + ",".join(str(i) for i in fe_paras) + "," + "\n")
+
+
     return alldata
 
