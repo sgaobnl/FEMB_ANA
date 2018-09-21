@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Sep 18 13:35:11 2018
+Last modified: Fri Sep 21 11:05:49 2018
 """
 
 #defaut setting for scientific caculation
@@ -217,7 +217,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
     strdate =resultpath[strdate_pos: strdate_pos+18]
     csvfile = resultpath + strdate + "_" + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.csv'
     
-    with open (csvfile, 'wb') as fp:
+    with open (csvfile, 'w') as fp:
         fp.write(",".join(str(i) for i in item_n) + "," + "\n")
         for x in allresult:
             fp.write(",".join(str(i) for i in x) + ","  + ",".join(str(i) for i in fe_paras) + "," + "\n")
