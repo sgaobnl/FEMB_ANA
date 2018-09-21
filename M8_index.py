@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Sep 21 13:36:02 2018
+Last modified: Fri Sep 21 14:10:43 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -879,13 +879,13 @@ for tn in tindexs:
             else:
                 strrunno = apas_chk[i]
                 env = "LAr"
-                server_flg = tn[18]
+                server_flg = tn[19]
 
                 print "Start run%schk"%strrunno
                 rundir = "run%schk"%strrunno
-                if (server_flg.find("rs" )):
+                if (server_flg.find("rs" )>=0):
                     rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
-                elif (server_flg.find("sw" )):
+                elif (server_flg.find("sw" )>=0):
                     rootpath = "/nfs/sw/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
                 else:
                     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/APA3/"
