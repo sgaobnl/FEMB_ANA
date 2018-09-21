@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Sep 21 11:05:49 2018
+Last modified: Fri Sep 21 12:37:12 2018
 """
 
 #defaut setting for scientific caculation
@@ -34,7 +34,7 @@ from raw_convertor_m import raw_convertor_peak
 from highpass_filter import hp_flt_applied
 from highpass_filter import hp_FIR_applied
 
-def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False):
+def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False, t_no = 1):
     apamap.APA = APA
     runpath = path + rundir + "/"
     start = timer()
@@ -215,7 +215,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
     fe_paras = [str_gain, str_tp, egain]
     strdate_pos =resultpath.find("Rawdata_")
     strdate =resultpath[strdate_pos: strdate_pos+18]
-    csvfile = resultpath + strdate + "_" + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.csv'
+    csvfile = resultpath + "Test" + format(t_no, "03d") + "_" + strdate + "_" + rundir + "_" + apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.csv'
     
     with open (csvfile, 'w') as fp:
         fp.write(",".join(str(i) for i in item_n) + "," + "\n")

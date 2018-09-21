@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Sep 21 11:55:21 2018
+Last modified: Fri Sep 21 13:36:02 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -38,12 +38,12 @@ from read_rtds import run_rtds
 def APA_sort(APAno = 1):
     femb_pos_np = femb_position(APAno)
     All_sort, X_sort, V_sort, U_sort = apamap.apa_femb_mapping_pd()
-    APA_sort = []
+    APA_sort_all = []
     for apa_slot in range(1,21,1):
         for femb_pos in femb_pos_np:
             if int(femb_pos[0][2:4]) ==  apa_slot :
                 break
-        APA_sort.append([femb_pos, All_sort])
+        APA_sort_all.append([femb_pos, All_sort])
 
     APA_X_sort = []
     for apa_slot in range(1,21,1):
@@ -66,7 +66,7 @@ def APA_sort(APAno = 1):
                 break
         APA_U_sort.append([femb_pos, U_sort])
 
-    return APA_sort, APA_X_sort, APA_V_sort, APA_U_sort 
+    return APA_sort_all, APA_X_sort, APA_V_sort, APA_U_sort 
 
 def plots(plt, plot_en, apa_results, loginfo, run_temp, sort_np, pp, gain=2, max_limit=15, min_limit=5, frontpage = False, APAno = 3, r_wfm = "./"):
     fembinfo = []
@@ -843,7 +843,7 @@ hp_filter  = False
 plot_en = 0x7B
 
 
-index_f = ".\\tests_index.csv"
+index_f = "./tests_index.csv"
 tindexs = []
 with open(index_f, 'r') as fp:
     for cl in fp:
@@ -860,24 +860,32 @@ tindexs = tmp
 
 for tn in tindexs:
     if (tn[0][0] == "#"): #valid test
+        print tn
         t_no =int( tn[0][1:])
         strdate = tn[1] + "_2018" 
-        apas_chk = [(sys.argv[12][0]), (sys.argv[13][0]), (sys.argv[14][0]), (sys.argv[15][0]), (sys.argv[16][0]), (sys.argv[17][0]) ]
+        apas_chk = [ format( int(tn[13][0]), "02d") ,
+                     format( int(tn[14][0]), "02d") , 
+                     format( int(tn[15][0]), "02d") , 
+                     format( int(tn[16][0]), "02d") , 
+                     format( int(tn[17][0]), "02d") , 
+                     format( int(tn[18][0]), "02d") , 
+                     ]
         for i in range(len(apas_chk)):
             APAno = i + 1
-            if (apas_chk[i] == "0" ):
+            if (int(apas_chk[i]) == 0 ):
+                print tn
                 print "Test#%d for APA#%d doesn't exist"%(t_no, APAno)
                 continue
             else:
                 strrunno = apas_chk[i]
                 env = "LAr"
-                server_flg = sys.argv[18]
+                server_flg = tn[18]
 
                 print "Start run%schk"%strrunno
                 rundir = "run%schk"%strrunno
-                if (server_flg.find("rs" ):
+                if (server_flg.find("rs" )):
                     rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
-                elif (server_flg.find("sw" ):
+                elif (server_flg.find("sw" )):
                     rootpath = "/nfs/sw/shanshan/Rawdata/" + "APA" + format(APAno, '1d') + "/"
                 else:
                     rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/APA3/"
@@ -906,10 +914,10 @@ for tn in tindexs:
                 wib_np = [0,1,2,3,4]
                 jumbo_flag = False
                 feed_freq=500
-                wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter)
+                wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter, t_no = t_no)
                 fig = plt.figure(figsize=(16,9))
-                APA_sort, APA_X_sort, APA_V_sort, APA_U_sort = APA_sort(APAno)
-                plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_sort,   pp, gain, max_limit, min_limit, frontpage = True , APAno = APAno, r_wfm = result_waveform)
+                APA_sort_all, APA_X_sort, APA_V_sort, APA_U_sort = APA_sort(APAno)
+                plots(plt, plot_en, wibsdata, loginfo, run_temp,  APA_sort_all,   pp, gain, max_limit, min_limit, frontpage = True , APAno = APAno, r_wfm = result_waveform)
                 pp.close()
                 
 print "Done, please punch \" Enter \" or \"return\" key !"
