@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Sep 21 14:10:43 2018
+Last modified: Sun Sep 23 00:35:47 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -863,12 +863,12 @@ for tn in tindexs:
         print tn
         t_no =int( tn[0][1:])
         strdate = tn[1] + "_2018" 
-        apas_chk = [ format( int(tn[13][0]), "02d") ,
-                     format( int(tn[14][0]), "02d") , 
-                     format( int(tn[15][0]), "02d") , 
-                     format( int(tn[16][0]), "02d") , 
-                     format( int(tn[17][0]), "02d") , 
-                     format( int(tn[18][0]), "02d") , 
+        apas_chk = [ format( int(tn[13].split("-")[0]), "02d") ,
+                     format( int(tn[14].split("-")[0]), "02d") , 
+                     format( int(tn[15].split("-")[0]), "02d") , 
+                     format( int(tn[16].split("-")[0]), "02d") , 
+                     format( int(tn[17].split("-")[0]), "02d") , 
+                     format( int(tn[18].split("-")[0]), "02d") , 
                      ]
         for i in range(len(apas_chk)):
             APAno = i + 1
