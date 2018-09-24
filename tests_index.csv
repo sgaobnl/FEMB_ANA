@@ -35,7 +35,6 @@ Test#, Date,  Drift / kV, Drift_filter, Recirculation, Bias, LEDs, PD, Cameras, 
 #33,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   5-3,  5-3,  5-3,  5-3,  5-3,  5-3, sw,        #,
 #34,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   6-0,  6-0,  6-0,  6-0,  6-0,  6-0, sw,        #,
 #35,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   7-0,  7-0,  7-0,  7-0,  7-0,  7-0, sw,        #,
-#36,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   8-0,  8-0,  8-0,  8-0,  8-0,  8-0, sw,        #,
-#37,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   9-5,  9-5,  9-5,  9-5,  9-5,  9-5, sw,        #,
-#38,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   10-6,10-6, 10-6, 10-6, 10-6, 10-6, sw,        #,
-#39,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   11-0,11-0, 11-0, 11-0, 11-0, 11-0, sw,        #,fpg03_200mV
+#36,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   9-5,  9-5,  9-5,  9-5,  9-5,  9-5, sw,        #,
+#37,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   10-6,10-6, 10-6, 10-6, 10-6, 10-6, sw,        #,
+#38,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   12-0,11-0, 11-0, 11-0, 11-0, 11-0, sw,        #,fpg03_200mV
