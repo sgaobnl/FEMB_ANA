@@ -28,13 +28,13 @@ Test#, Date,  Drift / kV, Drift_filter, Recirculation, Bias, LEDs, PD, Cameras, 
 #26,   09_21, 160,    yes,          on,1,  on,   off, on,        fixed, enable, fixed,  0xBF0xBF,  5-0,  5-0,  5-0,  5-0,  5-0,  6-0,  sw,        #,
 #27,   09_21, 160,    yes,          on,1,  on,   off, on,        fixed, enable, fixed,  0xBF0xBF,  6-0,  6-0,  6-0,  6-0,  6-0,  7-0,  sw,        #,
 #28,   09_21, 160,    yes,          on,1,  on,   off, on,        fixed, enable, fixed,  0xBF0xBF,  7-2,  7-2,  7-2,  7-2,  7-3,  8-3,  sw,        #,
-#29,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   1-1,  1-1,  1-1,  1-1,  1-1,  1-1, sw,        #,
+#29,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   1-1,  1-1,  1-1,  1-1,  1-1,  1-1, sw,        #09_17_CFG file,
 #30,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   2-0,  2-0,  2-0,  2-0,  2-0,  2-0, sw,        #,
-#31,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xFF0xFF,   3-0,  3-0,  3-0,  3-0,  3-0,  3-0, sw,        #,fpg01_200mV
-#32,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   4-2,  4-2,  4-2,  4-2,  4-2,  4-2, sw,        #,fpg02_900mV
-#33,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   5-3,  5-3,  5-3,  5-3,  5-3,  5-3, sw,        #,
-#34,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   6-0,  6-0,  6-0,  6-0,  6-0,  6-0, sw,        #,
-#35,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   7-0,  7-0,  7-0,  7-0,  7-0,  7-0, sw,        #,
+#31,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xFF0xFF,   3-0,  3-0,  3-0,  3-0,  3-0,  3-0, sw,        #fpg01_200mV,
+#32,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   4-2,  4-2,  4-2,  4-2,  4-2,  4-2, sw,        #fpg02_900mV
+#33,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   5-3,  5-3,  5-3,  5-3,  5-3,  5-3, sw,        # ADC offset calibration,
+#34,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   6-0,  6-0,  6-0,  6-0,  6-0,  6-0, sw,        # 09_23_CFG file,
+#35,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   7-0,  7-0,  7-0,  7-0,  7-0,  7-0, sw,        # 09_23_CFG file,
 #36,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   9-5,  9-5,  9-5,  9-5,  9-5,  9-5, sw,        #,
 #37,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   10-6,10-6, 10-6, 10-6, 10-6, 10-6, sw,        #,
-#38,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   12-0,11-0, 11-0, 11-0, 11-0, 11-0, sw,        #,fpg03_200mV
+#38,   09_23, 180,    yes,          on,1,  on,   on, on,        fixed, enable, fixed,  0xBF0xBF,   12-0,11-0, 11-0, 11-0, 11-0, 11-0, sw,        #fpg03_200mV,
