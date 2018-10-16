@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Mon Jul 23 16:41:32 2018
+Last modified: Wed Jul 25 21:57:07 2018
 """
 
 #defaut setting for scientific caculation
@@ -143,12 +143,20 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
     data_slice = chnrmsdata[feed_loc[0]:feed_loc[1]]
     data_200ms_slice = chnrmsdata[0:200000:200]
 
-    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[1]])
-    avg_cycles = len(feed_loc) - 2
+#    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[1]])
+#    avg_cycles = len(feed_loc) - 2
+#    for loci in range(avg_cycles - 1):
+#        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[loci+1]:feed_loc[loci+2]])
+#    avg_data_slice = avg_data_slice / (avg_cycles*1.0)
+#    data_200ms_slice = avg_data_slice
+
+    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[2]])
+    avg_cycles = (len(feed_loc) - 6)//2
     for loci in range(avg_cycles - 1):
-        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[loci+1]:feed_loc[loci+2]])
+        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[2*loci+2]:feed_loc[2*loci+4]])
     avg_data_slice = avg_data_slice / (avg_cycles*1.0)
     data_200ms_slice = avg_data_slice
+
 
     avg_cycle_l = 1
     if (len(chnrmsdata) >= 400000):

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Mon Jul 23 16:53:09 2018
+Last modified: Wed Jul 25 17:24:42 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -209,7 +209,10 @@ def ped_wf_subplot(ax, data_slice, ped, rms,  t_rate=0.5, title="Waveforms of ra
     ax.set_title(title )
     ax.set_xlim([0,int(N*t_rate)])
     #ax.set_ylim([ped-5*(int(rms+1)),ped+5*(int(rms+1))])
-    ax.set_ylim([0,4200])
+    if np.max(y) > 2500: 
+        ax.set_ylim([0,4200])
+    else:
+        pass
     ax.grid()
     ax.set_ylabel("ADC output / LSB")
     ax.set_xlabel("t / $\mu$s")

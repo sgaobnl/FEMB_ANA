@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jul 21 22:24:59 2018
+Last modified: 8/8/2018 6:01:41 PM
 """
 
 #defaut setting for scientific caculation
@@ -34,7 +34,7 @@ from raw_convertor_m import raw_convertor_peak
 #from highpass_filter import hp_flt_applied
 #from highpass_filter import hp_FIR_applied
 
-def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False, CFGpat = "CFG_DATA"):
+def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0, wib_np = [0,1,2,3,4], tp=2, jumbo_flag = True, feed_freq = 500, hp_filter = False):
     apamap.APA = APA
     runpath = path + rundir + "/"
     start = timer()
@@ -70,9 +70,9 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                 rawfilep = path_wib + rawfile
                 if (rawfilep.find(".bin") >= 0 ) and (rawfilep.find(wibinfo) >=0) :
                     wib  = int( rawfilep[(rawfilep.find("WIB") + 3):(rawfilep.find("WIB") + 5)])
-                    femb = int( rawfilep[rawfilep.find("FEMB") + 4])
+                    femb = int( rawfilep[rawfilep.find("F_FEMB") + 6])
                     chip = int( rawfilep[rawfilep.find("CHIP") + 4])
-                    CFG_flg = (rawfilep.find(CFGpat) > 0 )
+                    CFG_flg = (rawfilep.find("CFG_DATA") > 0 )
                     if (CFG_flg):
                         filetp = tp
                     else:
@@ -90,7 +90,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                         smps = (len_file-1024)/2/16 
                         #print smps
                         if (smps > 200000 ):
-                            smps = 10000
+                            smps = 50000
                         else:
                             pass
                         chn_data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
