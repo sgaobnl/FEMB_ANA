@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 8/8/2018 6:01:41 PM
+Last modified: 10/16/2018 3:01:04 PM
 """
 
 #defaut setting for scientific caculation
@@ -138,17 +138,18 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
 
                             chn_peakp_avg = np.mean(chn_peakp[chn])
                             chn_peakn_avg = np.mean(chn_peakn[chn])
-                            if (wib==0) and (femb==0) and (
-                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
-                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
-                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
-                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
-                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
-                                pass 
-                            else:
+#                            if (wib==0) and (femb==0) and (
+#                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
+#                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
+#                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
+#                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
+#                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
+#                                pass 
+#                            else:
+                            if (True):
                                 alldata.append( [apa_loc, apa_info, wib, femb, chip, \
                                              chn, raw_mean, raw_rms, sf_mean, sf_rms, \
                                              sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \

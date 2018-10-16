@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 10/5/2018 12:02:50 PM
+Last modified: 10/16/2018 3:07:13 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -62,7 +62,7 @@ if (server_flg == "server" ):
     #rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
 else:
 #    rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
-    rootpath = "I:/COTS_FEMB_Screen/Rawdata/"
+    rootpath = "D:/Ledge_Study/Rawdata/"
 path =rootpath + "Rawdata_"+ strdate + "/" 
 apamap.APA = "LArIAT"
 if mode == "F":
@@ -88,7 +88,7 @@ result_waveform = result_dir + "X" + format(plot_en, "02X") + rundir +  "_" + ap
 
 pp = PdfPages(result_pdf)
 
-wib_np = [0,1]
+wib_np = [0]
 feed_freq=500
 wibsdata = All_FEMBs_results(path, rundir, apamap.APA, APAno, gain=gain, mode=mode, wib_np = wib_np, tp=tp, jumbo_flag = jumbo_flag, feed_freq = 500, hp_filter=hp_filter)
 
@@ -160,24 +160,18 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         print "Noise Measurement"
         chnparas = []
         print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
-        rms_t = []
         for chndata in apa_results:
             if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 #chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
                 chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[7] ])
-                #if chndata[7] < 7:
-                #    print chndata[1], (chndata[7])
-                if int(chndata[1][1]) in [82, 83, 105, 112, 127 ]:
-                    pass
-                else:
-                    rms_t.append(chndata[7])
+                if chndata[7] > 5:
+                    print chndata[1], (chndata[7])
+                elif chndata[7] < 1:
+                    print chndata[1], (chndata[7])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
         chns = range(len(chns))
         paras = [paras]
-
-        print "%d, %.5f, %.5f, " % (len(paras[0]), np.mean(paras[0]), np.std(paras[0]))
-        print "%d, %.5f, %.5f, " % (len(rms_t), np.mean(rms_t), np.std(rms_t) )
 
         ylabel = "RMS(ADC) /bin"
         xlabel = "Channel No."
@@ -190,8 +184,8 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
             ymax = 10
         ylims = [0,ymax]
         a =  "%d, %.5f, %.5f " % (len(paras[0]), np.mean(paras[0]), np.std(paras[0]))
-        b =  "%d, %.5f, %.5f " % (len(rms_t), np.mean(rms_t), np.std(rms_t) )
-        labels = ["RMS(ADC) \n %s \n %s"%(a,b)]
+        labels = ["RMS(ADC) \n chns, rmsmean, rmsstd \n %s "%(a)]
+        print labels
         oneplt(pp, chns, paras, title, ylabel, xlabel, ylims, xlims, labels)
 
 
