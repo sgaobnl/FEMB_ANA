@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 2018/11/7 9:19:08
+Last modified: 11/15/2018 6:06:46 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -57,7 +57,8 @@ if __name__ == '__main__':
 #
     #if (apafolder == "APA40"):
     if (apafolder == "LArIAT"):
-        rms_rootpath =  "D:/junbin/Rawdata/Rawdata_" + rmsdate + "/"
+        #rms_rootpath =  "D:/junbin/Rawdata/Rawdata_" + rmsdate + "/"
+        rms_rootpath =  "D:/SBND_40APA/Rawdata/Rawdata_" + rmsdate + "/"
         #rms_rootpath =  "/home/nfs/sbnd/BNL_LD_data/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
         #rms_rootpath =  "/daqdata/sbnd/BNL_LD_data2/LArIAT/Rawdata/Rawdata_" + rmsdate + "/"
         fpga_rootpath = rms_rootpath 
@@ -77,10 +78,10 @@ if __name__ == '__main__':
     s0= timer()
     print "Start...please wait..."
     
-    gains = ["078"] 
+    gains = ["250"] 
     tps = [  "20"]
-    #jumbo_flag = True
-    jumbo_flag = False
+    jumbo_flag = True
+    #jumbo_flag = False
     wib_femb_chns = [  
                         #wib(0-4), femb(0-3), chn(0~127)
                         #[0, 2, 120   ],

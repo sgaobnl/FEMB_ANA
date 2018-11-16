@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 10/31/2018 2:36:53 PM
+Last modified: 11/15/2018 5:11:29 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -62,7 +62,7 @@ if (server_flg == "server" ):
     #rootpath = "/Users/shanshangao/tmp/dat0630/Rawdata/"
 else:
 #    rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
-    rootpath = "D:/junbin/Rawdata/"
+    rootpath = "D:/SBND_40APA/Rawdata/"
 path =rootpath + "Rawdata_"+ strdate + "/" 
 apamap.APA = "LArIAT"
 if mode == "F":
