@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 2018/11/2 16:21:00
+Last modified: 11/16/2018 10:36:00 AM
 """
 
 #defaut setting for scientific caculation
@@ -42,7 +42,7 @@ class APA_MAP:
 
     def mapping_rd (self  ):
         fp = self.fpmap
-        with open(fp, "rb") as fp:
+        with open(fp, "r") as fp:
             va = pickle.load(fp)
         return va
 
@@ -96,6 +96,8 @@ class APA_MAP:
             for vb in va:
                 if int(vb[9]) == self.femb :
                     va_femb.append(vb)
+
+
             apa_femb_loc = []
             for chn in range(128):
                 for vb in va_femb:
@@ -105,17 +107,17 @@ class APA_MAP:
                         elif (vb[1].find("In")) >= 0 : #induction wire
                             chninfo = [ "U" + vb[0], vb[8], int(vb[6]), int(vb[7]), int(vb[9]), int(vb[10])]
                         apa_femb_loc.append(chninfo)
-            #for chn in range(128):
-            #    fl_w = True
-            #    fl_i = 0
-            #    for tmp in apa_femb_loc:
-            #        if int(tmp[1]) == chn:
-            #            fl_w = False
-            #            break
-            #    if (fl_w):
-            #        chninfo = [ "V" + format(fl_i, "03d"), format(chn, "03d"), chn//16 , format(chn%15, "02d"), apa_femb_loc[0][4], apa_femb_loc[0][5]]
-            #        apa_femb_loc.append(chninfo)
-            #        fl_i = fl_i + 1
+            for chn in range(128):
+                fl_w = True
+                fl_i = 0
+                for tmp in apa_femb_loc:
+                    if int(tmp[1]) == chn:
+                        fl_w = False
+                        break
+                if (fl_w):
+                    chninfo = [ "V" + format(fl_i, "03d"), format(chn, "03d"), chn//16 , format(chn%15, "02d"), apa_femb_loc[0][4], apa_femb_loc[0][5]]
+                    apa_femb_loc.append(chninfo)
+                    fl_i = fl_i + 1
 
         elif (self.APA == "APA40" ):
             apa_femb_loc = [ 
@@ -177,7 +179,7 @@ class APA_MAP:
                 if chn[0][0] == "U" and int(chn[0][1:3]) == i :
                     U_sort.append(chn)
 
-        print "APA is " + self.APA + ",LArIAT FEMB no is %d"%self.femb 
+#        print "APA is " + self.APA + ",LArIAT FEMB no is %d"%self.femb 
         return All_sort, X_sort, V_sort, U_sort
     
     def apa_mapping(self):
@@ -202,12 +204,17 @@ class APA_MAP:
 
     def __init__(self):
         self.APA = 'LArIAT'
-        self.femb = 4
-        self.path = "./LArIAT_Pin_Mapping_06262018.xlsx" #if the mapping file changes, self.mapping_rd ( ) need to run once to to generate new *.map file 
-        self.fpmap = "./LArIAT_pin_mapping.map"
+        self.femb = 1
+        self.path = "./Screen_Mapping_10162018.xlsx" #if the mapping file changes, self.mapping_rd ( ) need to run once to to generate new *.map file 
+        self.fpmap = "D:/GitHub/ProtoDUNE_ANA/LArIAT_pin_mapping.map"
 
 #        self.mapping_rd ( )
 
 #apa = APA_MAP()
+#a,y,u,v = apa.apa_mapping()
+#print a
+#print y
+#print u
+#print v
 #a = apa.apa_femb_mapping()
 #print len(a[0]), len(a[1]), len(a[2]), len(a[3])

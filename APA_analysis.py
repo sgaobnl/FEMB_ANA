@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Apr 15 16:17:32 2018
+Last modified: 11/16/2018 10:42:35 AM
 """
 
 #defaut setting for scientific caculation
@@ -391,7 +391,12 @@ if __name__ == '__main__':
     asicrunno = sys.argv[7]
     apafolder = sys.argv[8]
 
-    if (apafolder == "APA40"):
+    if (apafolder == "SBND"):
+        rms_rootpath =  "D:/SBND_40APA/Rawdata/Rawdata_" + rmsdate + "/"
+        fpga_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + fpgdate + "/"
+        asic_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + asidate + "/"
+
+    elif (apafolder == "APA40"):
         rms_rootpath =  "D:/APA40/Rawdata/Rawdata_" + rmsdate + "/"
         fpga_rootpath = "D:/APA40/Rawdata/Rawdata_" + fpgdate + "/"
         asic_rootpath = "D:/APA40/Rawdata/Rawdata_" + asidate + "/"
@@ -406,9 +411,11 @@ if __name__ == '__main__':
     from timeit import default_timer as timer
     s0= timer()
     print "Start..., please wait..."
-    gains = ["250", "140"] 
+    #gains = ["250", "140", "078", "047"] 
+    gains = ["250", ] 
+    #tps = [ "20"]
     tps = ["05", "10", "20", "30"]
-    #jumbo_flag = False
+    jumbo_flag = False
     jumbo_flag = True
 
     results_save(rms_rootpath, fpga_rootpath, asic_rootpath,  APAno, rmsrunno, fpgarunno, asicrunno, gains, tps, jumbo_flag )

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/15/2018 6:03:44 PM
+Last modified: 10/23/2018 4:13:06 PM
 """
 
 #defaut setting for scientific caculation
@@ -22,7 +22,7 @@ from sys import exit
 import os.path
 import math
 import statsmodels.api as sm
-from raw_convertor_m import raw_convertor_peak 
+from raw_convertor import raw_convertor_peak 
 from femb_position import femb_position
 from apa_mapping import APA_MAP
 from fft_chn import chn_rfft_psd
@@ -63,14 +63,12 @@ def fe_cfg(gain="250", tp="30" ):
 def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain="250", tp="30" ): #calirun="run01fpg", 
     fecfg_reg0, sg, st = fe_cfg(gain=gain, tp=tp )
     
-    if runno.find( "rms" ) >= 0:
+    if runno[5:8] == "rms" :
         runcode = "1"
-    elif runno.find( "fpg" ) >= 0 :
+    elif runno[5:8] == "fpg" :
         runcode = "2"
-    elif runno.find( "asi" ) >= 0 :
+    elif runno[5:8] == "asi" :
         runcode = "4"
-    elif runno.find( "dat" ) >= 0 :
-        runcode = "F"
 
     if sg == 3:
         stepno = "step" + "3" + runcode 
@@ -80,8 +78,6 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
         stepno = "step" + "2" + runcode 
     elif sg == 0:
         stepno = "step" + "0" + runcode 
-    if runcode == "F":
-        stepno = "step" + "4" + runcode 
 
     runpath = rootpath + runno + "/" 
     files_cs = []
@@ -104,16 +100,11 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
                 fembasic = "FEMB" + format(fembno, "1d") + "CHIP" + format(chipno, "1d")
                 fa_pos = rawfile.find(fembasic)
                 if (fa_pos >= 0):
-                    #if (fe_set_rd == fecfg_reg0) and (rawfile.find(".bin") >=0 ):
-                    if (stepno == "step4F" ):
-                        if (rawfile.find("_CFG") >=0 ) and (rawfile.find(".bin") >=0 ):
-                            files_cs.append(steppath + rawfile)
-                    else:
-                        fe_set_rd = int(rawfile[fa_pos+11:fa_pos+13], 16) & 0x3C
-                        if (fe_set_rd == fecfg_reg0) and (rawfile.find(".bin") >=0 ):
-                            files_cs.append(steppath + rawfile)
+                    fe_set_rd = int(rawfile[fa_pos+11:fa_pos+13], 16) & 0x3C
+                    if (fe_set_rd == fecfg_reg0) and (rawfile.find(".bin") >=0 ):
+                        files_cs.append(steppath + rawfile)
     else:
-        print runpath + " doesn't exist, ignore anyway!"
+        #print runpath + " doesn't exist, ignore anyway!"
         files_cs = []
 
     return files_cs
@@ -132,7 +123,6 @@ def read_rawdata(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain
             data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
             ###############0         1      2       3       4     5    6    7      8           9         10#########
             datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
-            print onefile, chn_peakp[1][0], chn_peakp[1][1],chn_peakp[1][2]
     return datas
 
 def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
@@ -146,21 +136,6 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
     ped = np.mean(chnrmsdata[0:100000])
     data_slice = chnrmsdata[feed_loc[0]:feed_loc[1]]
     data_200ms_slice = chnrmsdata[0:200000:200]
-
-#    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[1]])
-#    avg_cycles = len(feed_loc) - 2
-#    for loci in range(avg_cycles - 1):
-#        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[loci+1]:feed_loc[loci+2]])
-#    avg_data_slice = avg_data_slice / (avg_cycles*1.0)
-#    data_200ms_slice = avg_data_slice
-
-    avg_data_slice = np.array(chnrmsdata[feed_loc[0]:feed_loc[2]])
-    avg_cycles = (len(feed_loc) - 6)//2
-    for loci in range(avg_cycles - 1):
-        avg_data_slice = avg_data_slice +  np.array(chnrmsdata[feed_loc[2*loci+2]:feed_loc[2*loci+4]])
-    avg_data_slice = avg_data_slice / (avg_cycles*1.0)
-    data_200ms_slice = avg_data_slice
-
 
     avg_cycle_l = 1
     if (len(chnrmsdata) >= 400000):
@@ -264,22 +239,20 @@ def cali_linear_calc(chn_cali_paras):
 
     for onecp in chn_cali_paras:
         if (ped >1000): #induction plane
-            if onecp[4] < 3000 : #region inside linearity
+            if onecp[4] < 3100 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
                 areaps.append(onecp[11])
                 areans.append(onecp[12])
-        elif (ped <1000): #induction plane
-            if onecp[4] < 2000 : #region inside linearity
+        elif (ped <=1000): #induction plane
+            if onecp[4] < 2800 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
                 areaps.append(onecp[11])
                 areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
-    print fc_dacs
-
     
     if (ped >1000): #induction plane
         #amplitude, positive pulse
@@ -400,12 +373,19 @@ def ana_a_chn(rms_rootpath,  cali_rootpath, mode="CHN", APAno = 4, \
             wireinfo = onewire
             break
     feset_info = [gain, tp]
-#    print rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag
     rmsdata = read_rawdata(rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     calidata = read_rawdata(cali_rootpath, calirunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     
     chn_noise_paras = noise_a_chn(rmsdata, chnno,fft_en, fft_s, fft_avg_cycle, wibno, fembno)
     chn_cali_paras  = cali_a_chn (calidata, chnno, cap, wibno, fembno )
+#    for j in range(10):
+#    for i in range(16):
+#        chn_noise_paras = noise_a_chn(rmsdata, i,fft_en, fft_s, fft_avg_cycle, wibno, fembno)
+#    for j in range(100):
+#    for i in range(16):
+#        chn_cali_paras  = cali_a_chn (calidata, i, cap, wibno, fembno )
+#    a = chn_noise_paras
+#    b = chn_cali_paras 
 
 ####multiprocessing, 
 def mp_noise_a_chn(cc, rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0, fembno=0):

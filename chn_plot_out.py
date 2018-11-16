@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/15/2018 6:11:16 PM
+Last modified: 10/23/2018 7:20:21 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -36,6 +36,7 @@ from chn_analysis  import noise_a_chn
 from chn_analysis  import cali_a_chn 
 from chn_analysis  import linear_fit 
 from matplotlib.backends.backend_pdf import PdfPages
+from detect_peaks import detect_peaks
 
 import multiprocessing as mp
 
@@ -88,14 +89,16 @@ def cali_linear_fitplot(pp, apainfo, wireinfo, cali_info, chn_cali_paras, ploten
 
     for onecp in chn_cali_paras:
         if (ped >1000): #induction plane
-            if onecp[4] < 3000 : #region inside linearity
+            #if onecp[4] < 3200 : #region inside linearity
+            if (True):
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
                 areaps.append(onecp[11])
                 areans.append(onecp[12])
         elif (ped <1000): #induction plane
-            if onecp[4] < 2000 : #region inside linearity
+            #if onecp[4] < 3000 : #region inside linearity
+            if (True):
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
@@ -103,15 +106,18 @@ def cali_linear_fitplot(pp, apainfo, wireinfo, cali_info, chn_cali_paras, ploten
                 areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
+    ampps = np.array(ampps)
     if (ped >1000): #induction plane
         #amplitude, positive pulse
-        ampp_fit = linear_fit(fc_dacs,  ampps )
-        ampn_fit = linear_fit(fc_dacs,  ampns )
-        areap_fit = linear_fit(fc_dacs, areaps)
-        arean_fit = linear_fit(fc_dacs, areans)
+        pos = np.where(ampps > 3000.0)[0][0]
+        ampp_fit = linear_fit(fc_dacs[0:pos],  ampps[0:pos] )
+        ampn_fit = linear_fit(fc_dacs[0:pos],  ampns[0:pos] )
+        areap_fit = linear_fit(fc_dacs[0:pos], areaps[0:pos])
+        arean_fit = linear_fit(fc_dacs[0:pos], areans[0:pos])
     else:
-        ampp_fit = linear_fit(fc_dacs, ampps)
-        areap_fit = linear_fit(fc_dacs,areaps)
+        pos = np.where(ampps > 3000.0)[0][0]
+        ampp_fit = linear_fit(fc_dacs[0:pos], ampps[0:pos])
+        areap_fit = linear_fit(fc_dacs[0:pos],areaps[0:pos])
         ampn_fit =  None
         arean_fit = None
 
@@ -208,11 +214,7 @@ def ped_wf_subplot(ax, data_slice, ped, rms,  t_rate=0.5, title="Waveforms of ra
    
     ax.set_title(title )
     ax.set_xlim([0,int(N*t_rate)])
-    #ax.set_ylim([ped-5*(int(rms+1)),ped+5*(int(rms+1))])
-    if np.max(y) > 2500: 
-        ax.set_ylim([0,4200])
-    else:
-        pass
+    ax.set_ylim([ped-5*(int(rms+1)),ped+5*(int(rms+1))])
     ax.grid()
     ax.set_ylabel("ADC output / LSB")
     ax.set_xlabel("t / $\mu$s")
@@ -249,7 +251,8 @@ def ped_wf_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras):
     sfped =  chn_noise_paras[14]
     unstk_ratio  =  chn_noise_paras[15]
 
-    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" 
+    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" + \
+            "Stuck Free: mean = %d, rms = %2.3f, unstuck=%%%d" % (int(sfped), sfrms, int(unstk_ratio*100) )
 
     hflabel = "After HPF:  mean = %d, rms = %2.3f" % (int(hfped), hfrms) 
 
@@ -261,8 +264,7 @@ def ped_wf_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras):
     ax4 = plt.subplot2grid((4, 4), (2, 2), colspan=2, rowspan=2)
     ped_wf_subplot(ax1, data_slice,         ped,   rms,    t_rate=0.5, title="Waveforms of raw data", label=label )
     ped_wf_subplot(ax2, hfdata_slice,       hfped, hfrms,  t_rate=0.5, title="Waveforms of data after HPF", label=hflabel )
-    #ped_wf_subplot(ax3, data_100us_slice,   ped,   rms,    t_rate=100, title="Waveforms of raw data", label=label )
-    ped_wf_subplot(ax3, data_100us_slice,   ped,   rms,    t_rate=0.5, title="Waveforms of raw data(Averaging)", label=label )
+    ped_wf_subplot(ax3, data_100us_slice,   ped,   rms,    t_rate=100, title="Waveforms of raw data", label=label )
     ped_wf_subplot(ax4, hfdata_100us_slice, hfped, hfrms,  t_rate=100, title="Waveforms of data after HPF", label=hflabel )
 
     apainfo_str = apainfo[0] + ", " + apainfo[1] + ", " + apainfo[2]  + "  ;  "
@@ -341,7 +343,8 @@ def ped_fft_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras, peaks_note = 
     sfped =  chn_noise_paras[14]
     unstk_ratio  =  chn_noise_paras[15]
 
-    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" 
+    label = "Rawdata: mean = %d, rms = %2.3f" % (int(ped), rms) + "\n" + \
+            "Stuck Free: mean = %d, rms = %2.3f, unstuck=%%%d" % (int(sfped), sfrms, int(unstk_ratio*100) )
 
     hflabel = "After HPF:  mean = %d, rms = %2.3f" % (int(hfped), hfrms) 
  
@@ -382,7 +385,8 @@ def plot_a_chn(out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, APAno = 4,
                   "Tp = %1.1f$\mu$s"% (int(tp)/10.0)  ]
     out_fn = "APA%d"%APAno + "_WIB%d"%wibno + "_FEMB%d"%fembno + "_CHN%d"%chnno + "_Gain%s"%gain + "_Tp%s"%tp+  "_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno + ".pdf"
 
-    fp = out_path + out_fn
+    #fp = out_path + out_fn
+    fp = "C:/Users/Hibay/Google Drive/tmp/caps/"  + out_fn
     pp = PdfPages(fp)
     femb_pos_np = femb_position (APAno)
 
@@ -395,7 +399,6 @@ def plot_a_chn(out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, APAno = 4,
             break
 
     apa_map = APA_MAP()
-    apa_map.femb = 1
     All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
     wireinfo = None
     for onewire in All_sort:
@@ -430,7 +433,8 @@ def plot_a_chn(out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, APAno = 4,
         cali_linear_fitplot(pp, apainfo, wireinfo, asic_info, chn_cali_paras)
     else:
         print "Path: %s%s doesnt' exist, ignore anyway"%(asic_rootpath, asicrunno)
-    pp.close() 
+
+    pp.close()
     print "results path: " + fp
 
 def pipe_ana_a_chn(cc, out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, APAno = 4, \
@@ -455,7 +459,7 @@ def pipe_ana_a_chn(cc, out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, AP
             break
 
     apa_map = APA_MAP()
-    All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
+    All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping_pd()
     wireinfo = None
     for onewire in All_sort:
         if (int(onewire[1]) == chnno):
@@ -508,6 +512,9 @@ def ped_fft_plot_avg(pp, ffs, title, lf_flg = False, psd_en = False, psd = 0):
         maxp = np.max(chn_noise_paras[17][1:])
         maxp_loc = np.where (chn_noise_paras[17][1:] == maxp)[0][0] 
         maxp_f_chns.append([chn_noise_paras[16][maxp_loc], maxp, chn_noise_paras[20], chn_noise_paras[21],  chn_noise_paras[0],])
+        #if (lf_flg==True) and (int(chn_noise_paras[16][maxp_loc]) > 400 ): #(maxp > 0):
+        #if (lf_flg==True) and (maxp > 0):
+        #    print int(chn_noise_paras[16][maxp_loc]), int(maxp), chn_noise_paras[20], chn_noise_paras[21],  chn_noise_paras[0]
 
         if (psd_en):
             if np.max(chn_noise_paras[17][10:]) > psd:
@@ -555,6 +562,7 @@ def ped_fft_plot_avg(pp, ffs, title, lf_flg = False, psd_en = False, psd = 0):
             ped_fft_subplot(ax3, f_l, p_l, maxx=100000, title="Spectrum of raw data", label=label, peaks_note = True)
             ped_fft_subplot(ax4, hff_l, hfp_l, maxx=100000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
         else:
+            #peaks = detect_peaks(p_l, mph=None, mpd=20, threshold=10, edge='rising')
             ped_fft_subplot(ax1, f_l, p_l, maxx=10000, title="Spectrum of raw data", label=label, peaks_note = True)
             ped_fft_subplot(ax2, hff_l, hfp_l, maxx=10000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
             ped_fft_subplot(ax3, f_l, p_l, maxx=1000, title="Spectrum of raw data", label=label, peaks_note = True)
@@ -584,6 +592,7 @@ def ped_fft_plot_avg(pp, ffs, title, lf_flg = False, psd_en = False, psd = 0):
     fig.suptitle(title, fontsize = 12)
     plt.tight_layout( rect=[0, 0.05, 1, 0.95])
     plt.savefig(pp[0:-4] + "wire%d_"%valid_chns + "_1M" + "_max_psd" + pp[-4:] , format='png')
+    
     plt.close()
 
     return f_l, p_l, hff_l, hfp_l, maxp_f_chns
