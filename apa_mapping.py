@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/16/2018 10:36:00 AM
+Last modified: 11/17/2018 1:12:34 PM
 """
 
 #defaut setting for scientific caculation
@@ -91,6 +91,7 @@ class APA_MAP:
                             ["U33", "083", 6, "03"], ["U35", "082", 6, "02"], ["U37", "081", 6, "01"], ["U39", "080", 6, "00"]
                         ]
         elif (self.APA == "LArIAT" ):
+            print self.APA
             va = self.mapping_rd ( )
             va_femb = []
             for vb in va:
@@ -120,6 +121,7 @@ class APA_MAP:
                     fl_i = fl_i + 1
 
         elif (self.APA == "APA40" ):
+            #print self.APA
             apa_femb_loc = [ 
                             ["X28", "031", 2, "15"], ["X27", "030", 2, "14"], ["X26", "029", 2, "13"], ["X25", "028", 2, "12"],
                             ["X24", "027", 2, "11"], ["X23", "026", 2, "10"], ["X22", "025", 2, "09"], ["X21", "024", 2, "08"],
@@ -203,7 +205,8 @@ class APA_MAP:
         return apa_yuv, apa_y, apa_u, apa_v
 
     def __init__(self):
-        self.APA = 'LArIAT'
+        #self.APA = 'LArIAT'
+        self.APA = 'APA40'
         self.femb = 1
         self.path = "./Screen_Mapping_10162018.xlsx" #if the mapping file changes, self.mapping_rd ( ) need to run once to to generate new *.map file 
         self.fpmap = "D:/GitHub/ProtoDUNE_ANA/LArIAT_pin_mapping.map"

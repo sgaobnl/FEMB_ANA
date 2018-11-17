@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/16/2018 10:42:35 AM
+Last modified: 11/17/2018 1:10:03 PM
 """
 
 #defaut setting for scientific caculation
@@ -413,8 +413,8 @@ if __name__ == '__main__':
     print "Start..., please wait..."
     #gains = ["250", "140", "078", "047"] 
     gains = ["250", ] 
-    #tps = [ "20"]
-    tps = ["05", "10", "20", "30"]
+    tps = [ "20"]
+    #tps = ["05", "10", "20", "30"]
     jumbo_flag = False
     jumbo_flag = True
 

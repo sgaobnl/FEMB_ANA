@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 10/16/2018 11:32:43 AM
+Last modified: 11/16/2018 4:58:12 PM
 """
 
 #defaut setting for scientific caculation
@@ -154,7 +154,6 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                                              chn, raw_mean, raw_rms, sf_mean, sf_rms, \
                                              sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \
                                              feed_loc, chn_peakp[chn], chn_peakn[chn] ] )
-
 #                            pulsemax_data = np.max(chn_full_data[feed_loc[0]:feed_loc[0]+100])
 #                            pulsemax_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemax_data)
 #                            ppeak_oft_feed = pulsemax_data_loc[0][0] 

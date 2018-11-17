@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 10/23/2018 4:13:06 PM
+Last modified: 11/17/2018 1:11:46 PM
 """
 
 #defaut setting for scientific caculation
@@ -22,7 +22,7 @@ from sys import exit
 import os.path
 import math
 import statsmodels.api as sm
-from raw_convertor import raw_convertor_peak 
+from raw_convertor_m import raw_convertor_peak 
 from femb_position import femb_position
 from apa_mapping import APA_MAP
 from fft_chn import chn_rfft_psd

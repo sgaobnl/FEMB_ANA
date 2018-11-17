@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/15/2018 5:11:29 PM
+Last modified: 11/16/2018 5:17:23 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -64,7 +64,8 @@ else:
 #    rootpath = "/Users/shanshangao/LArIAT/Rawdata/"
     rootpath = "D:/SBND_40APA/Rawdata/"
 path =rootpath + "Rawdata_"+ strdate + "/" 
-apamap.APA = "LArIAT"
+#apamap.APA = "LArIAT"
+#apamap.APA = "LArIAT"
 if mode == "F":
     loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = strdate, runno = strrunno, runtype = "dat") 
 else:
@@ -140,12 +141,15 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         print "Pedestal Measurement"
         chnparas = []
         for chndata in apa_results:
-            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
+            #if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 #chnparas.append( [int(chndata[1][0][1:]), chndata[6] ])
-                chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[6] ])
+            #    chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[6] ])
+            #chnparas.append( [int(chndata[1][2])*16 + int(chndata[1][3]), chndata[6] ])
+            #chnparas.append( [int(chndata[1][0][1:]), chndata[6] ])
+            chnparas.append( [int(chndata[0][1][3:4])*512 +int(chndata[0][1][10])*128 + int(chndata[1][1]), chndata[6] ])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
-        chns = range(len(chns))
+        #chns = range(len(chns))
         paras = [paras]
 
         ylabel = "ADC output /bin"
@@ -162,15 +166,17 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
         rms_t = []
         for chndata in apa_results:
-            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
+            chnparas.append( [int(chndata[0][1][3:4])*512 +int(chndata[0][1][10])*128 + int(chndata[1][1]), chndata[6] ])
+#            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 #chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
-                chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[7] ])
+                #chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[7] ])
+                #chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
                 #if chndata[7] < 7:
                 #    print chndata[1], (chndata[7])
-                if int(chndata[1][1]) in [82, 83, 105, 112, 127 ]:
-                    pass
-                else:
-                    rms_t.append(chndata[7])
+                #if int(chndata[1][1]) in [82, 83, 105, 112, 127 ]:
+                #    pass
+                #else:
+                #    rms_t.append(chndata[7])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, paras = zip(*chnparas)
         chns = range(len(chns))
@@ -199,27 +205,30 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         print "Pulse amplitude"
         chnparas = []
         for chndata in apa_results:
-            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
-                #chnparas.append( [int(chndata[1][0][1:]), chndata[11] ])
-                chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[11] ])
+            chnparas.append( [int(chndata[0][1][3:4])*512 +int(chndata[0][1][10])*128 + int(chndata[1][1]), chndata[11] ])
+#            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
+#                chnparas.append( [int(chndata[1][0][1:]), chndata[11] ])
+                #chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[11] ])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, para0 = zip(*chnparas)
         chns = range(len(chns))
 
         chnparas = []
         for chndata in apa_results:
-            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
+            chnparas.append( [int(chndata[0][1][3:4])*512 +int(chndata[0][1][10])*128 + int(chndata[1][1]), chndata[6] ])
+            #if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 #chnparas.append( [int(chndata[1][0][1:]), chndata[6] ])
-                chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[6] ])
+                #chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[6] ])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, para1 = zip(*chnparas)
         chns = range(len(chns))
 
         chnparas = []
         for chndata in apa_results:
-            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
+            chnparas.append( [int(chndata[0][1][3:4])*512 +int(chndata[0][1][10])*128 + int(chndata[1][1]), chndata[12] ])
+            #if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 #chnparas.append( [int(chndata[1][0][1:]), chndata[12] ])
-                chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[12] ])
+                #chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[12] ])
         chnparas = sorted(chnparas,key=lambda l:l[0], reverse=False)
         chns, para2 = zip(*chnparas)
         chns = range(len(chns))
