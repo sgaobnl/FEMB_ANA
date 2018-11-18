@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Nov 18 14:10:53 2018
+Last modified: Sun Nov 18 14:12:32 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -34,6 +34,7 @@ from apa_plot_out import plot2_peds
 from apa_plot_out import plot1_chns_enc
 from apa_plot_out import plot4_chns_gain
 from apa_plot_out import dict_filter
+from apa_plot_out import dict_del_chn
 
 APAno = int(sys.argv[1])
 rmsdate = sys.argv[2]
