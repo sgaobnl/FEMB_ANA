@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/18/2018 12:04:51 AM
+Last modified: Sun Nov 18 14:10:10 2018
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -99,6 +99,20 @@ def dict_filter (dicts, and_dnf =[["gain","250"]], or_dnf = [["gain","250"]], an
     else:
         or_apa_wires = and_apa_wires
     return or_apa_wires
+
+def dict_del_chn (dicts, del_chn =[0,0,0] ) :
+    apa_wires = []
+    wib = del_chn[0]
+    femb = del_chn[1]
+    fembchn = del_chn[2]
+
+    for chi in dicts:
+        if (chi["wib"] == wib) and (chi["femb"] == femb) and (chi["fembchn"] == fembchn)  :
+            pass
+        else
+            apa_wires.append(chi)
+    return apa_wires
+
 
 def apa_sorted_by_wire(orgdicts, g="250", tp="05", fembs_on_apa = range(1, 21, 1)) :
     dicts = dict_filter(orgdicts, and_dnf =[["gain",g],  ["tp",tp] ], or_dnf = [["fpgadac_en", True], ["asicdac_en", True]] ) 
