@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Nov 18 14:10:10 2018
+Last modified: Sun Nov 18 14:11:25 2018
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -109,7 +109,7 @@ def dict_del_chn (dicts, del_chn =[0,0,0] ) :
     for chi in dicts:
         if (chi["wib"] == wib) and (chi["femb"] == femb) and (chi["fembchn"] == fembchn)  :
             pass
-        else
+        else:
             apa_wires.append(chi)
     return apa_wires
 
