@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/17/2018 1:10:03 PM
+Last modified: 11/17/2018 1:45:07 PM
 """
 
 #defaut setting for scientific caculation
@@ -345,32 +345,41 @@ def results_save(rms_rootpath, fpga_rootpath, asic_rootpath,  APAno, rmsrunno, f
                 for femb_rec in fsum[1]:
                     for asic_rec in femb_rec :
                         for chn_rec in asic_rec:
-                            newdict = dict_chn.copy()
-                            newdict["rmspath"]      =  info[0]               
-                            newdict["fpgapath"]     =  info[1]           
-                            newdict["calipath"]     =  info[2]          
-                            newdict["apaloc"]       =  chn_rec[0][0]        
-                            newdict["wib"]          =  chn_rec[3]          
-                            newdict["femb"]         =  chn_rec[4]            
-                            newdict["cebox"]        =  chn_rec[0][2]            
-                            newdict["wire"]         =  chn_rec[1][0]           
-                            newdict["fembchn"]      =  chn_rec[5]             
-                            newdict["gain"]         =  chn_rec[2][0]          
-                            newdict["tp"]           =  chn_rec[2][1]           
-                            newdict["rms"]          =  chn_rec[6]            
-                            newdict["ped"]          =  chn_rec[7]           
-                            newdict["hfrms"]        =  chn_rec[8]              
-                            newdict["hfped"]        =  chn_rec[9]              
-                            newdict["sfrms"]        =  chn_rec[10]              
-                            newdict["sfped"]        =  chn_rec[11]              
-                            newdict["unstk_ratio"]  =  chn_rec[12]                    
-                            newdict["fpgadac_en"]   =  chn_rec[13]                   
-                            newdict["fpg_gain"]     =  chn_rec[14]                 
-                            newdict["fpg_inl"]      =  chn_rec[15]                
-                            newdict["asicdac_en"]   =  chn_rec[16]                   
-                            newdict["asi_gain"]     =  chn_rec[17]                 
-                            newdict["asi_inl"]      =  chn_rec[18]                
-                            sumtodict.append(newdict)
+                            if ( (chn_rec[3] == 0) and (chn_rec[4] == 0) and (chn_rec[5] == 109) or 
+                               (chn_rec[3] == 0) and (chn_rec[4] == 0) and (chn_rec[5] == 107) or 
+                               (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 79) or 
+                               (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 48) or 
+                               (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 127) or 
+                               (chn_rec[3] == 0) and (chn_rec[4] == 2) and (chn_rec[5] == 124) or 
+                               (chn_rec[3] == 0) and (chn_rec[4] == 2) and (chn_rec[5] == 126) ):
+                                pass
+                            else:
+                                newdict = dict_chn.copy()
+                                newdict["rmspath"]      =  info[0]               
+                                newdict["fpgapath"]     =  info[1]           
+                                newdict["calipath"]     =  info[2]          
+                                newdict["apaloc"]       =  chn_rec[0][0]        
+                                newdict["wib"]          =  chn_rec[3]          
+                                newdict["femb"]         =  chn_rec[4]            
+                                newdict["cebox"]        =  chn_rec[0][2]            
+                                newdict["wire"]         =  chn_rec[1][0]           
+                                newdict["fembchn"]      =  chn_rec[5]             
+                                newdict["gain"]         =  chn_rec[2][0]          
+                                newdict["tp"]           =  chn_rec[2][1]           
+                                newdict["rms"]          =  chn_rec[6]            
+                                newdict["ped"]          =  chn_rec[7]           
+                                newdict["hfrms"]        =  chn_rec[8]              
+                                newdict["hfped"]        =  chn_rec[9]              
+                                newdict["sfrms"]        =  chn_rec[10]              
+                                newdict["sfped"]        =  chn_rec[11]              
+                                newdict["unstk_ratio"]  =  chn_rec[12]                    
+                                newdict["fpgadac_en"]   =  chn_rec[13]                   
+                                newdict["fpg_gain"]     =  chn_rec[14]                 
+                                newdict["fpg_inl"]      =  chn_rec[15]                
+                                newdict["asicdac_en"]   =  chn_rec[16]                   
+                                newdict["asi_gain"]     =  chn_rec[17]                 
+                                newdict["asi_inl"]      =  chn_rec[18]                
+                                sumtodict.append(newdict)
 #            os.remove(sum_path+sumfile)
 
     out_fn = "APA%d"%APAno + "_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno+ ".allsum"
@@ -412,9 +421,9 @@ if __name__ == '__main__':
     s0= timer()
     print "Start..., please wait..."
     #gains = ["250", "140", "078", "047"] 
-    gains = ["250", ] 
-    tps = [ "20"]
-    #tps = ["05", "10", "20", "30"]
+    gains = ["140", "078"] 
+    #tps = [ "20"]
+    tps = ["05", "10", "20", "30"]
     jumbo_flag = False
     jumbo_flag = True
 

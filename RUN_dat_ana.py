@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/16/2018 5:17:23 PM
+Last modified: 11/17/2018 4:09:06 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -166,7 +166,9 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         print "wire no, FEMBchn, ASICno, ASICchn, FEMBno, WIBno, RMS(ADC)"
         rms_t = []
         for chndata in apa_results:
-            chnparas.append( [int(chndata[0][1][3:4])*512 +int(chndata[0][1][10])*128 + int(chndata[1][1]), chndata[6] ])
+            chnparas.append( [int(chndata[0][1][3:4])*512 +int(chndata[0][1][10])*128 + int(chndata[1][1]), chndata[7] ])
+            if (chndata[7] < 1):
+                print chndata[0][1], int(chndata[0][1][10]), int(chndata[1][1])
 #            if chndata[1][0][0] == 'X' or chndata[1][0][0] == 'U' :
                 #chnparas.append( [int(chndata[1][0][1:]), chndata[7] ])
                 #chnparas.append( [int(chndata[1][4])*16 + int(chndata[1][5]), chndata[7] ])
@@ -182,8 +184,8 @@ def plots(plot_en, apa_results, loginfo, run_temp,  pp, gain=2, frontpage = Fals
         chns = range(len(chns))
         paras = [paras]
 
-        print "%d, %.5f, %.5f, " % (len(paras[0]), np.mean(paras[0]), np.std(paras[0]))
-        print "%d, %.5f, %.5f, " % (len(rms_t), np.mean(rms_t), np.std(rms_t) )
+        #print "%d, %.5f, %.5f, " % (len(paras[0]), np.mean(paras[0]), np.std(paras[0]))
+        #print "%d, %.5f, %.5f, " % (len(rms_t), np.mean(rms_t), np.std(rms_t) )
 
         ylabel = "RMS(ADC) /bin"
         xlabel = "Channel No."

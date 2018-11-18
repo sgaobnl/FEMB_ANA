@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 10/23/2018 7:20:21 PM
+Last modified: 11/17/2018 5:49:18 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -36,7 +36,7 @@ from chn_analysis  import noise_a_chn
 from chn_analysis  import cali_a_chn 
 from chn_analysis  import linear_fit 
 from matplotlib.backends.backend_pdf import PdfPages
-from detect_peaks import detect_peaks
+#from detect_peaks import detect_peaks
 
 import multiprocessing as mp
 
@@ -385,8 +385,8 @@ def plot_a_chn(out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, APAno = 4,
                   "Tp = %1.1f$\mu$s"% (int(tp)/10.0)  ]
     out_fn = "APA%d"%APAno + "_WIB%d"%wibno + "_FEMB%d"%fembno + "_CHN%d"%chnno + "_Gain%s"%gain + "_Tp%s"%tp+  "_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno + ".pdf"
 
-    #fp = out_path + out_fn
-    fp = "C:/Users/Hibay/Google Drive/tmp/caps/"  + out_fn
+    fp = out_path + out_fn
+    #fp = "C:/Users/Hibay/Google Drive/tmp/caps/"  + out_fn
     pp = PdfPages(fp)
     femb_pos_np = femb_position (APAno)
 

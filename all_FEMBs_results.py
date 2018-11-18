@@ -6,6 +6,7 @@ Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
 Last modified: 11/16/2018 4:58:12 PM
+Last modified: 11/17/2018 4:11:40 PM
 """
 
 #defaut setting for scientific caculation
@@ -138,63 +139,55 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
 
                             chn_peakp_avg = np.mean(chn_peakp[chn])
                             chn_peakn_avg = np.mean(chn_peakn[chn])
-#                            if (wib==0) and (femb==0) and (
-#                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
-#                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
-#                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
-#                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
-#                                pass 
-#                            else:
-                            if (True):
+                            if (wib==0) and  (
+                                ( (femb==0) and ( chip==6 ) and (chn ==0xB)) or 
+                                ( (femb==0) and ( chip==6 ) and (chn ==0xD)) or 
+                                ( (femb==0) and ( chip==7 ) and (chn ==0xD)) or 
+                                ( (femb==1) and ( chip==3 ) and (chn ==0x0)) or 
+                                ( (femb==1) and ( chip==4 ) and (chn ==0xF)) or 
+                                ( (femb==1) and ( chip==7 ) and (chn ==0xF)) or 
+                                (femb==2)  or 
+                                (femb==3)   ):
+                                #( (femb==2) and ( chip==7 ) and (chn ==0xC)) or 
+                                #( (femb==2) and ( chip==7 ) and (chn ==0xE)) or 
+                                #( (femb==3) and ( chip==5 ) )  ):
+                                pass 
+                            else:
+                            #if (True):
                                 alldata.append( [apa_loc, apa_info, wib, femb, chip, \
                                              chn, raw_mean, raw_rms, sf_mean, sf_rms, \
                                              sf_ratio, chn_peakp_avg, chn_peakn_avg, rms_data, chn_full_data, \
                                              feed_loc, chn_peakp[chn], chn_peakn[chn] ] )
-#                            pulsemax_data = np.max(chn_full_data[feed_loc[0]:feed_loc[0]+100])
-#                            pulsemax_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemax_data)
-#                            ppeak_oft_feed = pulsemax_data_loc[0][0] 
-#
-#                            pulsemin_data = np.min(chn_full_data[feed_loc[0]:feed_loc[0]+100])
-#                            pulsemin_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemin_data)
-#                            npeak_oft_feed = pulsemin_data_loc[0][0]
-#
-#                            if (wib==0) and (femb==0) and (
-#                                ( ( chip==0 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==0 ) and ((chn ==14 ) or (chn ==15)) ) or 
-#                                ( ( chip==1 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==1 ) and ((chn ==14 ) or (chn ==15)) ) or 
-#                                ( ( chip==4 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==4 ) and ((chn ==14 ) or (chn ==15)) ) or 
-#                                ( ( chip==5 ) and ((chn ==0 ) or (chn ==1)) ) or 
-#                                ( ( chip==5 ) and ((chn ==14 ) or (chn ==15)) )  ):
-#                                pass 
-#                            else:
-#                                allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
-#                                               wib, femb, chip, chn, raw_mean, raw_rms, sf_mean, sf_rms, sf_ratio, chn_peakp_avg, chn_peakn_avg,\
-#                                               ppeak_oft_feed, npeak_oft_feed ] )
+                                pulsemax_data = np.max(chn_full_data[feed_loc[0]:feed_loc[0]+100])
+                                pulsemax_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemax_data)
+                                ppeak_oft_feed = pulsemax_data_loc[0][0] 
+    
+                                pulsemin_data = np.min(chn_full_data[feed_loc[0]:feed_loc[0]+100])
+                                pulsemin_data_loc =np.where ( chn_full_data[feed_loc[0]:feed_loc[0]+100] == pulsemin_data)
+                                npeak_oft_feed = pulsemin_data_loc[0][0]
+                                allresult.append( [apa_loc[0], apa_loc[1], apa_info[0], apa_info[1], apa_info[2], apa_info[3], \
+                                               wib, femb, chip, chn, raw_mean, raw_rms, sf_mean, sf_rms, sf_ratio, chn_peakp_avg, chn_peakn_avg,\
+                                               ppeak_oft_feed, npeak_oft_feed ] )
+   
             print "time passed = %d"% (timer()-start)
 
-#    import pickle
-#    resultpath = path + "results/" + rundir + "/" 
+    import pickle
+    resultpath = path + "results/" + rundir + "/" 
 
-#    if (os.path.exists(resultpath)):
-#        pass
-#    else:
-#        try: 
-#            os.makedirs(resultpath)
-#        except OSError:
-#            print "Error to create a folder"
-#            exit()
+    if (os.path.exists(resultpath)):
+        pass
+    else:
+        try: 
+            os.makedirs(resultpath)
+        except OSError:
+            print "Error to create a folder"
+            exit()
 
-#    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
-#    if (os.path.isfile(savefile)): 
-#        pass
-#    else:
-#        with open(savefile, "wb") as fp:
-#            pickle.dump(allresult, fp)
+    savefile = resultpath +  apamap.APA + "_APA" + str(APAno) + '_gain' + str(gain) + "_tp" + str(tp) + '_results.bin'
+    if (os.path.isfile(savefile)): 
+        pass
+    else:
+        with open(savefile, "wb") as fp:
+            pickle.dump(allresult, fp)
     return alldata
 

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/16/2018 11:16:09 AM
+Last modified: 11/17/2018 1:43:14 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -66,28 +66,27 @@ else:
     asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + asidate + "/"
  
 #fembs_on_apa = range(1,21, 1) 
-fembs_on_apa = range(2,3, 1) 
+#fembs_on_apa = range(2,3, 1) 
+fembs_on_apa = range(4) 
 
 sum_path = rms_rootpath + "/" + "results/" + "APA%d_"%APAno + rmsrunno + "_" + fpgarunno + "_" + asicrunno +"/"
 fn = "APA%d"%APAno + "_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno
 orgdicts = load_sum (sum_path, fn + ".allsum")
-print orgdicts[0]["apaloc"]
 
-
-femb_cs = []
-for fembloc in fembs_on_apa:
-    if (fembloc <= 10):
-        femb_cs.append(["apaloc", "B" + format(APAno, "1d") + format(fembloc, "02d")])
-    else:
-        femb_cs.append(["apaloc", "A" + format(APAno, "1d") + format(fembloc, "02d")])
-
-#if APAno == 3:
-#    femb_cs.remove(["apaloc","A308"])  #APA3 B308 has broken FE ASIC
-#if APAno == 4: #only at RT
-#    femb_cs.remove(["apaloc","B409"])  #APA3 B308 has broken FE ASIC
-#    femb_cs.remove(["apaloc","A420"])  #APA3 B308 has broken FE ASIC
-
-orgdicts = dict_filter (orgdicts, or_dnf =femb_cs, and_flg=False  ) 
+#femb_cs = []
+#for fembloc in fembs_on_apa:
+#    if (fembloc <= 10):
+#        femb_cs.append(["apaloc", "B" + format(APAno, "1d") + format(fembloc, "02d")])
+#    else:
+#        femb_cs.append(["apaloc", "A" + format(APAno, "1d") + format(fembloc, "02d")])
+#
+##if APAno == 3:
+##    femb_cs.remove(["apaloc","A308"])  #APA3 B308 has broken FE ASIC
+##if APAno == 4: #only at RT
+##    femb_cs.remove(["apaloc","B409"])  #APA3 B308 has broken FE ASIC
+##    femb_cs.remove(["apaloc","A420"])  #APA3 B308 has broken FE ASIC
+#
+#orgdicts = dict_filter (orgdicts, or_dnf =femb_cs, and_flg=False  ) 
 print len(orgdicts)
 
 fp = sum_path + fn + ".pdf" 
@@ -97,7 +96,7 @@ plot0_overall_enc (pp, orgdicts, title="APA ENC vs. Tp", calitype="fpg_gain", sf
 plot3_overall_gain (pp, orgdicts, title="APA Gain Measurement" ) 
 
 plot2_peds (pp, orgdicts,title="Pedestals", g="250", tp="20"  , fembs_on_apa = fembs_on_apa) 
-plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="250", fembs_on_apa = fembs_on_apa )  #
+#plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="250", fembs_on_apa = fembs_on_apa )  #
 ##plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="140", fembs_on_apa = fembs_on_apa )  #
 ##plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="078", fembs_on_apa = fembs_on_apa )  #
 ##plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="047", fembs_on_apa = fembs_on_apa )  #

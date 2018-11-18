@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 10/23/2018 7:21:29 PM
+Last modified: 11/17/2018 7:55:37 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -48,9 +48,12 @@ if __name__ == '__main__':
         fpga_rootpath = "D:/APA40/Rawdata/Rawdata_" + fpgdate + "/"
         asic_rootpath = "D:/APA40/Rawdata/Rawdata_" + asidate + "/"
     elif (apafolder == "SBND"):
-        rms_rootpath =  "D:/Ledge_Study/Rawdata/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "D:/Ledge_Study/Rawdata/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "D:/Ledge_Study/Rawdata/Rawdata_" + asidate + "/"
+        rms_rootpath =  "D:/SBND_40APA/Rawdata/Rawdata_" + rmsdate + "/"
+        fpga_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + fpgdate + "/"
+        asic_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + asidate + "/"
+        #rms_rootpath =  "D:/Ledge_Study/Rawdata/Rawdata_" + rmsdate + "/"
+        #fpga_rootpath = "D:/Ledge_Study/Rawdata/Rawdata_" + fpgdate + "/"
+        #asic_rootpath = "D:/Ledge_Study/Rawdata/Rawdata_" + asidate + "/"
     else:
         rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + rmsdate + "/"
         fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + fpgdate + "/"
@@ -64,14 +67,14 @@ if __name__ == '__main__':
     tps = ["05", "10", "20", "30"]
     #tps = [  "20"]
     jumbo_flag = True
-#    wib_femb_chns = [  
+    wib_femb_chns = [  
 #                        #wib(0-4), femb(0-3), chn(0~127)
 #                        #[0, 2, 120   ],
-#                        [wibno, fembno, chnno]
-#                    ]    
-    wib_femb_chns = [  ]
-    for i in range(64,128,1):
-        wib_femb_chns.append( [0, 0, i] )
+                        [wibno, fembno, chnno]
+                    ]    
+#    wib_femb_chns = [  ]
+#    for i in range(64,128,1):
+#        wib_femb_chns.append( [0, 0, i] )
     
     for wfc in wib_femb_chns:
         wibno = wfc[0]
