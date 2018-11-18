@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Nov 18 13:53:32 2018
+Last modified: Sun Nov 18 14:02:46 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -67,7 +67,7 @@ else:
  
 #fembs_on_apa = range(1,21, 1) 
 #fembs_on_apa = range(2,3, 1) 
-fembs_on_apa = range(2,3,1) 
+fembs_on_apa = range(1,2,1) 
 
 sum_path = rms_rootpath + "/" + "results/" + "APA%d_"%APAno + rmsrunno + "_" + fpgarunno + "_" + asicrunno +"/"
 fn = "APA%d"%APAno + "_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno
@@ -87,6 +87,9 @@ for fembloc in fembs_on_apa:
 ##    femb_cs.remove(["apaloc","A420"])  #APA3 B308 has broken FE ASIC
 #
 orgdicts = dict_filter (orgdicts, or_dnf =femb_cs, and_flg=False  ) 
+orgdicts = dict_filter (orgdicts, and_dnf =[["femb", 0], ["fembchn", 107]], or_flg=False  ) 
+orgdicts = dict_filter (orgdicts, and_dnf =[["femb", 0], ["fembchn", 109]], or_flg=False  ) 
+orgdicts = dict_filter (orgdicts, and_dnf =[["femb", 0], ["fembchn", 125]], or_flg=False  ) 
 print len(orgdicts)
 
 fp = sum_path + fn + ".pdf" 
