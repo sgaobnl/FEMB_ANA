@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/17/2018 1:45:07 PM
+Last modified: 11/18/2018 12:11:13 AM
 """
 
 #defaut setting for scientific caculation
@@ -345,15 +345,17 @@ def results_save(rms_rootpath, fpga_rootpath, asic_rootpath,  APAno, rmsrunno, f
                 for femb_rec in fsum[1]:
                     for asic_rec in femb_rec :
                         for chn_rec in asic_rec:
-                            if ( (chn_rec[3] == 0) and (chn_rec[4] == 0) and (chn_rec[5] == 109) or 
-                               (chn_rec[3] == 0) and (chn_rec[4] == 0) and (chn_rec[5] == 107) or 
-                               (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 79) or 
-                               (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 48) or 
-                               (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 127) or 
-                               (chn_rec[3] == 0) and (chn_rec[4] == 2) and (chn_rec[5] == 124) or 
-                               (chn_rec[3] == 0) and (chn_rec[4] == 2) and (chn_rec[5] == 126) ):
-                                pass
-                            else:
+                            #if ( (chn_rec[3] == 0) and (chn_rec[4] == 0) and (chn_rec[5] == 109) or 
+                            #   (chn_rec[3] == 0) and (chn_rec[4] == 0) and (chn_rec[5] == 107) or 
+                            #   (chn_rec[3] == 0) and (chn_rec[4] == 0) and (chn_rec[5] == 125) or 
+                            #   (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 79) or 
+                            #   (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 48) or 
+                            #   (chn_rec[3] == 0) and (chn_rec[4] == 1) and (chn_rec[5] == 127) or 
+                            #   (chn_rec[3] == 0) and (chn_rec[4] == 2) and (chn_rec[5] == 124) or 
+                            #   (chn_rec[3] == 0) and (chn_rec[4] == 2) and (chn_rec[5] == 126) ):
+                            #    pass
+                            #else:
+                            if (True):
                                 newdict = dict_chn.copy()
                                 newdict["rmspath"]      =  info[0]               
                                 newdict["fpgapath"]     =  info[1]           
@@ -420,8 +422,9 @@ if __name__ == '__main__':
     from timeit import default_timer as timer
     s0= timer()
     print "Start..., please wait..."
-    #gains = ["250", "140", "078", "047"] 
-    gains = ["140", "078"] 
+    gains = ["250", "140", "078", "047"] 
+    #gains = ["140", "078"] 
+    #gains = ["140"] 
     #tps = [ "20"]
     tps = ["05", "10", "20", "30"]
     jumbo_flag = False

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/16/2018 11:17:13 AM
+Last modified: 11/18/2018 12:04:51 AM
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -460,7 +460,6 @@ def plot1_chns_enc (pp, orgdicts, title="APA ENC s. Tp",  cali_cs="fpg_gain", rm
 #            sub_chns_hist_plot1 (ax4, dicts, rms_cs=rms_cs, cali_cs=cali_cs ) 
 #        elif ( tp == "30" ):
 #            sub_chns_hist_plot1 (ax5, dicts, rms_cs=rms_cs, cali_cs=cali_cs ) 
-    print "XXXXXXXXX"
 
     plt.tight_layout( rect=[0, 0.05, 1, 0.95])
     plt.savefig(pp, format='pdf')
@@ -639,15 +638,15 @@ def plot2_peds (pp, orgdicts, title="Pedestals", g="250", tp="20", fembs_on_apa 
 
     dicts_xvu = dict_filter(orgdicts, and_dnf =[["gain",g],  ["tp",tp] ], or_dnf = [["fpgadac_en", True], ["asicdac_en", True]] ) 
     dicts = enctp_sort_bywire (dicts_xvu,  wiretype = "X" , fembs_on_apa = fembs_on_apa ) 
-    dicts = enctp_sort_byfemb (dicts ) 
-#    print len(dicts)
+    #dicts = enctp_sort_byfemb (dicts ) 
     sub_ped_plot2 (ax1, dicts, fembs_on_apa = fembs_on_apa) 
 #    sub_ped_hist_plot2 (ax4, dicts ) 
-#    dicts = enctp_sort_bywire (dicts_xvu,  wiretype = "V" , fembs_on_apa = fembs_on_apa) 
-#    sub_ped_plot2 (ax2, dicts, fembs_on_apa = fembs_on_apa) 
+    dicts = enctp_sort_bywire (dicts_xvu,  wiretype = "V" , fembs_on_apa = fembs_on_apa) 
+    #dicts = enctp_sort_byfemb (dicts ) 
+    sub_ped_plot2 (ax2, dicts, fembs_on_apa = fembs_on_apa) 
 #    sub_ped_hist_plot2 (ax5, dicts ) 
     dicts = enctp_sort_bywire (dicts_xvu,  wiretype = "U" , fembs_on_apa = fembs_on_apa) 
-    dicts = enctp_sort_byfemb (dicts ) 
+    #dicts = enctp_sort_byfemb (dicts ) 
     sub_ped_plot2 (ax3, dicts, fembs_on_apa = fembs_on_apa) 
 #    sub_ped_hist_plot2 (ax6, dicts ) 
 
