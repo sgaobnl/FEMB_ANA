@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Nov 18 13:46:44 2018
+Last modified: Sun Nov 18 13:53:32 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -67,7 +67,7 @@ else:
  
 #fembs_on_apa = range(1,21, 1) 
 #fembs_on_apa = range(2,3, 1) 
-fembs_on_apa = range(1,2,1) 
+fembs_on_apa = range(2,3,1) 
 
 sum_path = rms_rootpath + "/" + "results/" + "APA%d_"%APAno + rmsrunno + "_" + fpgarunno + "_" + asicrunno +"/"
 fn = "APA%d"%APAno + "_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno
