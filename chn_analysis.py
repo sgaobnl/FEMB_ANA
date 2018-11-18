@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/17/2018 1:11:46 PM
+Last modified: 11/17/2018 8:09:09 PM
 """
 
 #defaut setting for scientific caculation
@@ -238,15 +238,15 @@ def cali_linear_calc(chn_cali_paras):
     ped = chn_cali_paras[0][10]
 
     for onecp in chn_cali_paras:
-        if (ped >1000): #induction plane
-            if onecp[4] < 3100 : #region inside linearity
+        if (ped >1500): #induction plane
+            if onecp[4] < 3500 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
                 areaps.append(onecp[11])
                 areans.append(onecp[12])
-        elif (ped <=1000): #induction plane
-            if onecp[4] < 2800 : #region inside linearity
+        elif (ped <=1500): #induction plane
+            if onecp[4] < 2200 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
@@ -254,7 +254,7 @@ def cali_linear_calc(chn_cali_paras):
                 areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
-    if (ped >1000): #induction plane
+    if (ped >1500): #induction plane
         #amplitude, positive pulse
         ampp_fit = linear_fit(fc_dacs,  ampps )
         ampn_fit = linear_fit(fc_dacs,  ampns )
