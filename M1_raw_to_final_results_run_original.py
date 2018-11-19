@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Nov 18 22:38:09 2018
+Last modified: Sun Nov 18 22:49:37 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -126,7 +126,7 @@ for step_one_info in step_info:
             ####        all_chn_results = pickle.load(fp)
             ####else:
             if (True):
-                all_chn_results = raw_convertion( path, gainpath, step_np = [step], env = env, femb=femb, psd = psd, rms_smps =100000, stuck_filter = True, \
+                all_chn_results = raw_convertion( path, gainpath, step_np = [step], env = env, femb=femb, psd = psd, rms_smps =100000, stuck_filter = False, \
                             gain = gain, gain_step = gain_step, DAC = DAC, DACvalue = DACvalue, jumbo_flag = jumbo_flag, apa="APA40")
             print "time cost = %.3f seconds"%(timer()-start)
 
