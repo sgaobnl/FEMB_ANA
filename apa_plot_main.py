@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Nov 18 14:12:32 2018
+Last modified: 11/18/2018 9:08:12 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -91,7 +91,12 @@ orgdicts = dict_filter (orgdicts, or_dnf =femb_cs, and_flg=False  )
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 0, 107]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 0, 109]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 0, 125]  ) 
+orgdicts = dict_filter (orgdicts, and_dnf =[["gain","140"], ["tp","20"]], or_flg=False  ) 
+#orgdicts = dict_filter (orgdicts, and_dnf =[["gain","078"]], and_flg=True  ) 
+#orgdicts = dict_filter (orgdicts, and_dnf =[["tp","20"]], and_flg=True  ) 
 print len(orgdicts)
+for i in range(64):
+    print orgdicts[i]["wib"],orgdicts[i]["femb"],orgdicts[i]["wire"],orgdicts[i]["fembchn"],orgdicts[i]["rms"], orgdicts[i]["fpg_gain"] 
 
 fp = sum_path + fn + ".pdf" 
 pp = PdfPages(fp)
