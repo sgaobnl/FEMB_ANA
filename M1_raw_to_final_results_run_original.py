@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Apr 12 15:51:16 2018
+Last modified: Sun Nov 18 22:16:17 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -60,7 +60,7 @@ if (gainstrstep[0] == "3" ):
     dac_np = [1,2,3,4]
 elif (gainstrstep[0] == "1" ):
     gain = 2
-    dac_np = [3,4,5,6,7]
+    dac_np = [2,3,4,5,6,7,8]
 
 if (jumbo_flag == "True"):
     jumbo_flag = True
@@ -74,15 +74,15 @@ if (server_flg == "server" ):
     path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ rmsstrdate + "/" 
     path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ gainstrdate + "/" 
 else:
-    path_raw = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ rmsstrdate + "/" 
-    path_gain = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ gainstrdate + "/"
+    path_raw = "D:/SBND_40APA/Rawdata/Rawdata_"+ rmsstrdate + "/" 
+    path_gain = "D:/SBND_40APA/Rawdata/Rawdata_"+ gainstrdate + "/"
 
 step_info = [ 
               [[rmsstrstep],[0,1,2,3],strenv, "WIB00"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB01"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB01"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB04"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB04"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB01"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB01"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB04"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB04"+femb_set], 
             ]
 
 psd = True
