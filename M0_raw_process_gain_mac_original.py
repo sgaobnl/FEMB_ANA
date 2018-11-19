@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Nov 18 22:10:50 2018
+Last modified: 11/18/2018 10:24:46 PM
 """
 
 #defaut setting for scientific caculation
@@ -36,7 +36,6 @@ def gain_process(path, wb, onedir = "step1", env = "RT", FEMB = "FEMB0", DAC = "
 
     for root, dirs, files in os.walk(gain_data_dir):
         break
-    print files
 
     for onefile in files:
         pos1 = onefile.find(FEMB)
@@ -148,7 +147,8 @@ else:
     path = "D:/SBND_40APA/Rawdata/Rawdata_"+ strdate + "/" + strrun + "/"
 #femb_set = strenv + strstep
 femb_set = strstep
-onedir_np = ["WIB00"+femb_set, "WIB01"+femb_set, "WIB02"+femb_set, "WIB03"+femb_set,"WIB04"+femb_set,]
+#onedir_np = ["WIB00"+femb_set, "WIB01"+femb_set, "WIB02"+femb_set, "WIB03"+femb_set,"WIB04"+femb_set,]
+onedir_np = ["WIB00"+femb_set]
 for onedir in onedir_np:
     for FEMB in ["FEMB0", "FEMB1", "FEMB2","FEMB3" ]:
         Active_flg = True
