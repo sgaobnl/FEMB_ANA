@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/18/2018 12:11:13 AM
+Last modified: 11/18/2018 9:46:52 PM
 """
 
 #defaut setting for scientific caculation
@@ -422,11 +422,11 @@ if __name__ == '__main__':
     from timeit import default_timer as timer
     s0= timer()
     print "Start..., please wait..."
-    gains = ["250", "140", "078", "047"] 
+    #gains = ["250", "140", "078", "047"] 
     #gains = ["140", "078"] 
-    #gains = ["140"] 
-    #tps = [ "20"]
-    tps = ["05", "10", "20", "30"]
+    gains = ["140"] 
+    tps = [ "20"]
+    #tps = ["05", "10", "20", "30"]
     jumbo_flag = False
     jumbo_flag = True
 
