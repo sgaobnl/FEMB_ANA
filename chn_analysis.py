@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Nov 20 13:22:40 2018
+Last modified: Tue Nov 20 13:24:03 2018
 """
 
 #defaut setting for scientific caculation
@@ -157,6 +157,33 @@ def read_rawdata_coh(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, 
             ###############0         1      2       3       4     5    6    7      8           9         10#########
             datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
     return datas
+
+def coh_noise_ana(asic_ccs, rmsdata, wiretype = "X"):
+    wdata = []
+    ext_chns = []
+    for i in range(16):
+        chni = int(asic_ccs[i][6] )
+        if (asic_ccs[i][2][0] in wiretype):
+            if asic_ccs[i][18] in ["C10", "C11", "C12"] : #only channel with ENC< 2000e- is considered
+                wdata.append(np.array(rmsdata[0][7][chni][0:200000]))
+            else:
+                ext_chns.append(chni)
+
+    lenwdata = len(wdata)
+    for i in range(lenwdata):
+        if i == 0:
+            avgdata = wdata[0]
+        else:
+            avgdata = avgdata + wdata[i]
+
+    if lenwdata >= 4 :
+        coh_data = (avgdata*1.0/lenwdata) 
+        coh_data = coh_data - np.mean( coh_data)
+        coh_flg = [lenwdata, ext_chns]
+    else:
+        coh_data = np.array(rmsdata[0][7][0][0:200000])*0 
+        coh_flg = [0, ext_chns]
+    return coh_data, coh_flg
 
 def noise_a_coh(coh_data, coh_flg, rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
     c_flg = coh_flg[0]
