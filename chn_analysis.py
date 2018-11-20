@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/17/2018 11:50:53 PM
+Last modified: Tue Nov 20 13:22:40 2018
 """
 
 #defaut setting for scientific caculation
@@ -124,6 +124,122 @@ def read_rawdata(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain
             ###############0         1      2       3       4     5    6    7      8           9         10#########
             datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
     return datas
+
+
+def read_rawdata_fast(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain="250", tp="20", jumbo_flag=False ):
+    files = generate_rawpaths(rootpath, runno, wibno,  fembno, chnno, gain, tp ) 
+    datas = []
+    for onefile in files:
+        with open(onefile, 'rb') as f:
+            raw_data = f.read()
+            filelength = len(raw_data )
+            smps = (filelength-1024)/2/16 
+            if smps > 20000:
+                smps = 20000
+
+            data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
+            ###############0         1      2       3       4     5    6    7      8           9         10#########
+            datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
+    return datas
+
+def read_rawdata_coh(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain="250", tp="20", jumbo_flag=False ):
+    files = generate_rawpaths(rootpath, runno, wibno,  fembno, chnno, gain, tp ) 
+    datas = []
+    for onefile in files:
+        with open(onefile, 'rb') as f:
+            raw_data = f.read()
+            filelength = len(raw_data )
+            smps = (filelength-1024)/2/16 
+            if smps > 200000:
+                smps = 200000
+
+            data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
+            ###############0         1      2       3       4     5    6    7      8           9         10#########
+            datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
+    return datas
+
+def noise_a_coh(coh_data, coh_flg, rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
+    c_flg = coh_flg[0]
+    c_chns = coh_flg[1]
+
+    asicchn = chnno % 16
+    if asicchn in c_chns:
+        c_flg = 0
+
+    chnrmsdata = rmsdata[0][7][asicchn]
+    len_chnrmsdata = len(chnrmsdata)
+    if (len_chnrmsdata > 200000):
+        len_chnrmsdata  = 200000
+    if (len_chnrmsdata > len(coh_data) ):
+        len_chnrmsdata = len(coh_data)
+
+    chnrmsdata = np.array( chnrmsdata[0:len_chnrmsdata ]) 
+    if (c_flg == 0):
+        coh_data = coh_data * 0
+        postdata = np.array( chnrmsdata[0:len_chnrmsdata ]) 
+    else:
+        coh_data = coh_data 
+        postdata = chnrmsdata - coh_data
+
+    sp = len_chnrmsdata//20
+    rms_tmp = []
+    for i in range(20):
+        tmp = np.std(chnrmsdata[i*sp: i*sp + sp]) 
+        if math.isnan(tmp):
+            tmp = 1000 + i
+        rms_tmp.append(tmp)
+    rms_tmp = np.array(rms_tmp)*100//1
+    rms_tmp2 = sorted(rms_tmp)
+    rms10th = rms_tmp2[9]
+    pos = np.where(rms_tmp == rms10th) [0][0]
+    k = pos
+
+    rms =  np.std(chnrmsdata[k*sp: k*sp + sp])  
+    ped = np.mean(chnrmsdata[k*sp: k*sp + sp])  
+    cohrms =  np.std(coh_data[k*sp: k*sp + sp]) 
+    cohped = np.mean(coh_data[k*sp: k*sp + sp]) 
+    postrms =  np.std(postdata[k*sp: k*sp + sp])
+    postped = np.mean(postdata[k*sp: k*sp + sp])
+    if math.isnan(rms):
+        rms = 0
+    if math.isnan(ped):
+        ped = 0
+    if math.isnan(cohrms):
+        cohrms = 0
+    if math.isnan(cohped):
+        cohped = 0
+    if math.isnan(postrms):
+        postrms = 0
+    if math.isnan(postped):
+        postped = 0
+ 
+    data_slice =   chnrmsdata[k*sp: k*sp + sp]
+    data_200ms_slice = chnrmsdata[k*sp: k*sp + sp]
+    f = None
+    p = None
+    f_l = None
+    p_l = None
+    
+    hfrms = postrms
+    hfped = postped
+    hfdata_slice =   postdata[k*sp: k*sp + sp]
+    hfdata_200ms_slice =  postdata[k*sp: k*sp + sp]
+    hff = None
+    hfp = None
+    hff_l = None
+    hfp_l = None
+
+    sfrms = cohrms
+    sfped = cohped
+
+    unstk_ratio = c_flg
+
+    chn_noise_paras = [chnno, 
+                       rms,   ped,   data_slice,   data_200ms_slice,   f,   p,
+                       hfrms, hfped, hfdata_slice, hfdata_200ms_slice, hff, hfp,
+                       sfrms, sfped, unstk_ratio, f_l, p_l, hff_l, hfp_l,
+                       wibno,  fembno ]
+    return chn_noise_paras
 
 def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
     asicchn = chnno % 16
