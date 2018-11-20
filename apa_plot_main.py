@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/18/2018 9:56:16 PM
+Last modified: 11/19/2018 11:20:23 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -32,6 +32,7 @@ from apa_plot_out import plot0_overall_enc
 from apa_plot_out import plot3_overall_gain
 from apa_plot_out import plot2_peds
 from apa_plot_out import plot1_chns_enc
+from apa_plot_out import plot1_chns_enc_1
 from apa_plot_out import plot4_chns_gain
 from apa_plot_out import dict_filter
 from apa_plot_out import dict_del_chn
@@ -68,7 +69,9 @@ else:
  
 #fembs_on_apa = range(1,21, 1) 
 #fembs_on_apa = range(2,3, 1) 
-fembs_on_apa = range(2,3,1) 
+#fembs_on_apa = range(2,3,1) 
+loc = 4
+fembs_on_apa = [loc] 
 
 sum_path = rms_rootpath + "/" + "results/" + "APA%d_"%APAno + rmsrunno + "_" + fpgarunno + "_" + asicrunno +"/"
 fn = "APA%d"%APAno + "_" + rmsrunno + "_" + fpgarunno + "_" + asicrunno
@@ -94,20 +97,31 @@ orgdicts = dict_del_chn (orgdicts, del_chn = [0, 0, 125]  )
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 1,  48]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 1,  79]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 1, 127]  ) 
-orgdicts = dict_filter (orgdicts, and_dnf =[["gain","140"], ["tp","20"]], or_flg=False  ) 
+orgdicts = dict_del_chn (orgdicts, del_chn = [0, 2, 124]  ) 
+orgdicts = dict_del_chn (orgdicts, del_chn = [0, 2, 126]  ) 
+orgdicts = dict_del_chn (orgdicts, del_chn = [0, 2, 127]  ) 
+for i in range(16):
+    orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 64+i]  ) 
+orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 3]  ) 
+orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 4]  ) 
+orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 48]  ) 
+orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 50]  ) 
+#orgdicts = dict_filter (orgdicts, and_dnf =[["gain","140"], ["tp","20"]], or_flg=False  ) 
+#orgdicts = dict_filter (orgdicts, and_dnf =[ ["tp","20"]], or_flg=False  ) 
 #orgdicts = dict_filter (orgdicts, and_dnf =[["gain","078"]], and_flg=True  ) 
 #orgdicts = dict_filter (orgdicts, and_dnf =[["tp","20"]], and_flg=True  ) 
 print len(orgdicts)
 
-fp = sum_path + fn + ".pdf" 
+fp = sum_path + fn + "femb%d"%loc + ".pdf" 
 pp = PdfPages(fp)
 print "start...wait a few minutes..."
 plot0_overall_enc (pp, orgdicts, title="APA ENC vs. Tp", calitype="fpg_gain", sfhf = "hf" ) 
 plot3_overall_gain (pp, orgdicts, title="APA Gain Measurement" ) 
 
-plot2_peds (pp, orgdicts,title="Pedestals", g="140", tp="20"  , fembs_on_apa = fembs_on_apa) 
+plot2_peds (pp, orgdicts,title="Pedestals", gs=["250", "140", "078"], tp="20"  , loc = loc) 
+plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "078", "047"], tp="20", loc=loc )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="250", fembs_on_apa = fembs_on_apa )  #
-plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="140", fembs_on_apa = fembs_on_apa )  #
+#plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="140", fembs_on_apa = fembs_on_apa )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="078", fembs_on_apa = fembs_on_apa )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="047", fembs_on_apa = fembs_on_apa )  #
 #plot4_chns_gain (pp, orgdicts, title="Gain Distribution",  g="250" , fembs_on_apa = fembs_on_apa)  #

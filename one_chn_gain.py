@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 3/9/2016 7:12:33 PM
-Last modified: Thu Oct 12 12:03:59 2017
+Last modified: 11/19/2018 12:45:41 AM
 """
 
 #defaut setting for scientific caculation
@@ -53,7 +53,8 @@ def read_gain(filepath,sheetname):
     return dacmean 
 
 def one_chn_gain(gainfile_path, chn, tp=0, env="RT",gain=3, femb=0, DAC = "FPGADAC", DACvalue = [4,5,6,7,8,9,10,11]):
-    fpga_vlt_slope = fpga_dac_fit(path = "./R32_16_8_4_2_1_77iii_stength.xlsx",ideal_flg = 1)
+    #fpga_vlt_slope = fpga_dac_fit(path = "./R32_16_8_4_2_1_77iii_stength.xlsx",ideal_flg = 1)
+    fpga_vlt_slope = fpga_dac_fit( )
     ln2_int_vlt_slope = int_dac_fit(1)
     rt_int_vlt_slope = int_dac_fit(0)
 
