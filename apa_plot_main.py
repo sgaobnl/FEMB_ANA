@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Thu Nov 22 13:50:25 2018
+Last modified: Thu Nov 22 13:56:43 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -70,7 +70,7 @@ else:
 #fembs_on_apa = range(1,21, 1) 
 #fembs_on_apa = range(2,3, 1) 
 #fembs_on_apa = range(2,3,1) 
-loc = 2
+loc = 1
 fembs_on_apa = [loc] 
 
 sum_path = rms_rootpath + "/" + "results/" + "APA%d_"%APAno + rmsrunno + "_" + fpgarunno + "_" + asicrunno +"/"
@@ -132,8 +132,13 @@ if loc == 1:
                 ["V04",  6, "08"], ["U04",  6, "09"], ["V03",  6, "10"], ["U03",  6, "11"], 
                 ["V02",  6, "12"], ["U02",  6, "13"], ["V01",  6, "14"], ["U01",  6, "15"] 
             ]
-print orgdicts[0]
-sys.exit()
+    for adict in orgdicts:
+        for al in apa_femb_loc:
+            if (adict["fembchn"] == al[1] + int(al[2])
+                    adict["wire"] = al[0]
+                    break
+#print orgdicts[0]
+#sys.exit()
 
 
 orgdicts = dict_filter (orgdicts, or_dnf =femb_cs, and_flg=False  ) 
