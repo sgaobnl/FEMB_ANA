@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/17/2018 4:11:40 PM
+Last modified: 11/20/2018 2:52:46 PM
 """
 
 #defaut setting for scientific caculation
@@ -145,12 +145,12 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                                 ( (femb==1) and ( chip==3 ) and (chn ==0x0)) or 
                                 ( (femb==1) and ( chip==4 ) and (chn ==0xF)) or 
                                 ( (femb==1) and ( chip==7 ) and (chn ==0xF)) or 
-                                (femb==2)  or 
-                                (femb==3)   ):
-                                #( (femb==2) and ( chip==7 ) and (chn ==0xC)) or 
-                                #( (femb==2) and ( chip==7 ) and (chn ==0xE)) or 
+                                #(femb==2)  or 
+                                #(femb==3)   ):
+                                ( (femb==2) and ( chip==7 ) and (chn ==0xC)) or 
+                                ( (femb==2) and ( chip==7 ) and (chn ==0xE)) ):  
                                 #( (femb==3) and ( chip==5 ) )  ):
-                                pass 
+                                    pass 
                             else:
                             #if (True):
                                 alldata.append( [apa_loc, apa_info, wib, femb, chip, \

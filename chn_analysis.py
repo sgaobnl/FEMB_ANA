@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/20/2018 1:54:16 PM
+Last modified: 11/21/2018 12:42:38 AM
 """
 
 #defaut setting for scientific caculation
@@ -44,7 +44,7 @@ def fe_cfg(gain="250", tp="30" ):
         sg = 0
     else:
         print "Wrong gain input, exit anyway"
-        eixt ()
+        exit()
         
     if (tp=="30"):
         st = 2
@@ -67,6 +67,8 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
         runcode = "1"
     elif runno[5:8] == "fpg" :
         runcode = "2"
+    elif runno.find("dat")>=0 :
+        runcode = "f"
     elif runno[5:8] == "asi" :
         runcode = "4"
 
@@ -78,6 +80,7 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
         stepno = "step" + "2" + runcode 
     elif sg == 0:
         stepno = "step" + "0" + runcode 
+    #stepno = "step4F"
 
     runpath = rootpath + runno + "/" 
     files_cs = []
@@ -102,9 +105,10 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
                 if (fa_pos >= 0):
                     fe_set_rd = int(rawfile[fa_pos+11:fa_pos+13], 16) & 0x3C
                     if (fe_set_rd == fecfg_reg0) and (rawfile.find(".bin") >=0 ):
+                    #if (rawfile.find(".bin") >=0 ):
                         files_cs.append(steppath + rawfile)
     else:
-        #print runpath + " doesn't exist, ignore anyway!"
+        print runpath + " doesn't exist, ignore anyway!"
         files_cs = []
 
     return files_cs
@@ -124,7 +128,6 @@ def read_rawdata(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain
             ###############0         1      2       3       4     5    6    7      8           9         10#########
             datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
     return datas
-
 
 def read_rawdata_fast(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain="250", tp="20", jumbo_flag=False ):
     files = generate_rawpaths(rootpath, runno, wibno,  fembno, chnno, gain, tp ) 
@@ -147,6 +150,7 @@ def read_rawdata_coh(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, 
     datas = []
     for onefile in files:
         with open(onefile, 'rb') as f:
+            print onefile
             raw_data = f.read()
             filelength = len(raw_data )
             smps = (filelength-1024)/2/16 
@@ -154,6 +158,8 @@ def read_rawdata_coh(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, 
                 smps = 200000
 
             data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
+
+            #flt_chn_data = hp_flt_applied(chnrmsdata, fs = 2000000, passfreq = 1000, flt_order = 3)
             ###############0         1      2       3       4     5    6    7      8           9         10#########
             datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
     return datas
@@ -184,6 +190,7 @@ def coh_noise_ana(asic_ccs, rmsdata, wiretype = "X"):
         coh_data = np.array(rmsdata[0][7][0][0:200000])*0 
         coh_flg = [0, ext_chns]
     return coh_data, coh_flg
+
 
 def noise_a_coh(coh_data, coh_flg, rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
     c_flg = coh_flg[0]
@@ -268,24 +275,104 @@ def noise_a_coh(coh_data, coh_flg, rmsdata, chnno, fft_en = True, fft_s=2000, ff
                        wibno,  fembno ]
     return chn_noise_paras
 
-def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
-    asicchn = chnno % 16
 
-    chnrmsdata = rmsdata[0][7][asicchn]
+def noise_a_chn_fast(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
+    asicchn = chnno % 16
+    chnrmsdata = rmsdata[0][7][asicchn][0:20000]
     feed_loc = rmsdata[0][8]
-#   raw data
     len_chnrmsdata = len(chnrmsdata)
-    rms =  np.std(chnrmsdata[0:100000])
-    ped = np.mean(chnrmsdata[0:100000])
-    #data_slice = chnrmsdata[feed_loc[0]:feed_loc[1]]
-    data_slice = chnrmsdata[0:200000]
-    data_200ms_slice = chnrmsdata[0:200000:200]
+    if (len_chnrmsdata > 200000):
+        len_chnrmsdata  = 200000
+    rms =  np.std(chnrmsdata[0:10000])
+    ped = np.mean(chnrmsdata[0:10000])
+    data_slice = chnrmsdata[feed_loc[0]:feed_loc[1]]
+    data_200ms_slice = chnrmsdata[0:20000:20]
 
     avg_cycle_l = 1
     if (len(chnrmsdata) >= 400000):
         fft_s_l = 400000//avg_cycle_l
+
+    if (False):
+        f,p = chn_rfft_psd(chnrmsdata,  fft_s = fft_s, avg_cycle = fft_avg_cycle)
+        f_l, p_l = chn_rfft_psd(chnrmsdata, fft_s = fft_s_l, avg_cycle = avg_cycle_l)
     else:
-        fft_s_l = len(chnrmsdata)
+        f = None
+        p = None
+        f_l = None
+        p_l = None
+
+    if (False ):
+        flt_chn_data = hp_flt_applied(chnrmsdata, fs = 2000000, passfreq = 1000, flt_order = 3)
+        flt_chn_data = np.array(flt_chn_data) +  ped 
+        hfped = ped
+        hfrms = np.std(flt_chn_data)
+        if (fft_en):
+            hff,hfp = chn_rfft_psd(flt_chn_data, fft_s = fft_s, avg_cycle = fft_avg_cycle)
+            hff_l,hfp_l = chn_rfft_psd(flt_chn_data, fft_s = fft_s_l, avg_cycle = avg_cycle_l)
+        else:
+            hff = None
+            hfp = None
+            hff_l = None
+            hfp_l = None
+        
+        hfdata_slice = flt_chn_data[feed_loc[0]:feed_loc[1]]
+        hfdata_100us_slice = flt_chn_data[0:100000:200]
+    else:
+        hfped = ped
+        hfrms = rms
+        hff = None
+        hfp = None
+        hff_l = None
+        hfp_l = None
+        hfdata_slice = data_slice
+        hfdata_100us_slice = chnrmsdata[0:10000:10]
+ 
+    tmp_data = []
+    lenonechn_data = len(chnrmsdata)
+    for tmp in chnrmsdata:
+        if ( tmp % 64  == 63 ) or ( tmp % 64  == 0 ) or ( tmp % 64  == 1 ) or ( tmp % 64  == 62 )  or ( tmp % 64  == 2 ):
+            pass
+        else:
+            tmp_data.append(tmp)
+    len_tmp_data = len(tmp_data)
+    unstk_ratio =1.0 * len_tmp_data / lenonechn_data
+    sfrms =  np.std(tmp_data[0:10000])
+    sfped = np.mean(tmp_data[0:10000])
+
+    chn_noise_paras = [chnno, 
+                       rms,   ped,   data_slice,   data_200ms_slice,   f,   p,
+                       hfrms, hfped, hfdata_slice, hfdata_100us_slice, hff, hfp,
+                       sfrms, sfped, unstk_ratio, f_l, p_l, hff_l, hfp_l,
+                       wibno,  fembno ]
+    return chn_noise_paras
+
+
+def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
+    asicchn = chnno % 16
+    chnrmsdata = rmsdata[0][7][asicchn]
+
+#    chnrmsdata = hp_flt_applied(chnrmsdata, fs = 2000000, passfreq = 500, flt_order = 3)
+
+    feed_loc = rmsdata[0][8]
+    len_chnrmsdata = len(chnrmsdata)
+    if (len_chnrmsdata > 200000):
+        len_chnrmsdata  = 200000
+    chnrmsdata = chnrmsdata[0:len_chnrmsdata ]
+    rms =  np.std(chnrmsdata[0:10000])
+    ped = np.mean(chnrmsdata[0:10000])
+    if len(feed_loc) > 2:
+        #data_slice = chnrmsdata[feed_loc[0]:feed_loc[0]+5000]
+        data_slice = chnrmsdata
+        data_200ms_slice = chnrmsdata[0:200000:200]
+    else:
+        data_slice = chnrmsdata
+        data_200ms_slice = chnrmsdata[0:200000:200]
+
+    avg_cycle_l = 1
+    if (len_chnrmsdata >= 400000):
+        fft_s_l = 400000//avg_cycle_l
+    else:
+        fft_s_l =len(chnrmsdata) 
 
     if (fft_en):
         f,p = chn_rfft_psd(chnrmsdata,  fft_s = fft_s, avg_cycle = fft_avg_cycle)
@@ -311,7 +398,11 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
         hff_l = None
         hfp_l = None
         
-    hfdata_slice = flt_chn_data[feed_loc[0]:feed_loc[1]]
+    if len(feed_loc) > 2:
+        #hfdata_slice = flt_chn_data[feed_loc[0]:feed_loc[0] + 5000]
+        hfdata_slice = flt_chn_data
+    else:
+        hfdata_slice = flt_chn_data
     hfdata_100us_slice = flt_chn_data[0:100000:200]
 
 #   data after stuck code filter
@@ -330,8 +421,8 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
 #        stuck_type = "Middle"
 #    else:
 #        stuck_type = "Large"
-    sfrms =  np.std(tmp_data[0:100000])
-    sfped = np.mean(tmp_data[0:100000])
+    sfrms =  np.std(tmp_data[0:10000])
+    sfped = np.mean(tmp_data[0:10000])
 
     chn_noise_paras = [chnno, 
                        rms,   ped,   data_slice,   data_200ms_slice,   f,   p,
@@ -367,7 +458,13 @@ def linear_fit(x, y):
 
     y_fit = np.array(x)*slope + constant
     delta_y = abs(y - y_fit)
-    inl = delta_y / (max(y)-min(y))
+    if (len(y) > 0 ):
+        if ( (max(y)-min(y)) > 0 ) :
+            inl = delta_y / (max(y)-min(y))
+        else:
+            inl = [-1]
+    else:
+        inl = [-1]
     peakinl = max(inl)
 
     return slope, constant, peakinl, error_gain
@@ -382,14 +479,14 @@ def cali_linear_calc(chn_cali_paras):
     ped = chn_cali_paras[0][10]
 
     for onecp in chn_cali_paras:
-        if (ped >1500): #induction plane
+        if (ped >1000): #induction plane
             if onecp[4] < 3500 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
                 areaps.append(onecp[11])
                 areans.append(onecp[12])
-        elif (ped <=1500): #induction plane
+        elif (ped <1000): #induction plane
             if onecp[4] < 2200 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
@@ -398,7 +495,7 @@ def cali_linear_calc(chn_cali_paras):
                 areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
-    if (ped >1500): #induction plane
+    if (ped >1000): #induction plane
         #amplitude, positive pulse
         ampp_fit = linear_fit(fc_dacs,  ampps )
         ampn_fit = linear_fit(fc_dacs,  ampns )
@@ -410,14 +507,16 @@ def cali_linear_calc(chn_cali_paras):
         ampn_fit =  None
         arean_fit = None
 
-    if (ampp_fit != None) and ( math.isnan(ampp_fit[0]) == False) and ( ampp_fit[0] !=0 ):
-        encperlsb = int(6250/ampp_fit[0])
-        chninl    = ampp_fit[2]
+    if (ampp_fit != None):
+        if (ampp_fit[0] != 0):
+            encperlsb = int(6250/ampp_fit[0])
+            chninl    = ampp_fit[2]
+        else:
+            encperlsb = None
+            chninl    = None
     else:
         encperlsb = None
         chninl    = None
-        encperlsb = 0
-        chninl    = 0
 
     return  encperlsb, chninl
 
@@ -451,10 +550,13 @@ def cali_a_chn(calidata, chnno, cap=1.85E-13, wibno=0,  fembno=0 ):
         ppeak = np.mean(sonecali[2][9][asicchn])
         npeak = np.mean(sonecali[2][10][asicchn])
         data_slice = chncalidata[feed_loc[0]:feed_loc[1]]
-        avg_data_slice = np.array(chncalidata[feed_loc[0]:feed_loc[1]])
-        avg_cycles = len(feed_loc) - 2
-        for loci in range(avg_cycles - 1):
-            avg_data_slice = avg_data_slice +  np.array(chncalidata[feed_loc[loci+1]:feed_loc[loci+2]])
+        avg_cycles = len(feed_loc) - 5
+        #avg_data_slice = np.array(chncalidata[feed_loc[0]:feed_loc[1]])
+        avg_data_slice = np.array(chncalidata[feed_loc[0]:feed_loc[0]+400])
+        for loci in range(3, (avg_cycles - 5), 1):
+            #if len(chncalidata[feed_loc[loci+1]:feed_loc[loci+2]]) == len(chncalidata[feed_loc[1]:feed_loc[2]]):
+            #if len(chncalidata[feed_loc[loci+1]:feed_loc[loci+2]]) == 500:
+            avg_data_slice = avg_data_slice +  np.array(chncalidata[feed_loc[loci+1]:feed_loc[loci+1] + 400])
         avg_data_slice = avg_data_slice / (avg_cycles*1.0)
         dactype = sonecali[0]
         vdac = sonecali[1]
@@ -501,7 +603,7 @@ def cali_a_chn(calidata, chnno, cap=1.85E-13, wibno=0,  fembno=0 ):
 def ana_a_chn(rms_rootpath,  cali_rootpath, mode="CHN", APAno = 4, \
                rmsrunno = "run01rms", calirunno = "run01fpg",
                wibno=0,  fembno=0, chnno=0, gain="250", tp="20", \
-               jumbo_flag=False, fft_en= True, fft_s=5000, fft_avg_cycle=50, cap=1.85E-13 ):
+               jumbo_flag=False, fft_en= True, fft_s=5000, fft_avg_cycle=50, cap=1.85E-13, apa="ProtoDUNE" ):
     femb_pos_np = femb_position (APAno)
     wibfemb= "WIB"+format(wibno,'02d') + "_" + "FEMB" + format(fembno,'1d') 
 
@@ -512,6 +614,7 @@ def ana_a_chn(rms_rootpath,  cali_rootpath, mode="CHN", APAno = 4, \
             break
 
     apa_map = APA_MAP()
+    apa_map.APA=apa
     All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
     wireinfo = None
     for onewire in All_sort:
@@ -519,7 +622,7 @@ def ana_a_chn(rms_rootpath,  cali_rootpath, mode="CHN", APAno = 4, \
             wireinfo = onewire
             break
     feset_info = [gain, tp]
-    rmsdata = read_rawdata(rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
+    rmsdata = read_rawdata_fast(rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     calidata = read_rawdata(cali_rootpath, calirunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     
     chn_noise_paras = noise_a_chn(rmsdata, chnno,fft_en, fft_s, fft_avg_cycle, wibno, fembno)
@@ -572,7 +675,7 @@ def mp_ana_a_chn(rms_rootpath,  cali_rootpath, mode="CHN", APAno = 4, \
             wireinfo = onewire
             break
     feset_info = [gain, tp]
-    rmsdata = read_rawdata(rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
+    rmsdata = read_rawdata_fast(rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     calidata = read_rawdata(cali_rootpath, calirunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     
     from multiprocessing import Pipe

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/19/2018 10:51:17 PM
+Last modified: 11/22/2018 10:54:21 AM
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -363,10 +363,11 @@ def sub_enctp_plot0 (ax, g,calitype, tp_us, xchns, xenc_tps, vchns, venc_tps, uc
     ax.legend(loc=4)
     ax.set_xlim([0,4])
     ax.set_xlabel("Peaking time / ($\mu$s)")
-    if maxy > 1000:
-        maxy = (maxy//1000 + 1)*1000
-    else:
-        maxy = 1000
+    #if maxy > 1000:
+    #    maxy = (maxy//1000 + 1)*1000
+    #else:
+    #    maxy = 1000
+    maxy = 1000
     ax.set_ylim([0,maxy])
     ax.set_ylabel("ENC /e-")
     ax.set_title(title )
@@ -380,6 +381,7 @@ def plot0_overall_enc (pp, orgdicts, title="APA ENC vs. Tp", calitype="fpg_gain"
     ax4 = plt.subplot2grid((4, 4), (2, 2), colspan=2, rowspan=2)
 
     gs=["250", "140", "078", "047"]
+    #gs=[ "140"]
     tps=["05", "10", "20", "30"]
 
     encgs = []
@@ -917,6 +919,7 @@ def plot3_overall_gain (pp, orgdicts, title="APA Gain Measurement" ) :
     ax4 = plt.subplot2grid((4, 4), (2, 2), colspan=2, rowspan=2)
 
     gs=["250", "140", "078", "047"]
+    #gs=[ "140"]
     tps=["05", "10", "20", "30"]
 
     encgs = []

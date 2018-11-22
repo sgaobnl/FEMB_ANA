@@ -24,12 +24,28 @@
 ::python APA_analysis.py  9    "10_23_2018" "10_23_2018" "10_23_2018" run06rms   run06fpg  run99asi  SBND 
 ::python apa_plot_main.py 9    "10_23_2018" "10_23_2018" "10_23_2018" run06rms   run06fpg  run99asi  SBND 
 
-python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run01rms   run01fpg  run99asi  SBND 
-python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run02rms   run01fpg  run99asi  SBND 
-python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run05rms   run01fpg  run99asi  SBND 
-python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run03rms   run01fpg  run99asi  SBND 
-python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run04rms   run01fpg  run99asi  SBND 
-python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run06rms   run01fpg  run99asi  SBND 
-python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run07rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_16_2018" "11_16_2018" "11_16_2018" run01rms   run01fpg  run99asi  SBND 
 ::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run01rms   run01fpg  run99asi  SBND 
-::python apa_plot_main.py 9    "11_17_2018" "11_17_2018" "11_17_2018" run01rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run02rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run05rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run03rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run04rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run06rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run07rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run01rms   run01fpg  run99asi  SBND 
+python apa_plot_main.py 9    "11_17_2018" "11_17_2018" "11_17_2018" run05rms   run01fpg  run99asi  SBND 
+::
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run12rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run13rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run02rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run03rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run06rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run07rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_16_2018" "11_16_2018" run01rms   run01fpg  run99asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run10rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run07rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run08rms   run01fpg  run01asi  SBND 
+::python APA_analysis.py  9    "11_20_2018" "11_20_2018" "11_20_2018" run09rms   run01fpg  run01asi  SBND 
+
+::python apa_plot_main.py 9    "11_16_2018" "11_16_2018" "11_16_2018" run01rms   run01fpg  run99asi  SBND 
