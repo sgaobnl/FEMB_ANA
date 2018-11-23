@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/22/2018 10:54:21 AM
+Last modified: 11/22/2018 3:08:01 PM
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -938,17 +938,33 @@ def plot3_overall_gain (pp, orgdicts, title="APA Gain Measurement" ) :
             dr = draw_results (xd) 
             xchns = len(dr[0])
             xfpg_dac.append([np.mean(dr[7]), np.std(dr[7])] )
-            xasi_dac.append([np.mean(dr[8]), np.std(dr[8])] )
+            tmp = []
+            for i in dr[8]:
+                if i != None :
+                    tmp.append(i)
+            xasi_dac.append([np.mean(tmp), np.std(tmp)] )
+
+            #xasi_dac.append([np.mean(dr[8]), np.std(dr[8])] )
 
             dr = draw_results (vd) 
             vchns = len(dr[0])
             vfpg_dac.append([np.mean(dr[7]), np.std(dr[7])] )
-            vasi_dac.append([np.mean(dr[8]), np.std(dr[8])] )
+            tmp = []
+            for i in dr[8]:
+                if i != None :
+                    tmp.append(i)
+            vasi_dac.append([np.mean(tmp), np.std(tmp)] )
 
             dr = draw_results (ud) 
             uchns = len(dr[0])
             ufpg_dac.append([np.mean(dr[7]), np.std(dr[7])] )
-            uasi_dac.append([np.mean(dr[8]), np.std(dr[8])] )
+            tmp = []
+            for i in dr[8]:
+                if i != None :
+                    tmp.append(i)
+            uasi_dac.append([np.mean(tmp), np.std(tmp)] )
+
+#            uasi_dac.append([np.mean(dr[8]), np.std(dr[8])] )
  
         if ( g == "250" ):
             sub_gain_plot3 (ax1, g, tp_us, xchns, xfpg_dac, vchns, vfpg_dac, uchns, ufpg_dac, note="FPGA-DAC") 

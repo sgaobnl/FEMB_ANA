@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/21/2018 11:10:57 PM
+Last modified: 11/23/2018 9:31:41 AM
 """
 
 #defaut setting for scientific caculation
@@ -590,17 +590,19 @@ if __name__ == '__main__':
     print "Result saves at: "
     print out_path 
     gains = ["250", "140"] 
-    gains = [ "140"] 
     tps = ["05", "10", "20", "30"]
+    gains = [ "140"] 
     tps = [ "20"]
 
-    PCE = rms_rootpath+ rmsrunno + "_ASICrms" + ".csv"
+    PCE = rms_rootpath+ rmsrunno + "_ASICrms_femb0" + ".csv"
     ccs_title = ["wire", "wib", "femb", "asic", "chnno", "RawRMS", "CohRMS", "PostRMS"]
     with open (PCE, 'w') as fp:
         fp.write(",".join(str(i) for i in ccs_title) +  "," + "\n")
  
     #for i in range(5):
-    del_chns =[ [0, 1, 48], [0, 1, 79], [0, 1, 127] ]
+
+    #del_chns =[ [0, 0, 107], [0, 0, 109], [0, 0, 125] ] #femb0
+    del_chns =[ [0, 1, 48], [0, 1, 79], [0, 1, 127] ] #femb1
     for i in [1]:
         wibno = i//4
         fembno = i%4
@@ -612,7 +614,8 @@ if __name__ == '__main__':
             if (asicno in [0,1,4,5]):
                 asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "X", del_chns = del_chns)
             else:
-                asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "UV", del_chns = del_chns)
+                asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "V", del_chns = del_chns)
+                asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "U", del_chns = del_chns)
             with open (PCE, 'a+') as fp:
                 for x in asicrms:
                     fp.write(",".join(str(i) for i in x) +  "," + "\n")
