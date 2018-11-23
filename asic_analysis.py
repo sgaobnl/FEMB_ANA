@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Nov 23 11:52:05 2018
+Last modified: 11/23/2018 12:05:55 PM
 """
 
 #defaut setting for scientific caculation
@@ -641,8 +641,7 @@ if __name__ == '__main__':
     gains = [ "140"] 
     tps = [ "20"]
 
-    f_cs = 1
-    PCE = rms_rootpath+ rmsrunno + "_ASICrms_femb%d"%f_cs + ".csv"
+    PCE = rms_rootpath+ rmsrunno + "_ASICrms_femb%d"%fembno + ".csv"
     ccs_title = ["wire", "wib", "femb", "asic", "chnno", "RawRMS", "CohRMS", "PostRMS"]
     with open (PCE, 'w') as fp:
         fp.write(",".join(str(i) for i in ccs_title) +  "," + "\n")
