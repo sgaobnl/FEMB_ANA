@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Nov 23 10:09:36 2018
+Last modified: 11/23/2018 10:21:02 AM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -117,12 +117,11 @@ if loc == 1:
                 ["V04",  6, "08"], ["U04",  6, "09"], ["V03",  6, "10"], ["U03",  6, "11"], 
                 ["V02",  6, "12"], ["U02",  6, "13"], ["V01",  6, "14"], ["U01",  6, "15"] 
             ]
-    for adict in orgdicts:
+    for ai in range(len(orgdicts)):
         for al in apa_femb_loc:
-            if (adict["fembchn"] == al[1] + int(al[2])
-                    adict["wire"] = al[0]
+            if (orgdicts[ai]["fembchn"] == (al[1]-1)*16 + int(al[2]) ):
+                    orgdicts[ai]["wire"] = al[0]
                     break
-
 orgdicts = dict_filter (orgdicts, or_dnf =femb_cs, and_flg=False  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 0, 107]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 0, 109]  ) 
@@ -146,15 +145,15 @@ orgdicts = dict_filter (orgdicts, and_dnf =[["gain","140"], ["tp","20"]], or_flg
 #orgdicts = dict_filter (orgdicts, and_dnf =[ ["tp","20"]], or_flg=False  ) 
 print len(orgdicts)
 
-PCE = rms_rootpath+ fpgarunno + "_fpgagain" + ".csv"
+PCE = rms_rootpath+ fpgarunno + "_fpgagain" + "_femb%d.csv"%(loc-1)
 ccs_title = ["wib", "femb", "fembchn", "Egain", "INL"]
 
 with open (PCE, 'w') as fp:
     fp.write(",".join(str(i) for i in ccs_title) +  "," + "\n")
     
-for d in orgdicts:
-    cs = [d["wib"], d["femb"], d["fembchn"], d["fpg_gain"], d["fpg_inl"] ]
-    fp.write(",".join(str(i) for i in cs) +  "," + "\n")
+    for d in orgdicts:
+        cs = [d["wib"], d["femb"], d["fembchn"], d["fpg_gain"], d["fpg_inl"] ]
+        fp.write(",".join(str(i) for i in cs) +  "," + "\n")
     
 print "Done"
 

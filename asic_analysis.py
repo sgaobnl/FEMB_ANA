@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/23/2018 9:31:41 AM
+Last modified: 11/23/2018 11:16:24 AM
 """
 
 #defaut setting for scientific caculation
@@ -66,6 +66,46 @@ def wf_a_asic(rms_rootpath, fpga_rootpath, asic_rootpath,  APAno = 4, \
             if (int(onewire[1]) == chnno):
                 wireinfo = onewire
                 break
+        if fembno == 0:
+            apa_femb_loc = [ 
+                        ["X56",  4, "15"], ["X55",  4, "14"], ["X54",  4, "13"], ["X53",  4, "12"],
+                        ["X52",  4, "11"], ["X51",  4, "10"], ["X50",  4, "09"], ["X49",  4, "08"],
+                        ["X48",  4, "07"], ["X47",  4, "06"], ["X46",  4, "05"], ["X45",  4, "04"],
+                        ["X44",  4, "03"], ["X43",  4, "02"], ["U29",  4, "01"], ["U28",  4, "00"],
+                        ["U27",  3, "15"], ["U26",  3, "14"], ["X42",  3, "13"], ["X41",  3, "12"],
+                        ["X40",  3, "11"], ["X39",  3, "10"], ["X38",  3, "09"], ["X37",  3, "08"],
+                        ["X36",  3, "07"], ["X35",  3, "06"], ["X34",  3, "05"], ["X33",  3, "04"],
+                        ["X32",  3, "03"], ["X31",  3, "02"], ["X30",  3, "01"], ["X29",  3, "00"],
+                        ["V36",  2, "00"], ["U36",  2, "01"], ["V35",  2, "02"], ["U35",  2, "03"],
+                        ["V34",  2, "04"], ["U34",  2, "05"], ["V33",  2, "06"], ["U33",  2, "07"],
+                        ["V32",  2, "08"], ["U32",  2, "09"], ["V31",  2, "10"], ["U31",  2, "11"],
+                        ["V30",  2, "12"], ["U30",  2, "13"], ["V29",  2, "14"], ["V28",  2, "15"],
+                        ["V27",  1, "00"], ["V26",  1, "01"], ["V25",  1, "02"], ["U25",  1, "03"],
+                        ["V24",  1, "04"], ["U24",  1, "05"], ["V23",  1, "06"], ["U23",  1, "07"],
+                        ["V22",  1, "08"], ["U22",  1, "09"], ["V21",  1, "10"], ["U21",  1, "11"],
+                        ["V20",  1, "12"], ["U20",  1, "13"], ["V19",  1, "14"], ["U19",  1, "15"],
+                        ["X28",  7, "15"], ["X27",  7, "14"], ["X26",  7, "13"], ["X25", 7 , "12"],
+                        ["X24",  7, "11"], ["X23",  7, "10"], ["X22",  7, "09"], ["X21", 7 , "08"],
+                        ["X20",  7, "07"], ["X19",  7, "06"], ["X18",  7, "05"], ["X17", 7 , "04"],
+                        ["X16",  7, "03"], ["X15",  7, "02"], ["U11",  7, "01"], ["U10", 7 , "00"],
+                        ["U09",  8, "15"], ["U08",  8, "14"], ["X14",  8, "13"], ["X13", 8 , "12"],
+                        ["X12",  8, "11"], ["X11",  8, "10"], ["X10",  8, "09"], ["X09", 8 , "08"],
+                        ["X08",  8, "07"], ["X07",  8, "06"], ["X06",  8, "05"], ["X05", 8 , "04"],
+                        ["X04",  8, "03"], ["X03",  8, "02"], ["X02",  8, "01"], ["X01", 8 , "00"],
+                        ["V18",  5, "00"], ["U18",  5, "01"], ["V17",  5, "02"], ["U17",  5, "03"], 
+                        ["V16",  5, "04"], ["U16",  5, "05"], ["V15",  5, "06"], ["U15",  5, "07"], 
+                        ["V14",  5, "08"], ["U14",  5, "09"], ["V13",  5, "10"], ["U13",  5, "11"], 
+                        ["V12",  5, "12"], ["U12",  5, "13"], ["V11",  5, "14"], ["V10",  5, "15"], 
+                        ["V09",  6, "00"], ["V08",  6, "01"], ["V07",  6, "02"], ["U07",  6, "03"], 
+                        ["V06",  6, "04"], ["U06",  6, "05"], ["V05",  6, "06"], ["U05",  6, "07"], 
+                        ["V04",  6, "08"], ["U04",  6, "09"], ["V03",  6, "10"], ["U03",  6, "11"], 
+                        ["V02",  6, "12"], ["U02",  6, "13"], ["V01",  6, "14"], ["U01",  6, "15"] 
+                    ]
+
+            for al in apa_femb_loc:
+                if ( int(wireinfo[1]) == (al[1]-1)*16 + int(al[2]) ):
+                        wireinfo[0] = al[0]
+                        break
         
         chn_noise_paras = noise_a_chn(rmsdata, chnno, fft_en = True)
         rms          =  chn_noise_paras[1]
@@ -594,7 +634,8 @@ if __name__ == '__main__':
     gains = [ "140"] 
     tps = [ "20"]
 
-    PCE = rms_rootpath+ rmsrunno + "_ASICrms_femb0" + ".csv"
+    f_cs = 1
+    PCE = rms_rootpath+ rmsrunno + "_ASICrms_femb%d"%f_cs + ".csv"
     ccs_title = ["wire", "wib", "femb", "asic", "chnno", "RawRMS", "CohRMS", "PostRMS"]
     with open (PCE, 'w') as fp:
         fp.write(",".join(str(i) for i in ccs_title) +  "," + "\n")
@@ -603,7 +644,7 @@ if __name__ == '__main__':
 
     #del_chns =[ [0, 0, 107], [0, 0, 109], [0, 0, 125] ] #femb0
     del_chns =[ [0, 1, 48], [0, 1, 79], [0, 1, 127] ] #femb1
-    for i in [1]:
+    for i in [fembno]:
         wibno = i//4
         fembno = i%4
         for asicno in range(8):
@@ -611,14 +652,30 @@ if __name__ == '__main__':
                           rmsrunno = rmsrunno, fpgarunno = fpgarunno, asicrunno = asicrunno,\
                           wibno=wibno,  fembno=fembno, asicno=asicno, gain=gains[0], tp=tps[0] ,\
                           jumbo_flag=True, apa= apa )
-            if (asicno in [0,1,4,5]):
+            if fembno == 0:
+                xasics = [2,3,6,7]
+            else:
+                xasics = [0,1,4,5]
+            if (asicno in xasics):
                 asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "X", del_chns = del_chns)
+                with open (PCE, 'a+') as fp:
+                    for x in asicrms:
+                        fp.write(",".join(str(i) for i in x) +  "," + "\n")
+
             else:
                 asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "V", del_chns = del_chns)
+                with open (PCE, 'a+') as fp:
+                    for x in asicrms:
+                        fp.write(",".join(str(i) for i in x) +  "," + "\n")
+
                 asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "U", del_chns = del_chns)
-            with open (PCE, 'a+') as fp:
-                for x in asicrms:
-                    fp.write(",".join(str(i) for i in x) +  "," + "\n")
+                with open (PCE, 'a+') as fp:
+                    for x in asicrms:
+                        fp.write(",".join(str(i) for i in x) +  "," + "\n")
+
+#            with open (PCE, 'a+') as fp:
+#                for x in asicrms:
+#                    fp.write(",".join(str(i) for i in x) +  "," + "\n")
     print PCE
 
 ########    asic_results = wf_a_asic(rms_rootpath, fpga_rootpath, asic_rootpath,  APAno = APAno, \
