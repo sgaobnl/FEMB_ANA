@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Nov 23 21:17:04 2018
+Last modified: Fri Nov 23 23:58:53 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -31,23 +31,47 @@ import matplotlib.gridspec as gridspec
 import matplotlib.patches as mpatches
 import time
 import datetime
-from temperature import temp_fit
+#from temperature import temp_fit
 from readlog import readlog
-from read_rtds import run_rtds
+#from read_rtds import run_rtds
 
 
-def apa_noise(all_chn_results, wiretype="X", sf = False):
+def apa_noise(all_chn_results, wiretype="X", sf = False, runno = "run01dat"):
     rms_np = []
     for onechn_results in all_chn_results:
-        #rchn = int(onechn_results[2][1:] )
-        #if (onechn_results[2][0] == wiretype ) and (rchn >= 48) and (rchn<192):
-        if (onechn_results[1][0][0] == wiretype ) :
+        if (onechn_results[2][0] == wiretype ):
             if (sf == False):
-                rms_np.append(onechn_results[7])
+                rms_np.append(onechn_results[11])
             else:
-                rms_np.append(onechn_results[9])
+                rms_np.append(onechn_results[13])
     rms_np = np.array(rms_np)
+    if int(runno[3:5]) < 5:
+        tmp = []
+        for i in range(len(rms_np)):
+            if rms_np[i] > 2 and rms_np[i] < 5:
+                tmp.append(rms_np[i])
+        rms_np = tmp
+    elif int(runno[3:5]) <= 10:
+        tmp = []
+        for i in range(len(rms_np)):
+            if rms_np[i] < 3:
+                tmp.append(rms_np[i])
+        rms_np = tmp
+    elif int(runno[3:5]) <= 14:
+        tmp = []
+        for i in range(len(rms_np)):
+            if rms_np[i] < 2.5:
+                tmp.append(rms_np[i])
+        rms_np = tmp
+    else:
+        tmp = []
+        for i in range(len(rms_np)):
+            if rms_np[i] < 2.3:
+                tmp.append(rms_np[i])
+        rms_np = tmp
     rms = np.mean(rms_np)
+    if math.isnan(rms) :
+        print runno
     errbar = np.std(rms_np)
     return rms, errbar
 
@@ -56,9 +80,10 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
                temper_time_np, temper_femb0_np, temper_femb1_np, temper_femb2_np, temper_femb3_np, \
                gain=3, tp=2,  enc_flg = True, sf_flg = False ):
 
-    plt.figure(figsize=(16,9))
+    plt.figure(figsize=(12,8))
     ax = plt.subplot2grid((1, 1), (0, 0))
 
+#    rtd_time_np = ( np.array(temperrtdts_np) - np.min(time_np) ) / 3600.0
     if FE_temper_flg == True :
         temper_time_np = ( np.array(temper_time_np) - np.min(time_np) ) / 3600.0
     time_np = ( np.array(time_np) - np.min(time_np) ) /3600.0
@@ -78,7 +103,7 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
         temper_femb3_np = (( np.array( temper_femb3_np ) * deg_per_mv ) + cconstant ) 
 
     if gain == 4:
-        egain = 192 
+        egain = 193
         strtp = "2.0"
 #    if gain == 3:
 #        if tp ==1 : #0.5us
@@ -117,63 +142,95 @@ def noise_plot(path, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, v
     label = []
     wire_type_np = [ "X", "U", "V"]
 
-####    wire_np = [["X plane",xrms_np, xrms_errbar_np], ["V plane",vrms_np, vrms_errbar_np], ["U plane",urms_np, urms_errbar_np]]
-    wire_np = [["X plane",xrms_np, xrms_errbar_np], ["U plane",(urms_np*225.0/245.0), (urms_errbar_np*225.0/245.0)]]
+    wire_np = [["X plane",xrms_np, xrms_errbar_np], ["V plane",vrms_np, vrms_errbar_np], ["U plane",urms_np, urms_errbar_np]]
+#    wire_np = [["X plane",xrms_np, xrms_errbar_np], ["U plane", urms_np, urms_errbar_np], ["U plane", urms_np, urms_errbar_np]]
     minxrms = np.min(xrms_np)
     minxrms_pos = np.where(xrms_np == minxrms)[0][0]
-#    minvrms = np.min(vrms_np)
-#    minvrms_pos = np.where(vrms_np == minvrms)[0][0]
+    print len(vrms_np)
+    print vrms_np
+    minvrms = np.min(vrms_np)
+    print minvrms
+    minvrms_pos = np.where(vrms_np == minvrms)[0][0]
     minurms = np.min(urms_np)
     minurms_pos = np.where(urms_np == minurms)[0][0]
 
-    lxrms = xrms_np[-1]
-    lxrms_pos = len(xrms_np) - 1
-#    lvrms = vrms_np[-1]
-#    lvrms_pos = len(vrms_np) - 1
-    lurms = urms_np[1]
-    lurms_pos = len(urms_np) - 1
-
     markerno = 0
+#    ax2 = ax.twinx()
+#    ax2patch = []
+#    ax2label = []
+#    ax2.plot(rtd_time_np, temperrtd0_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd1_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd2_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd3_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd4_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd5_np, color = 'tab:orange' )
+#    ax2.plot(rtd_time_np, temperrtd6_np, color = 'tab:orange' )
+#    ax2.scatter(rtd_time_np, temperrtd0_np, color = 'b',           marker = '1', label = "TT0200 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd1_np, color = 'g',           marker = '2', label = "TT0201 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd2_np, color = 'c',           marker = '4', label = "TT0202 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd3_np, color = 'm',           marker = '8', label = "TT0203 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd4_np, color = 'y',           marker = 's', label = "TT0204 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd5_np, color = 'tab:orange',  marker = '+', label = "TT0205 (K)")
+#    ax2.scatter(rtd_time_np, temperrtd6_np, color = 'r',           marker = 'x', label = "TT0206 (K)")
+#    ax2.legend(loc = 4 )
+#
+#    if (FE_temper_flg == True):
+#        ax2.scatter(temper_time_np, temper_femb0_np, color = 'tab:orange', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:orange') )
+#        ax2label.append( "Temperature on WIB5FEMB0" )
+#        ax2.scatter(temper_time_np, temper_femb1_np, color = 'tab:purple', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:purple') )
+#        ax2label.append( "Temperature on WIB5FEMB1" )
+#        ax2.scatter(temper_time_np, temper_femb2_np, color = 'tab:brown', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:brown') )
+#        ax2label.append( "Temperature on WIB5FEMB2" )
+#        ax2.scatter(temper_time_np, temper_femb3_np, color = 'tab:olive', marker = 'x')
+#        ax2patch.append( mpatches.Patch(color = 'tab:olive') )
+#        ax2label.append( "Temperature on WIB5FEMB3" )
+#        ax2.legend(ax2patch, ax2label, loc=4, fontsize=12 )
+#    
+#        ax2.plot(temper_time_np, temper_femb0_np, color =  'tab:orange', marker = 'x')
+#        ax2.plot(temper_time_np, temper_femb1_np, color =  'tab:purple', marker = 'x')
+#        ax2.plot(temper_time_np, temper_femb2_np, color =  'tab:brown', marker = 'x')
+#        ax2.plot(temper_time_np, temper_femb3_np, color =  'tab:olive', marker = 'x')
+#    ax2.set_ylabel('Temperature / K', color='tab:orange', fontsize=12)
+#    ax2.tick_params('y', colors='tab:orange')
+#    ax2.set_ylim([-50, 350])
+#    ax2.set_xlim([np.min(time_np)-1,np.max(time_np)+2])
+
+
     for onewire in wire_np:
         ax.errorbar(time_np, onewire[1], onewire[2], color = clor[markerno], marker = mker[markerno])
-        if enc_flg == True:
-#            if (onewire[0][0] == "X" ):
-#                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.85, "Collection lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=20) 
-#            elif (onewire[0][0] == "U" ):                                                                                                          
-#                ax.text( time_np[minxrms_pos]*0.65, yrange[1]*0.79, "Induction lowest noise: %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=20) 
-##            elif (onewire[0][0] == "V" ):                                                                                                          
-##                ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.82, "Void channels lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=10) 
-#
-#            if (onewire[0][0] == "X" ):
-#                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.85, "Collection latest noise: %d$\pm$%d e$^-$"%(onewire[1][lxrms_pos], onewire[2][lxrms_pos]), color = clor[markerno], fontsize=20) 
-#            elif (onewire[0][0] == "U" ):                                                                                                          
-#                ax.text( time_np[lxrms_pos]*0.65, yrange[1]*0.79, "Induction latest noise: %d$\pm$%d e$^-$"%(onewire[1][lurms_pos], onewire[2][lurms_pos]), color = clor[markerno], fontsize=20) 
-#            elif (onewire[0][0] == "V" ):                                                                                                          
-#                ax.text( time_np[lxrms_pos]*0.75, yrange[1]*0.82, "Void channels latest noise = %d$\pm$%d e$^-$"%(onewire[1][lvrms_pos], onewire[2][lvrms_pos]), color = clor[markerno], fontsize=10) 
-
+        #if enc_flg == True:
+        #    if (onewire[0][0] == "X" ):
+        #        ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.85, "X plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minxrms_pos], onewire[2][minxrms_pos]), color = clor[markerno], fontsize=16) 
+        #    elif (onewire[0][0] == "U" ):                                                                                                          
+        #        ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.75, "U plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minurms_pos], onewire[2][minurms_pos]), color = clor[markerno], fontsize=16) 
+        #    elif (onewire[0][0] == "V" ):                                                                                                          
+        #        ax.text( time_np[minxrms_pos]*0.75, yrange[1]*0.65, "V plane lowest noise = %d$\pm$%d e$^-$"%(onewire[1][minvrms_pos], onewire[2][minvrms_pos]), color = clor[markerno], fontsize=16) 
 
         patch.append( mpatches.Patch(color = clor[markerno]))
         label.append("ENC of %s"%(onewire[0] ))
         if (markerno  == 0 ):
-            ax.text( time_np[0], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[0], fontsize=8) 
+            ax.text( time_np[0], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[0][0:-1], fontsize=16) 
             runlen = len(time_np)
             for runtmp in range(1,runlen,1):
                 if (strtime_np[runtmp][0:10] != strtime_np[runtmp-1][0:10] ):
-                    ax.text( time_np[runtmp], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[runtmp], fontsize=8) 
+                    ax.text( time_np[runtmp], yrange[1]*0.95 , "$\leftarrow$%s"%strtime_np[runtmp], fontsize=16) 
         markerno = markerno + 1
 
-    ax.legend(patch, label, loc=3, fontsize=12 )
-    ax.tick_params(labelsize=12)
+    ax.legend(patch, label, loc=3, fontsize=16 )
+    ax.tick_params(labelsize=16)
     ax.set_ylim(yrange)
     ax.set_xlim([np.min(time_np),np.max(time_np)])
     if enc_flg == True:
-        ax.set_ylabel("ENC / e$^-$", fontsize=12)
-        ax.set_title("ENC (Gain = 14mV/fC, Tp = %s$\mu$s) vs. Temperature"%strtp, fontsize=12 )
+        ax.set_ylabel("ENC / e$^-$", fontsize=16)
+        ax.set_title("ENC (Gain = 14mV/fC, Tp = %s$\mu$s) vs. Temperature"%strtp, fontsize=16 )
     else:
-        ax.set_ylabel("ADC /bin", fontsize=12)
-        ax.set_title("Noise", fontsize=12 )
+        ax.set_ylabel("ADC /bin", fontsize=16)
+        ax.set_title("Noise", fontsize=16 )
 
-    ax.set_xlabel("Time / hour", fontsize=12)
+    ax.set_xlabel("Time / hour", fontsize=16)
     ax.grid()
 
 
@@ -201,12 +258,11 @@ FE_temper_flg = ( sys.argv[8] == True )
 
 if (server_flg == "server" ):
     #rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/"
-    rootpath = "/daqdata/sbnd/BNL_LD_data/LArIAT/Rawdata/"
-    rootpath = "/lariat/data/users/sbnd/BNL_LD_data/LArIAT/Rawdata/"
+    rootpath = "/daqdata/BNL_LD_data/LArIAT/Rawdata/"
 else:
-    rootpath = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/"
+    rootpath = "/Users/shanshangao/Google_Drive_BNL/tmp/11202018/Rawdata/"
 prepath = rootpath + "Rawdata_"
-rtdsfile = rootpath + "APA4_cooldown_RTDdata.csv" 
+#rtdsfile = rootpath + "APA4_cooldown_RTDdata.csv" 
 
 month_np = []
 for tmp in range(0, len(strmonths), 3):
@@ -230,15 +286,15 @@ for rundate in rundatepaths:
     for root, dirs, files in os.walk(resultpath):
         break   
     for chkdir in dirs:
-        if (chkdir.find("dat") > 0 ) and (chkdir.find("99fpg") < 0 ):
+        if (chkdir.find("dat") > 0 ):
             if len(chkdir) == 8:
                 strrunno = chkdir[3:5]
             else:
                 strrunno = chkdir[3:6]
             loginfo = readlog(rootpath=rootpath, APAno=APAno, runtime = rundate, runno = strrunno, runtype = "dat") 
-            run_temp = run_rtds(filepath=rtdsfile, runtime =loginfo[6]) 
+#            run_temp = run_rtds(filepath=rtdsfile, runtime =loginfo[6]) 
             run_temp = 0
-            chkrun_ts = long( time.mktime(datetime.datetime.strptime(loginfo[6], "%Y-%m-%d %H:%M:%S").timetuple()) )
+            chkrun_ts = long( time.mktime(datetime.datetime.strptime(loginfo[6][0:-1], "%Y-%m-%d %H:%M:%S").timetuple()) )
             chkruns.append( [resultpath, chkdir, loginfo, run_temp, chkrun_ts] ) 
 
     rundatepath = prepath + rundate  
@@ -321,209 +377,14 @@ sfurms_np = []
 sfurms_errbar_np = []
 
 del_run = [
-
-            ["Rawdata_08_20_2018",  "run01dat",] ,
-            ["Rawdata_08_20_2018",  "run02dat",] ,
-            ["Rawdata_08_20_2018",  "run03dat",] ,
-            ["Rawdata_08_20_2018",  "run04dat",] ,
-            ["Rawdata_08_20_2018",  "run05dat",] ,
-            ["Rawdata_08_20_2018",  "run06dat",] ,
-            ["Rawdata_08_20_2018",  "run07dat",] ,
-            ["Rawdata_08_20_2018",  "run08dat",] ,
-            ["Rawdata_08_20_2018",  "run09dat",] ,
-            ["Rawdata_08_20_2018",  "run10dat",] ,
-
-            ["Rawdata_08_20_2018",  "run11dat",] ,
-            ["Rawdata_08_20_2018",  "run12dat",] ,
-            ["Rawdata_08_20_2018",  "run13dat",] ,
-            ["Rawdata_08_20_2018",  "run14dat",] ,
-            ["Rawdata_08_20_2018",  "run15dat",] ,
-            ["Rawdata_08_20_2018",  "run16dat",] ,
-            ["Rawdata_08_20_2018",  "run17dat",] ,
-            ["Rawdata_08_20_2018",  "run18dat",] ,
-            ["Rawdata_08_20_2018",  "run19dat",] ,
-            ["Rawdata_06_20_2018",  "run20dat",] ,
-            ["Rawdata_06_20_2018",  "run21dat",] ,
-
-
-#            ["Rawdata_08_22_2018",  "run20dat",] ,
-#            ["Rawdata_08_22_2018",  "run21dat",] ,
-#            ["Rawdata_08_22_2018",  "run22dat",] ,
-#            ["Rawdata_08_22_2018",  "run23dat",] ,
-#            ["Rawdata_08_22_2018",  "run24dat",] ,
-#            ["Rawdata_08_22_2018",  "run25dat",] ,
-#            ["Rawdata_08_22_2018",  "run26dat",] ,
-#            ["Rawdata_08_22_2018",  "run27dat",] ,
-#            ["Rawdata_08_22_2018",  "run28dat",] ,
-#            ["Rawdata_08_22_2018",  "run29dat",] ,
-#
-#            ["Rawdata_08_22_2018",  "run30dat",] ,
-#            ["Rawdata_08_22_2018",  "run31dat",] ,
-#            ["Rawdata_08_22_2018",  "run32dat",] ,
-#            ["Rawdata_08_22_2018",  "run33dat",] ,
-#            ["Rawdata_08_22_2018",  "run34dat",] ,
-#            ["Rawdata_08_22_2018",  "run35dat",] ,
-#            ["Rawdata_08_22_2018",  "run36dat",] ,
-#            ["Rawdata_08_22_2018",  "run37dat",] ,
-#            ["Rawdata_08_22_2018",  "run38dat",] ,
-#            ["Rawdata_08_22_2018",  "run39dat",] ,
-
-            ["Rawdata_08_22_2018",  "run40dat",] ,
-            ["Rawdata_08_22_2018",  "run41dat",] ,
-            ["Rawdata_08_22_2018",  "run42dat",] ,
-            ["Rawdata_08_22_2018",  "run43dat",] ,
-            ["Rawdata_08_22_2018",  "run44dat",] ,
-            ["Rawdata_08_22_2018",  "run45dat",] ,
-            ["Rawdata_08_22_2018",  "run46dat",] ,
-            ["Rawdata_08_22_2018",  "run47dat",] ,
-            ["Rawdata_08_22_2018",  "run48dat",] ,
-            ["Rawdata_08_22_2018",  "run49dat",] ,
-
-            ["Rawdata_08_22_2018",  "run50dat",] ,
-            ["Rawdata_08_22_2018",  "run51dat",] ,
-            ["Rawdata_08_22_2018",  "run52dat",] ,
-            ["Rawdata_08_22_2018",  "run53dat",] ,
-            ["Rawdata_08_22_2018",  "run54dat",] ,
-            ["Rawdata_08_22_2018",  "run55dat",] ,
-            ["Rawdata_08_22_2018",  "run56dat",] ,
-            ["Rawdata_08_22_2018",  "run57dat",] ,
-            ["Rawdata_08_22_2018",  "run58dat",] ,
-            ["Rawdata_08_22_2018",  "run59dat",] ,
-
-            ["Rawdata_08_22_2018",  "run60dat",] ,
-            ["Rawdata_08_22_2018",  "run61dat",] ,
-            ["Rawdata_08_22_2018",  "run62dat",] ,
-            ["Rawdata_08_22_2018",  "run63dat",] ,
-            ["Rawdata_08_22_2018",  "run64dat",] ,
-            ["Rawdata_08_22_2018",  "run65dat",] ,
-            ["Rawdata_08_22_2018",  "run66dat",] ,
-            ["Rawdata_08_22_2018",  "run67dat",] ,
-            ["Rawdata_08_22_2018",  "run68dat",] ,
-            ["Rawdata_08_22_2018",  "run69dat",] ,
-
-            ["Rawdata_08_22_2018",  "run70dat",] ,
-            ["Rawdata_08_22_2018",  "run71dat",] ,
-            ["Rawdata_08_22_2018",  "run72dat",] ,
-            ["Rawdata_08_22_2018",  "run73dat",] ,
-            ["Rawdata_08_22_2018",  "run74dat",] ,
-            ["Rawdata_08_22_2018",  "run75dat",] ,
-            ["Rawdata_08_22_2018",  "run76dat",] ,
-            ["Rawdata_08_22_2018",  "run77dat",] ,
-            ["Rawdata_08_22_2018",  "run78dat",] ,
-            ["Rawdata_08_22_2018",  "run79dat",] ,
-
-            ["Rawdata_08_22_2018",  "run80dat",] ,
-            ["Rawdata_08_22_2018",  "run81dat",] ,
-            ["Rawdata_08_22_2018",  "run82dat",] ,
-            ["Rawdata_08_22_2018",  "run83dat",] ,
-            ["Rawdata_08_22_2018",  "run84dat",] ,
-            ["Rawdata_08_22_2018",  "run85dat",] ,
-            ["Rawdata_08_22_2018",  "run86dat",] ,
-            ["Rawdata_08_22_2018",  "run87dat",] ,
-            ["Rawdata_08_22_2018",  "run88dat",] ,
-            ["Rawdata_08_22_2018",  "run89dat",] ,
-
-            ["Rawdata_08_22_2018",  "run90dat",] ,
-            ["Rawdata_08_22_2018",  "run91dat",] ,
-            ["Rawdata_08_22_2018",  "run92dat",] ,
-            ["Rawdata_08_22_2018",  "run93dat",] ,
-            ["Rawdata_08_22_2018",  "run94dat",] ,
-            ["Rawdata_08_22_2018",  "run95dat",] ,
-            ["Rawdata_08_22_2018",  "run96dat",] ,
-            ["Rawdata_08_22_2018",  "run97dat",] ,
-            ["Rawdata_08_22_2018",  "run98dat",] ,
-            ["Rawdata_08_22_2018",  "run99dat",] ,
-
-            ["Rawdata_08_22_2018",  "run100dat",] ,
-            ["Rawdata_08_22_2018",  "run101dat",] ,
-            ["Rawdata_08_22_2018",  "run102dat",] ,
-            ["Rawdata_08_22_2018",  "run103dat",] ,
-            ["Rawdata_08_22_2018",  "run104dat",] ,
-            ["Rawdata_08_22_2018",  "run105dat",] ,
-            ["Rawdata_08_22_2018",  "run106dat",] ,
-            ["Rawdata_08_22_2018",  "run107dat",] ,
-            ["Rawdata_08_22_2018",  "run108dat",] ,
-            ["Rawdata_08_22_2018",  "run109dat",] ,
-
-            ["Rawdata_08_22_2018",  "run110dat",] ,
-            ["Rawdata_08_22_2018",  "run111dat",] ,
-            ["Rawdata_08_22_2018",  "run112dat",] ,
-            ["Rawdata_08_22_2018",  "run113dat",] ,
-            ["Rawdata_08_22_2018",  "run114dat",] ,
-            ["Rawdata_08_22_2018",  "run115dat",] ,
-            ["Rawdata_08_22_2018",  "run116dat",] ,
-            ["Rawdata_08_22_2018",  "run117dat",] ,
-            ["Rawdata_08_22_2018",  "run118dat",] ,
-            ["Rawdata_08_22_2018",  "run119dat",] ,
-
-            ["Rawdata_08_22_2018",  "run120dat",] ,
-            ["Rawdata_08_22_2018",  "run121dat",] ,
-            ["Rawdata_08_22_2018",  "run122dat",] ,
-            ["Rawdata_08_22_2018",  "run123dat",] ,
-            ["Rawdata_08_22_2018",  "run124dat",] ,
-            ["Rawdata_08_22_2018",  "run125dat",] ,
-            ["Rawdata_08_22_2018",  "run126dat",] ,
-            ["Rawdata_08_22_2018",  "run127dat",] ,
-            ["Rawdata_08_22_2018",  "run128dat",] ,
-            ["Rawdata_08_22_2018",  "run129dat",] ,
-
-            ["Rawdata_08_22_2018",  "run130dat",] ,
-            ["Rawdata_08_22_2018",  "run131dat",] ,
-            ["Rawdata_08_22_2018",  "run132dat",] ,
-            ["Rawdata_08_22_2018",  "run133dat",] ,
-            ["Rawdata_08_22_2018",  "run134dat",] ,
-            ["Rawdata_08_22_2018",  "run135dat",] ,
-            ["Rawdata_08_22_2018",  "run136dat",] ,
-            ["Rawdata_08_22_2018",  "run137dat",] ,
-            ["Rawdata_08_22_2018",  "run138dat",] ,
-            ["Rawdata_08_22_2018",  "run139dat",] ,
-
-            ["Rawdata_08_22_2018",  "run140dat",] ,
-            ["Rawdata_08_22_2018",  "run141dat",] ,
-            ["Rawdata_08_22_2018",  "run142dat",] ,
-            ["Rawdata_08_22_2018",  "run143dat",] ,
-            ["Rawdata_08_22_2018",  "run144dat",] ,
-            ["Rawdata_08_22_2018",  "run145dat",] ,
-            ["Rawdata_08_22_2018",  "run146dat",] ,
-            ["Rawdata_08_22_2018",  "run147dat",] ,
-            ["Rawdata_08_22_2018",  "run148dat",] ,
-            ["Rawdata_08_22_2018",  "run149dat",] ,
-
-            ["Rawdata_08_22_2018",  "run150dat",] ,
-            ["Rawdata_08_22_2018",  "run151dat",] ,
-            ["Rawdata_08_22_2018",  "run152dat",] ,
-            ["Rawdata_08_22_2018",  "run153dat",] ,
-            ["Rawdata_08_22_2018",  "run154dat",] ,
-            ["Rawdata_08_22_2018",  "run155dat",] ,
-            ["Rawdata_08_22_2018",  "run156dat",] ,
-            ["Rawdata_08_22_2018",  "run157dat",] ,
-            ["Rawdata_08_22_2018",  "run158dat",] ,
-            ["Rawdata_08_22_2018",  "run159dat",] ,
-
-            ["Rawdata_08_22_2018",  "run160dat",] ,
-            ["Rawdata_08_22_2018",  "run161dat",] ,
-            ["Rawdata_08_22_2018",  "run162dat",] ,
-            ["Rawdata_08_22_2018",  "run163dat",] ,
-            ["Rawdata_08_22_2018",  "run164dat",] ,
-            ["Rawdata_08_22_2018",  "run165dat",] ,
-            ["Rawdata_08_22_2018",  "run166dat",] ,
-            ["Rawdata_08_22_2018",  "run167dat",] ,
-            ["Rawdata_08_22_2018",  "run168dat",] ,
-            ["Rawdata_08_22_2018",  "run169dat",] ,
-
-
-            ["Rawdata_08_22_2018",  "run170dat",] ,
-            ["Rawdata_08_22_2018",  "run171dat",] ,
-            ["Rawdata_08_22_2018",  "run172dat",] ,
-            ["Rawdata_08_22_2018",  "run173dat",] ,
-            ["Rawdata_08_22_2018",  "run174dat",] ,
-            ["Rawdata_08_22_2018",  "run175dat",] ,
-            ["Rawdata_08_22_2018",  "run176dat",] ,
-            ["Rawdata_08_22_2018",  "run177dat",] ,
-            ["Rawdata_08_22_2018",  "run178dat",] ,
-            ["Rawdata_08_22_2018",  "run179dat",] ,
-#
-
+ 
+            ["Rawdata_11_20_2018",  "run01dat",] ,
+            ["Rawdata_11_20_2018",  "run08dat",] ,
+            ["Rawdata_11_20_2018",  "run34dat",] ,
+            ["Rawdata_11_20_2018",  "run47dat",] ,
+            ["Rawdata_11_20_2018",  "run48dat",] ,
+            ["Rawdata_11_20_2018",  "run91dat",] ,
+            ["Rawdata_11_20_2018",  "run92dat",] ,
 #            ["Rawdata_02_06_2018",  "run13chk",] ,
 #            ["Rawdata_02_06_2018",  "run19chk",] ,
 #            ["Rawdata_02_07_2018",  "run03chk",] ,
@@ -557,7 +418,7 @@ for chkrun in chkruns:
                 print binfile
                 chkruns_cs.append(chkrun)
                 all_chn_results = pickle.load(fp)
-                runts = time.mktime(datetime.datetime.strptime(chkrun[2][6], "%Y-%m-%d %H:%M:%S").timetuple())
+                runts = time.mktime(datetime.datetime.strptime(chkrun[2][6][0:-1], "%Y-%m-%d %H:%M:%S").timetuple())
                 time_np.append(runts)
 #                temperrtdts_np.append(chkrun[3][0] ) 
 #                temperrtd0_np.append(chkrun[3][1] ) 
@@ -568,23 +429,23 @@ for chkrun in chkruns:
 #                temperrtd5_np.append(chkrun[3][6] ) 
 #                temperrtd6_np.append(chkrun[3][7] ) 
                 strtime_np.append(chkrun[2][6])
-                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="X", sf = False)
+                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="X", sf = False, runno = chkrun[1])
                 xrms_np.append(tmp1)
                 xrms_errbar_np.append(tmp2)
-                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="V", sf = False)
+                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="V", sf = False, runno = chkrun[1])
                 vrms_np.append(tmp1)
                 vrms_errbar_np.append(tmp2)
-                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="U", sf = False)
+                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="U", sf = False, runno = chkrun[1])
                 urms_np.append(tmp1)
                 urms_errbar_np.append(tmp2)
             
-                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="X", sf = True)
+                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="X", sf = True, runno = chkrun[1])
                 sfxrms_np.append(tmp1)
                 sfxrms_errbar_np.append(tmp2)
-                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="V", sf = True)
+                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="V", sf = True, runno = chkrun[1])
                 sfvrms_np.append(tmp1)
                 sfvrms_errbar_np.append(tmp2)
-                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="U", sf = True)
+                tmp1, tmp2 = apa_noise(all_chn_results, wiretype="U", sf = True, runno = chkrun[1])
                 sfurms_np.append(tmp1)
                 sfurms_errbar_np.append(tmp2)
         else:
@@ -607,14 +468,10 @@ if (FE_temper_flg == True):
         temper_femb2_np.append(one_temper_info[2][2])
         temper_femb3_np.append(one_temper_info[2][3])
 
+
 noise_plot(rootpath, chkruns_cs, time_np, strtime_np, xrms_np, xrms_errbar_np, vrms_np, vrms_errbar_np, urms_np, urms_errbar_np, \
            temperrtdts_np, temperrtd0_np, temperrtd1_np, temperrtd2_np, temperrtd3_np, temperrtd4_np, temperrtd5_np, temperrtd6_np,\
            temper_time_np, temper_femb0_np, temper_femb1_np, temper_femb2_np, temper_femb3_np, \
            gain=gain, tp=tp,  enc_flg = True, sf_flg = False )
-
-noise_plot(rootpath, chkruns_cs, time_np, strtime_np, sfxrms_np, sfxrms_errbar_np, sfvrms_np, sfvrms_errbar_np, sfurms_np, sfurms_errbar_np, \
-           temperrtdts_np, temperrtd0_np, temperrtd1_np, temperrtd2_np, temperrtd3_np, temperrtd4_np, temperrtd5_np, temperrtd6_np,\
-           temper_time_np, temper_femb0_np, temper_femb1_np, temper_femb2_np, temper_femb3_np, \
-           gain=gain, tp=tp,  enc_flg = True, sf_flg = True )
 
 

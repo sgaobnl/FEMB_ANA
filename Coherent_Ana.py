@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Nov 23 17:26:53 2018
+Last modified: Sat Nov 24 11:43:33 2018
 """
 
 #defaut setting for scientific caculation
@@ -27,8 +27,8 @@ import sys
 
 
 rpath = "/Users/shanshangao/Google_Drive_BNL/tmp/11202018/"
-gcsv = "run01fpg_fpgagain078_femb1.csv"
-rcsv = "run05rms078_ASICrms_femb1_tp20.csv"
+gcsv = "run01fpg_fpgagain250_femb1.csv"
+rcsv = "run11rms250_ASICrms_femb1_tp20.csv"
 
 gs = []
 with open(rpath + gcsv, 'r') as fp:
