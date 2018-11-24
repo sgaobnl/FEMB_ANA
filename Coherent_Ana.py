@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Nov 23 10:50:23 2018
+Last modified: Fri Nov 23 17:26:53 2018
 """
 
 #defaut setting for scientific caculation
@@ -27,8 +27,8 @@ import sys
 
 
 rpath = "/Users/shanshangao/Google_Drive_BNL/tmp/11202018/"
-gcsv = "run01fpg_fpgagain_femb1.csv"
-rcsv = "run11rms_ASICrms_femb1.csv"
+gcsv = "run01fpg_fpgagain078_femb1.csv"
+rcsv = "run05rms078_ASICrms_femb1_tp20.csv"
 
 gs = []
 with open(rpath + gcsv, 'r') as fp:
@@ -53,7 +53,8 @@ with open(rpath + rcsv, 'r') as fp:
         rs.append(x)
 rs_title = rs[0]
 rs = rs[1:]
-print len(rs)
+#print len(rs)
+#sys.exit()
 
 grs = [] 
 for r in rs:
@@ -71,14 +72,15 @@ for r in rs:
             chngrs.append( float(r[5]) ) #raw rms
             chngrs.append( float(r[6]) ) #coh rms
             chngrs.append( float(r[7]) ) #post rms
-            if float(g[3]) > 300 or float(g[3]) < 100 :
-                if r[0][0] == "X":
-                    egain = 245
-                else:
-                    egain = 225
-                einl = 0
-                eflag = False
-            else:
+            #if float(g[3]) > 300 or float(g[3]) < 100 :
+            #    if r[0][0] == "X":
+            #        egain = 245
+            #    else:
+            #        egain = 225
+            #    einl = 0
+            #    eflag = False
+            #else:
+            if (True):
                 egain =float(g[3]) 
                 einl = float(g[4])
                 eflag = True
@@ -88,8 +90,8 @@ for r in rs:
             chngrs.append( int(egain * float(r[5])) ) #raw rms
             chngrs.append( int(egain * float(r[6])) ) #coh rms
             chngrs.append( int(egain * float(r[7])) ) #post rms
+            grs.append(chngrs) 
             break
-    grs.append(chngrs) 
 
 
 
@@ -97,6 +99,7 @@ cols  = []
 Uinds = []
 Vinds = []
 for gr in grs:
+    print gr
     if (gr[0][0] == "X") and (gr[10]==True):
         cols.append(gr)
     if (gr[0][0] == "U") and (gr[10]==True):
