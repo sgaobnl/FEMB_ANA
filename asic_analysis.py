@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/23/2018 12:05:55 PM
+Last modified: 11/24/2018 11:01:42 AM
 """
 
 #defaut setting for scientific caculation
@@ -394,7 +394,7 @@ def asic_wf_plot_coh(out_path, asic_results, wiretypes = "U", del_chns = [[0,1,0
     return asicrms
 
 
-def asic_coh_plot_wire(out_path, asic_results, wiretypes = "U", del_chns = [[0,1,0]]):
+def asic_coh_plot_wire(out_path, asic_results, wiretypes = "U"):
     w_results = []
     wi = 0
     for chni in range(16):
@@ -429,6 +429,7 @@ def asic_coh_plot_wire(out_path, asic_results, wiretypes = "U", del_chns = [[0,1
  
         chn_noise_paras = w_results[chni]
         wireinfo =  chn_noise_paras[19]
+        wiretype = wireinfo[0][0] 
         APAno =  chn_noise_paras[1]
         rms =  chn_noise_paras[6]
         ped =  chn_noise_paras[7]
@@ -463,7 +464,7 @@ def asic_coh_plot_wire(out_path, asic_results, wiretypes = "U", del_chns = [[0,1
         ped_fft_subplot(axm[2], cf_l, cp_l, maxx=100000,  title="FFT specturm", label=label, peaks_note = False )
         ped_fft_subplot(axd[2], pf_l, pp_l, maxx=100000,  title="FFT specturm", label=label, peaks_note = False )
 
-        fig_title = apainfo[0] + "_" + apainfo[1] + "_FE%d_%s"%(wireinfo[2], wiretypes)
+        fig_title = apainfo[0] + "_" + apainfo[1] + "_FE%d_%s"%(wireinfo[2], wiretype)
         plt.tight_layout( rect=[0, 0.05, 1, 0.95])
         fig.suptitle(fig_title, fontsize = 20)
         plt.savefig(out_path + fig_title + "_coh_%s.png"%label, format='png')
@@ -496,12 +497,12 @@ def asic_fft_plot_wire(out_path, asic_results, wiretype = "U"):
         axm.append( plt.subplot2grid((17, 3), (i, 1), colspan=1, rowspan=1)) 
         axr.append( plt.subplot2grid((17, 3), (i, 2), colspan=1, rowspan=1)) 
     wi = 0
-    for chni in range(16):
+    #for chni in range(16):
+    for chni in [0]:
         chn_noise_paras = asic_results[chni]
         wireinfo =  chn_noise_paras[19]
         APAno =  chn_noise_paras[1]
         #if (wireinfo[0][0] == wiretype):
-        wiretype = wireinfo[0][0] 
         if (wireinfo[0][0] != "C"):
             wiretype = wireinfo[0][0] 
             rms =  chn_noise_paras[6]
@@ -639,17 +640,17 @@ if __name__ == '__main__':
     gains = ["250", "140"] 
     tps = ["05", "10", "20", "30"]
     gains = [ "140"] 
+    gains = [ "078"] 
+    gains = [ "250"] 
     tps = [ "20"]
 
-    PCE = rms_rootpath+ rmsrunno + "_ASICrms_femb%d"%fembno + ".csv"
+    PCE = rms_rootpath+ rmsrunno + "%s_ASICrms_femb%d_tp%s"%(gains[0],fembno, tps[0]) + ".csv"
     ccs_title = ["wire", "wib", "femb", "asic", "chnno", "RawRMS", "CohRMS", "PostRMS"]
     with open (PCE, 'w') as fp:
         fp.write(",".join(str(i) for i in ccs_title) +  "," + "\n")
  
     #for i in range(5):
 
-    #del_chns =[ [0, 0, 107], [0, 0, 109], [0, 0, 125] ] #femb0
-    del_chns =[ [0, 1, 48], [0, 1, 79], [0, 1, 127] ] #femb1
     for i in [fembno]:
         wibno = i//4
         fembno = i%4
@@ -660,7 +661,9 @@ if __name__ == '__main__':
                           jumbo_flag=True, apa= apa )
             if fembno == 0:
                 xasics = [2,3,6,7]
+                del_chns =[ [0, 0, 107], [0, 0, 109], [0, 0, 125] ] #femb0
             else:
+                del_chns =[ [0, 1, 48], [0, 1, 79], [0, 1, 127] ] #femb1
                 xasics = [0,1,4,5]
             if (asicno in xasics):
                 asicrms = asic_wf_plot_coh(out_path, asic_results, wiretypes = "X", del_chns = del_chns)
@@ -684,17 +687,19 @@ if __name__ == '__main__':
 #                    fp.write(",".join(str(i) for i in x) +  "," + "\n")
     print PCE
 
-########    asic_results = wf_a_asic(rms_rootpath, fpga_rootpath, asic_rootpath,  APAno = APAno, \
-########                  rmsrunno = rmsrunno, fpgarunno = fpgarunno, asicrunno = asicrunno,\
-########                  wibno=wibno,  fembno=fembno, asicno=asicno, gain=gains[0], tp=tps[0] ,\
-########                  jumbo_flag=True, apa= apa )
+#    asic_results = wf_a_asic(rms_rootpath, fpga_rootpath, asic_rootpath,  APAno = APAno, \
+#                  rmsrunno = rmsrunno, fpgarunno = fpgarunno, asicrunno = asicrunno,\
+#                  wibno=wibno,  fembno=fembno, asicno=asicno, gain=gains[0], tp=tps[0] ,\
+#                  jumbo_flag=True, apa= apa )
 #########    asicrms = asic_wf_plot_coh(out_path, asic_results, wiretype = "U")
 #########    asic_coh_plot_wire(out_path, asic_results, wiretype = "V")
 ########if asicno in [0,1,4,5]:
 ########    asic_coh_plot_wire(out_path, asic_results, wiretype = "X")
 ########else:
 ########    asic_coh_plot_wire(out_path, asic_results, wiretypes = "UV")
-#    asic_coh_plot_wire(out_path, asic_results, wiretype = "UVX")
+#    asic_coh_plot_wire(out_path, asic_results, wiretypes = "X")
+#    asic_coh_plot_wire(out_path, asic_results, wiretypes = "U")
+#    asic_coh_plot_wire(out_path, asic_results, wiretypes = "V")
 
 #    asic_wf_plot_coh(out_path, asic_results, wiretype = "U")
 #    asic_wf_plot_wire(out_path, asic_results, wiretype = "U")

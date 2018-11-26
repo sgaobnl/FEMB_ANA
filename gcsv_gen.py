@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Nov 23 12:08:05 2018
+Last modified: 11/24/2018 11:21:35 AM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -61,7 +61,7 @@ else:
 #fembs_on_apa = range(1,21, 1) 
 #fembs_on_apa = range(2,3, 1) 
 #fembs_on_apa = range(2,3,1) 
-loc = 2
+loc = int(sys.argv[9])
 fembs_on_apa = [loc] 
 
 sum_path = rms_rootpath + "/" + "results/" + "APA%d_"%APAno + rmsrunno + "_" + fpgarunno + "_" + asicrunno +"/"
@@ -139,14 +139,15 @@ orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 3]  )
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 4]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 48]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 50]  ) 
-orgdicts = dict_filter (orgdicts, and_dnf =[["gain","140"], ["tp","20"]], or_flg=False  ) 
+#orgdicts = dict_filter (orgdicts, and_dnf =[["gain","078"], ["tp","20"]], or_flg=False  ) 
+orgdicts = dict_filter (orgdicts, and_dnf =[["gain","250"], ["tp","20"]], or_flg=False  ) 
 #orgdicts = dict_filter (orgdicts, and_dnf =[ ["tp","20"]], or_flg=False  ) 
 #orgdicts = dict_filter (orgdicts, and_dnf =[["gain","078"]], and_flg=True  ) 
 #orgdicts = dict_filter (orgdicts, and_dnf =[["tp","20"]], and_flg=True  ) 
 #orgdicts = dict_filter (orgdicts, and_dnf =[ ["tp","20"]], or_flg=False  ) 
 print len(orgdicts)
 
-PCE = rms_rootpath+ fpgarunno + "_fpgagain" + "_femb%d.csv"%(loc-1)
+PCE = rms_rootpath+ fpgarunno + "_fpgagain" + "%s_femb%d.csv"%("250", loc-1)
 ccs_title = ["wib", "femb", "fembchn", "Egain", "INL"]
 
 with open (PCE, 'w') as fp:

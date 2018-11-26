@@ -47,7 +47,8 @@
 ::python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run02rms   run01fpg  run01asi  SBND 1
 ::python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run02rms   run01fpg  run01asi  SBND 2
 ::python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run02rms   run01fpg  run01asi  SBND 3
+::python apa_plot_main.py 9    "11_17_2018" "11_17_2018" "11_17_2018" run05rms   run01fpg  run99asi  SBND 1
 python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 1
-python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 2
-python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 3
-python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 4
+::python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 2
+::python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 3
+::python apa_plot_main.py 9    "11_20_2018" "11_20_2018" "11_20_2018" run11rms   run01fpg  run01asi  SBND 4

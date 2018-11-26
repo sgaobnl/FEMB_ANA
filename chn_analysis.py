@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/21/2018 12:42:38 AM
+Last modified: 11/23/2018 2:18:01 PM
 """
 
 #defaut setting for scientific caculation
@@ -215,19 +215,21 @@ def noise_a_coh(coh_data, coh_flg, rmsdata, chnno, fft_en = True, fft_s=2000, ff
         coh_data = coh_data 
         postdata = chnrmsdata - coh_data
 
-    sp = len_chnrmsdata//20
-    rms_tmp = []
-    for i in range(20):
-        tmp = np.std(chnrmsdata[i*sp: i*sp + sp]) 
-        if math.isnan(tmp):
-            tmp = 1000 + i
-        rms_tmp.append(tmp)
-    rms_tmp = np.array(rms_tmp)*100//1
-    rms_tmp2 = sorted(rms_tmp)
-    rms10th = rms_tmp2[9]
-    pos = np.where(rms_tmp == rms10th) [0][0]
-    k = pos
-
+#    sp = len_chnrmsdata//20
+#    rms_tmp = []
+#    for i in range(20):
+#        tmp = np.std(chnrmsdata[i*sp: i*sp + sp]) 
+#        if math.isnan(tmp):
+#            tmp = 1000 + i
+#        rms_tmp.append(tmp)
+#    rms_tmp = np.array(rms_tmp)*100//1
+#    rms_tmp2 = sorted(rms_tmp)
+#    rms10th = rms_tmp2[9]
+#    pos = np.where(rms_tmp == rms10th) [0][0]
+#    k = pos
+    sp = len_chnrmsdata
+    k = 0
+#
     rms =  np.std(chnrmsdata[k*sp: k*sp + sp])  
     ped = np.mean(chnrmsdata[k*sp: k*sp + sp])  
     cohrms =  np.std(coh_data[k*sp: k*sp + sp]) 

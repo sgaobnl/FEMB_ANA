@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/20/2018 2:52:46 PM
+Last modified: 11/23/2018 8:02:33 PM
 """
 
 #defaut setting for scientific caculation
@@ -80,7 +80,7 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
 
                     apamap.femb = wib*4+femb
                     apa_femb_loc, X_sort, V_sort, U_sort = apamap.apa_femb_mapping()
-                    if os.path.isfile(rawfilep) and (filetp==tp) :
+                    if os.path.isfile(rawfilep) and (filetp==tp) and (femb == 1) :
                         with open(rawfilep, 'rb') as f:
                             raw_data = f.read()                
                             len_file = len(raw_data) 
@@ -139,16 +139,17 @@ def All_FEMBs_results(path, rundir,  APA="ProtoDUNE", APAno =1,  gain=3, mode=0,
                             chn_peakp_avg = np.mean(chn_peakp[chn])
                             chn_peakn_avg = np.mean(chn_peakn[chn])
                             if (wib==0) and  (
-                                ( (femb==0) and ( chip==6 ) and (chn ==0xB)) or 
-                                ( (femb==0) and ( chip==6 ) and (chn ==0xD)) or 
-                                ( (femb==0) and ( chip==7 ) and (chn ==0xD)) or 
+                                (femb==2)  or 
+                                #( (femb==0) and ( chip==6 ) and (chn ==0xB)) or 
+                                #( (femb==0) and ( chip==6 ) and (chn ==0xD)) or 
+                                #( (femb==0) and ( chip==7 ) and (chn ==0xD)) or 
                                 ( (femb==1) and ( chip==3 ) and (chn ==0x0)) or 
                                 ( (femb==1) and ( chip==4 ) and (chn ==0xF)) or 
                                 ( (femb==1) and ( chip==7 ) and (chn ==0xF)) or 
-                                #(femb==2)  or 
-                                #(femb==3)   ):
-                                ( (femb==2) and ( chip==7 ) and (chn ==0xC)) or 
-                                ( (femb==2) and ( chip==7 ) and (chn ==0xE)) ):  
+                                (femb==2)  or 
+                                (femb==3)   ):
+                                #( (femb==2) and ( chip==7 ) and (chn ==0xC)) or 
+                                #( (femb==2) and ( chip==7 ) and (chn ==0xE)) ):  
                                 #( (femb==3) and ( chip==5 ) )  ):
                                     pass 
                             else:

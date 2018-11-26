@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/20/2018 9:13:53 PM
+Last modified: 11/24/2018 11:07:08 AM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -63,10 +63,11 @@ if __name__ == '__main__':
     s0= timer()
     print "Start...please wait..."
     
-    #gains = ["250","140","078","047"] 
-    gains = ["140"] 
+    gains = ["250","140","078","047"] 
+    #gains = ["140"] 
     tps = ["05", "10", "20", "30"]
-    #tps = [  "20"]
+    gains = ["250"] 
+    tps = [  "20"]
     jumbo_flag = True
     wib_femb_chns = [  
 #                        #wib(0-4), femb(0-3), chn(0~127)

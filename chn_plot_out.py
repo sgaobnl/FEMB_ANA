@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/21/2018 12:52:46 AM
+Last modified: 11/24/2018 11:07:45 AM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -107,9 +107,10 @@ def cali_linear_fitplot(pp, apainfo, wireinfo, cali_info, chn_cali_paras, ploten
     fc_dacs = np.array(vdacs) * fc_daclsb
     
     ampps = np.array(ampps)
+    print ampps
     if (ped >1500): #induction plane
         #amplitude, positive pulse
-        pos = np.where(ampps > 3000.0)[0][0]
+        pos = np.where(ampps > 3300.0)[0][0]
         ampp_fit = linear_fit(fc_dacs[0:pos],  ampps[0:pos] )
         ampn_fit = linear_fit(fc_dacs[0:pos],  ampns[0:pos] )
         areap_fit = linear_fit(fc_dacs[0:pos], areaps[0:pos])
