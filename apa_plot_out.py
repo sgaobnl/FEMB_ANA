@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/26/2018 4:23:27 PM
+Last modified: 11/27/2018 9:22:49 AM
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -349,7 +349,7 @@ def sub_enctp_plot0 (ax, g,calitype, tp_us, xchns, xenc_tps, vchns, venc_tps, uc
     label = "%d"%vchns +" V " +  "wires" 
     ax.errorbar(x, y, e, label=label, color='b', marker='o')
     for xye in zip(x, y, e):                                   
-        ax.annotate('%d$\pm$%d' % xye[1:3], xy=[xye[0], 1620], textcoords='data', color='b') 
+        ax.annotate('%d$\pm$%d' % xye[1:3], xy=[xye[0], 1700], textcoords='data', color='b') 
 
     y = [uenc_tps[0][0], uenc_tps[1][0], uenc_tps[2][0], uenc_tps[3][0]]
     if (np.max(y) >  maxy):
@@ -358,7 +358,7 @@ def sub_enctp_plot0 (ax, g,calitype, tp_us, xchns, xenc_tps, vchns, venc_tps, uc
     label = "%d"%uchns +" U " +  "wires" 
     ax.errorbar(x, y, e, label=label, color='r', marker='o')
     for xye in zip(x, y, e):                                   
-        ax.annotate('%d$\pm$%d' % xye[1:3], xy=[xye[0], 1440], textcoords='data', color='r') 
+        ax.annotate('%d$\pm$%d' % xye[1:3], xy=[xye[0], 1600], textcoords='data', color='r') 
 
     ax.legend(loc=4)
     ax.set_xlim([0,4])

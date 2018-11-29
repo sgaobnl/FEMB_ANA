@@ -26,8 +26,10 @@
 
 ::python APA_analysis.py  9    "11_15_2018" "11_15_2018" "11_15_2018" run01rms   run01fpg  run99asi  SBND 
 ::python APA_analysis.py  9    "11_15_2018" "11_15_2018" "11_15_2018" run02rms   run01fpg  run99asi  SBND 
+::python apa_plot_main.py 9    "11_15_2018" "11_15_2018" "11_15_2018" run01rms   run01fpg  run99asi  SBND 2
+::python apa_plot_main.py 9    "11_15_2018" "11_15_2018" "11_15_2018" run02rms   run01fpg  run99asi  SBND 2
 python apa_plot_main.py 9    "11_15_2018" "11_15_2018" "11_15_2018" run01rms   run01fpg  run99asi  SBND 2
-python apa_plot_main.py 9    "11_15_2018" "11_15_2018" "11_15_2018" run02rms   run01fpg  run99asi  SBND 2
+python apa_plot_main.py 9    "11_15_2018" "11_15_2018" "11_15_2018" run10rms   run05fpg  run99asi  SBND 2
 ::python APA_analysis.py  9    "11_16_2018" "11_16_2018" "11_16_2018" run01rms   run01fpg  run99asi  SBND 
 ::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run01rms   run01fpg  run99asi  SBND 
 ::python APA_analysis.py  9    "11_17_2018" "11_17_2018" "11_17_2018" run02rms   run01fpg  run99asi  SBND 
