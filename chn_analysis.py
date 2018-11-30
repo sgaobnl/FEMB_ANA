@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/23/2018 2:18:01 PM
+Last modified: 11/30/2018 3:39:02 PM
 """
 
 #defaut setting for scientific caculation
@@ -121,8 +121,8 @@ def read_rawdata(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain
             raw_data = f.read()
             filelength = len(raw_data )
             smps = (filelength-1024)/2/16 
-            if smps > 200000:
-                smps = 200000
+            #if smps > 200000:
+            #    smps = 200000
 
             data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
             ###############0         1      2       3       4     5    6    7      8           9         10#########
@@ -357,8 +357,9 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
 
     feed_loc = rmsdata[0][8]
     len_chnrmsdata = len(chnrmsdata)
-    if (len_chnrmsdata > 200000):
-        len_chnrmsdata  = 200000
+    print "FFT samples = %d"%len_chnrmsdata 
+    #if (len_chnrmsdata > 200000):
+    #    len_chnrmsdata  = 200000
     chnrmsdata = chnrmsdata[0:len_chnrmsdata ]
     rms =  np.std(chnrmsdata[0:10000])
     ped = np.mean(chnrmsdata[0:10000])
