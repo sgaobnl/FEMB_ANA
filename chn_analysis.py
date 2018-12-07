@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/30/2018 3:39:02 PM
+Last modified: 11/30/2018 4:23:01 PM
 """
 
 #defaut setting for scientific caculation
@@ -358,8 +358,9 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
     feed_loc = rmsdata[0][8]
     len_chnrmsdata = len(chnrmsdata)
     print "FFT samples = %d"%len_chnrmsdata 
-    #if (len_chnrmsdata > 200000):
-    #    len_chnrmsdata  = 200000
+    if (len_chnrmsdata > 400000):
+        len_chnrmsdata  = 400000
+    print "FFT samples = %d"%len_chnrmsdata 
     chnrmsdata = chnrmsdata[0:len_chnrmsdata ]
     rms =  np.std(chnrmsdata[0:10000])
     ped = np.mean(chnrmsdata[0:10000])

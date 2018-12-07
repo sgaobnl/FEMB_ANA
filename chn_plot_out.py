@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/24/2018 11:07:45 AM
+Last modified: 12/4/2018 10:01:11 AM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -36,7 +36,7 @@ from chn_analysis  import noise_a_chn
 from chn_analysis  import cali_a_chn 
 from chn_analysis  import linear_fit 
 from matplotlib.backends.backend_pdf import PdfPages
-#from detect_peaks import detect_peaks
+from detect_peaks import detect_peaks
 
 import multiprocessing as mp
 
@@ -330,6 +330,13 @@ def ped_fft_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras, peaks_note = 
     if (fl_flg):
         f = chn_noise_paras[16]
         p = chn_noise_paras[17]
+        maxp = np.max(p[2:400])
+        pocp = np.where( p[2:400] == maxp )[0][0]
+        print pocp+2, f[pocp+2], p[pocp+2]
+
+        #peaks = detect_peaks(p, mph=None, mpd=10, threshold=10, edge='rising')
+        #for i in peaks[0:20]:
+        #    print f[i], p[i]
         hff = chn_noise_paras[18]
         hfp = chn_noise_paras[19]
     else:
