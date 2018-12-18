@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/4/2018 10:01:11 AM
+Last modified: Fri Dec  7 16:52:55 2018
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -36,7 +36,7 @@ from chn_analysis  import noise_a_chn
 from chn_analysis  import cali_a_chn 
 from chn_analysis  import linear_fit 
 from matplotlib.backends.backend_pdf import PdfPages
-from detect_peaks import detect_peaks
+#from detect_peaks import detect_peaks
 
 import multiprocessing as mp
 
@@ -88,35 +88,24 @@ def cali_linear_fitplot(pp, apainfo, wireinfo, cali_info, chn_cali_paras, ploten
     ped = chn_cali_paras[0][10]
 
     for onecp in chn_cali_paras:
-        if (ped >1500): #induction plane
-            if onecp[4] < 3500 : #region inside linearity
-            #if (True):
-                vdacs.append(onecp[2])
-                ampps.append(onecp[4])
-                ampns.append(onecp[5])
-                areaps.append(onecp[11])
-                areans.append(onecp[12])
-        elif (ped <1500): #induction plane
-            if onecp[4] < 2200 : #region inside linearity
-            #if (True):
-                vdacs.append(onecp[2])
-                ampps.append(onecp[4])
-                ampns.append(onecp[5])
-                areaps.append(onecp[11])
-                areans.append(onecp[12])
+        #if ( (onecp[4]- ped)  <1500):
+            vdacs.append(onecp[2])
+            ampps.append(onecp[4])
+            ampns.append(onecp[5])
+            areaps.append(onecp[11])
+            areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
     ampps = np.array(ampps)
-    print ampps
     if (ped >1500): #induction plane
-        #amplitude, positive pulse
-        pos = np.where(ampps > 3300.0)[0][0]
+        pos = np.where( np.array(ampps) - ped > 1500.0)[0][0]
         ampp_fit = linear_fit(fc_dacs[0:pos],  ampps[0:pos] )
         ampn_fit = linear_fit(fc_dacs[0:pos],  ampns[0:pos] )
         areap_fit = linear_fit(fc_dacs[0:pos], areaps[0:pos])
         arean_fit = linear_fit(fc_dacs[0:pos], areans[0:pos])
     else:
-        pos = np.where(ampps > 2000.0)[0][0]
+        #pos = np.where(ampps > 2000.0)[0][0]
+        pos = np.where( np.array(ampps) - ped > 1500.0)[0][0]
         ampp_fit = linear_fit(fc_dacs[0:pos], ampps[0:pos])
         areap_fit = linear_fit(fc_dacs[0:pos],areaps[0:pos])
         ampn_fit =  None
@@ -330,13 +319,6 @@ def ped_fft_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras, peaks_note = 
     if (fl_flg):
         f = chn_noise_paras[16]
         p = chn_noise_paras[17]
-        maxp = np.max(p[2:400])
-        pocp = np.where( p[2:400] == maxp )[0][0]
-        print pocp+2, f[pocp+2], p[pocp+2]
-
-        #peaks = detect_peaks(p, mph=None, mpd=10, threshold=10, edge='rising')
-        #for i in peaks[0:20]:
-        #    print f[i], p[i]
         hff = chn_noise_paras[18]
         hfp = chn_noise_paras[19]
     else:
