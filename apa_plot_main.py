@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/4/2018 3:40:55 PM
+Last modified: 11/26/2018 11:51:08 AM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -151,8 +151,8 @@ orgdicts = dict_del_chn (orgdicts, del_chn = [0, 1, 127]  )
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 2, 124]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 2, 126]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 2, 127]  ) 
-for i in range(24):
-    orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 60+i]  ) 
+for i in range(16):
+    orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 64+i]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 3]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 4]  ) 
 orgdicts = dict_del_chn (orgdicts, del_chn = [0, 3, 48]  ) 
@@ -172,8 +172,8 @@ plot0_overall_enc (pp, orgdicts, title="APA ENC vs. Tp", calitype="fpg_gain", sf
 plot3_overall_gain (pp, orgdicts, title="APA Gain Measurement" ) 
 
 #plot2_peds (pp, orgdicts,title="Pedestals", gs=[ "140"], tp="20"  , loc = loc) 
-plot2_peds (pp, orgdicts,title="Pedestals", gs=["250", "140", "078"], tp="20"  , loc = loc) 
-plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "078", "047"], tp="20", loc=loc )  #
+#plot2_peds (pp, orgdicts,title="Pedestals", gs=["250", "140", "078"], tp="20"  , loc = loc) 
+#plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "078", "047"], tp="20", loc=loc )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="250", fembs_on_apa = fembs_on_apa )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="140", fembs_on_apa = fembs_on_apa )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="078", fembs_on_apa = fembs_on_apa )  #
