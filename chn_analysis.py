@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Dec  7 16:53:35 2018
+Last modified: 12/16/2018 1:44:36 PM
 """
 
 #defaut setting for scientific caculation
@@ -357,9 +357,10 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
 
     feed_loc = rmsdata[0][8]
     len_chnrmsdata = len(chnrmsdata)
-    print "FFT samples = %d"%len_chnrmsdata 
-    #if (len_chnrmsdata > 200000):
-    #    len_chnrmsdata  = 200000
+#    print "FFT samples = %d"%len_chnrmsdata 
+    if (len_chnrmsdata > 400000):
+        len_chnrmsdata  = 400000
+#    print "FFT samples = %d"%len_chnrmsdata 
     chnrmsdata = chnrmsdata[0:len_chnrmsdata ]
     rms =  np.std(chnrmsdata[0:10000])
     ped = np.mean(chnrmsdata[0:10000])
@@ -482,25 +483,31 @@ def cali_linear_calc(chn_cali_paras):
     ped = chn_cali_paras[0][10]
 
     for onecp in chn_cali_paras:
-        #if ( (onecp[4]- ped)  <1500):
-            vdacs.append(onecp[2])
-            ampps.append(onecp[4])
-            ampns.append(onecp[5])
-            areaps.append(onecp[11])
-            areans.append(onecp[12])
+        if (ped >1000): #induction plane
+            if onecp[4] < 3500 : #region inside linearity
+                vdacs.append(onecp[2])
+                ampps.append(onecp[4])
+                ampns.append(onecp[5])
+                areaps.append(onecp[11])
+                areans.append(onecp[12])
+        elif (ped <1000): #induction plane
+            if onecp[4] < 2200 : #region inside linearity
+                vdacs.append(onecp[2])
+                ampps.append(onecp[4])
+                ampns.append(onecp[5])
+                areaps.append(onecp[11])
+                areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
-    ampps = np.array(ampps)
-    if (ped >1500): #induction plane
-        pos = np.where( np.array(ampps) - ped > 1500.0)[0][0]
-        ampp_fit = linear_fit(fc_dacs[0:pos],  ampps[0:pos] )
-        ampn_fit = linear_fit(fc_dacs[0:pos],  ampns[0:pos] )
-        areap_fit = linear_fit(fc_dacs[0:pos], areaps[0:pos])
-        arean_fit = linear_fit(fc_dacs[0:pos], areans[0:pos])
+    if (ped >1000): #induction plane
+        #amplitude, positive pulse
+        ampp_fit = linear_fit(fc_dacs,  ampps )
+        ampn_fit = linear_fit(fc_dacs,  ampns )
+        areap_fit = linear_fit(fc_dacs, areaps)
+        arean_fit = linear_fit(fc_dacs, areans)
     else:
-        pos = np.where( np.array(ampps) - ped > 1500.0)[0][0]
-        ampp_fit = linear_fit(fc_dacs[0:pos], ampps[0:pos])
-        areap_fit = linear_fit(fc_dacs[0:pos],areaps[0:pos])
+        ampp_fit = linear_fit(fc_dacs, ampps)
+        areap_fit = linear_fit(fc_dacs,areaps)
         ampn_fit =  None
         arean_fit = None
 

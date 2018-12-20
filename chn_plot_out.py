@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Fri Dec  7 16:52:55 2018
+Last modified: 12/16/2018 1:28:14 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -36,7 +36,7 @@ from chn_analysis  import noise_a_chn
 from chn_analysis  import cali_a_chn 
 from chn_analysis  import linear_fit 
 from matplotlib.backends.backend_pdf import PdfPages
-#from detect_peaks import detect_peaks
+from detect_peaks import detect_peaks
 
 import multiprocessing as mp
 
@@ -88,24 +88,35 @@ def cali_linear_fitplot(pp, apainfo, wireinfo, cali_info, chn_cali_paras, ploten
     ped = chn_cali_paras[0][10]
 
     for onecp in chn_cali_paras:
-        #if ( (onecp[4]- ped)  <1500):
-            vdacs.append(onecp[2])
-            ampps.append(onecp[4])
-            ampns.append(onecp[5])
-            areaps.append(onecp[11])
-            areans.append(onecp[12])
+        if (ped >1500): #induction plane
+            if onecp[4] < 3500 : #region inside linearity
+            #if (True):
+                vdacs.append(onecp[2])
+                ampps.append(onecp[4])
+                ampns.append(onecp[5])
+                areaps.append(onecp[11])
+                areans.append(onecp[12])
+        elif (ped <1500): #induction plane
+            if onecp[4] < 2200 : #region inside linearity
+            #if (True):
+                vdacs.append(onecp[2])
+                ampps.append(onecp[4])
+                ampns.append(onecp[5])
+                areaps.append(onecp[11])
+                areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
     ampps = np.array(ampps)
+    print ampps
     if (ped >1500): #induction plane
-        pos = np.where( np.array(ampps) - ped > 1500.0)[0][0]
+        #amplitude, positive pulse
+        pos = np.where(ampps > 3300.0)[0][0]
         ampp_fit = linear_fit(fc_dacs[0:pos],  ampps[0:pos] )
         ampn_fit = linear_fit(fc_dacs[0:pos],  ampns[0:pos] )
         areap_fit = linear_fit(fc_dacs[0:pos], areaps[0:pos])
         arean_fit = linear_fit(fc_dacs[0:pos], areans[0:pos])
     else:
-        #pos = np.where(ampps > 2000.0)[0][0]
-        pos = np.where( np.array(ampps) - ped > 1500.0)[0][0]
+        pos = np.where(ampps > 2000.0)[0][0]
         ampp_fit = linear_fit(fc_dacs[0:pos], ampps[0:pos])
         areap_fit = linear_fit(fc_dacs[0:pos],areaps[0:pos])
         ampn_fit =  None
@@ -319,6 +330,13 @@ def ped_fft_plot(pp, apainfo, wireinfo, rms_info, chn_noise_paras, peaks_note = 
     if (fl_flg):
         f = chn_noise_paras[16]
         p = chn_noise_paras[17]
+        maxp = np.max(p[2:400])
+        pocp = np.where( p[2:400] == maxp )[0][0]
+        print pocp+2, f[pocp+2], p[pocp+2]
+
+        #peaks = detect_peaks(p, mph=None, mpd=10, threshold=10, edge='rising')
+        #for i in peaks[0:20]:
+        #    print f[i], p[i]
         hff = chn_noise_paras[18]
         hfp = chn_noise_paras[19]
     else:
@@ -450,7 +468,7 @@ def pipe_ana_a_chn(cc, out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, AP
             break
 
     apa_map = APA_MAP()
-    All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping_pd()
+    All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
     wireinfo = None
     for onewire in All_sort:
         if (int(onewire[1]) == chnno):
@@ -547,17 +565,21 @@ def ped_fft_plot_avg(pp, ffs, title, lf_flg = False, psd_en = False, psd = 0):
         
         label = "Averaging FFT"
         hflabel = "Averaging FFT"
-        if (not lf_flg):
-            ped_fft_subplot(ax1, f_l, p_l, maxx=1000000, title="Spectrum of raw data", label=label, peaks_note = True )
-            ped_fft_subplot(ax2, hff_l, hfp_l, maxx=1000000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
-            ped_fft_subplot(ax3, f_l, p_l, maxx=100000, title="Spectrum of raw data", label=label, peaks_note = True)
-            ped_fft_subplot(ax4, hff_l, hfp_l, maxx=100000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
-        else:
-            #peaks = detect_peaks(p_l, mph=None, mpd=20, threshold=10, edge='rising')
-            ped_fft_subplot(ax1, f_l, p_l, maxx=10000, title="Spectrum of raw data", label=label, peaks_note = True)
-            ped_fft_subplot(ax2, hff_l, hfp_l, maxx=10000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
-            ped_fft_subplot(ax3, f_l, p_l, maxx=1000, title="Spectrum of raw data", label=label, peaks_note = True)
-            ped_fft_subplot(ax4, hff_l, hfp_l, maxx=1000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
+        ped_fft_subplot(ax1, f_l, p_l, maxx=1000000, title="Spectrum of raw data", label=label, peaks_note = True )
+        ped_fft_subplot(ax2, f_l, p_l, maxx=100000, title="Spectrum of raw data", label=label, peaks_note = True )
+        ped_fft_subplot(ax3, f_l, p_l, maxx=10000, title="Spectrum of raw data", label=label, peaks_note = True )
+        ped_fft_subplot(ax4, f_l, p_l, maxx=1000, title="Spectrum of raw data", label=label, peaks_note = True )
+        #if (not lf_flg):
+        #    ped_fft_subplot(ax1, f_l, p_l, maxx=1000000, title="Spectrum of raw data", label=label, peaks_note = True )
+        #    #ped_fft_subplot(ax2, hff_l, hfp_l, maxx=1000000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
+        #    ped_fft_subplot(ax3, f_l, p_l, maxx=100000, title="Spectrum of raw data", label=label, peaks_note = True)
+        #    #ped_fft_subplot(ax4, hff_l, hfp_l, maxx=100000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
+        #else:
+        #    #peaks = detect_peaks(p_l, mph=None, mpd=20, threshold=10, edge='rising')
+        #    ped_fft_subplot(ax1, f_l, p_l, maxx=10000, title="Spectrum of raw data", label=label, peaks_note = True)
+        #    #ped_fft_subplot(ax2, hff_l, hfp_l, maxx=10000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
+        #    ped_fft_subplot(ax3, f_l, p_l, maxx=1000, title="Spectrum of raw data", label=label, peaks_note = True)
+        #    #ped_fft_subplot(ax4, hff_l, hfp_l, maxx=1000, title="Spectrum of data after HPF", label=hflabel, peaks_note = True)
 
     fig.suptitle(title, fontsize = 12)
     plt.tight_layout( rect=[0, 0.05, 1, 0.95])
@@ -570,21 +592,21 @@ def ped_fft_plot_avg(pp, ffs, title, lf_flg = False, psd_en = False, psd = 0):
     plt.close()
 
 
-    fig = plt.figure(figsize=(16,9))
-    ax1 = plt.subplot2grid((4, 4), (0, 0), colspan=2, rowspan=2)
-    ax2 = plt.subplot2grid((4, 4), (0, 2), colspan=2, rowspan=2)
-    ax3 = plt.subplot2grid((4, 4), (2, 0), colspan=2, rowspan=2)
-    ax4 = plt.subplot2grid((4, 4), (2, 2), colspan=2, rowspan=2)
-    maxpsd_subplot(ax1, maxp_f_chns, fmax = 200, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
-    maxpsd_subplot(ax2, maxp_f_chns, fmax = 1000, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
-    maxpsd_subplot(ax3, maxp_f_chns, fmax = 10000, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
-    maxpsd_subplot(ax4, maxp_f_chns, fmax = 100000, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
-
-    fig.suptitle(title, fontsize = 12)
-    plt.tight_layout( rect=[0, 0.05, 1, 0.95])
-    plt.savefig(pp[0:-4] + "wire%d_"%valid_chns + "_1M" + "_max_psd" + pp[-4:] , format='png')
-    
-    plt.close()
+#    fig = plt.figure(figsize=(16,9))
+#    ax1 = plt.subplot2grid((4, 4), (0, 0), colspan=2, rowspan=2)
+#    ax2 = plt.subplot2grid((4, 4), (0, 2), colspan=2, rowspan=2)
+#    ax3 = plt.subplot2grid((4, 4), (2, 0), colspan=2, rowspan=2)
+#    ax4 = plt.subplot2grid((4, 4), (2, 2), colspan=2, rowspan=2)
+#    maxpsd_subplot(ax1, maxp_f_chns, fmax = 200, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
+#    maxpsd_subplot(ax2, maxp_f_chns, fmax = 1000, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
+#    maxpsd_subplot(ax3, maxp_f_chns, fmax = 10000, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
+#    maxpsd_subplot(ax4, maxp_f_chns, fmax = 100000, title="Max(CHN PSD) vs. Freq", label="Max(CHN PSD)" )
+#
+#    fig.suptitle(title, fontsize = 12)
+#    plt.tight_layout( rect=[0, 0.05, 1, 0.95])
+#    plt.savefig(pp[0:-4] + "wire%d_"%valid_chns + "_1M" + "_max_psd" + pp[-4:] , format='png')
+#    
+#    plt.close()
 
     return f_l, p_l, hff_l, hfp_l, maxp_f_chns
 

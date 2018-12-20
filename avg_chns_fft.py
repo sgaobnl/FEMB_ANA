@@ -5,18 +5,10 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sun Apr 15 16:18:59 2018
+Last modified: 12/16/2018 2:20:52 PM
 """
 import matplotlib
 matplotlib.use('Agg')
-#defaut setting for scientific caculation
-#import numpy
-#import scipy
-#from numpy import *
-#import numpy as np
-#import scipy as sp
-#import pylab as pl
-#from openpyxl import Workbook
 import numpy as np
 import struct
 import os
@@ -49,30 +41,24 @@ if __name__ == '__main__':
     asicrunno = sys.argv[7]
     apafolder = sys.argv[8]
 
-    if (apafolder == "APA40"):
-        rms_rootpath =  "D:/APA40/Rawdata/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "D:/APA40/Rawdata/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "D:/APA40/Rawdata/Rawdata_" + asidate + "/"
-    elif (apafolder != "APA"):
-        rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + asidate + "/"
-    else:
-        rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + rmsdate + "/"
-        fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + fpgdate + "/"
-        asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + asidate + "/"
- 
+    if (apafolder == "SBND"):
+        rms_rootpath =  "D:/SBND_40APA/Rawdata/Rawdata_" + rmsdate + "/"
+        fpga_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + fpgdate + "/"
+        asic_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + asidate + "/"
+
     from timeit import default_timer as timer
     s0= timer()
     print "Start...please wait..."
     
-    wibnos = [0,1,2,3,4]
-    fembnos = [0,1,2,3] #0~3
-    jumbo_flag = False
-    wire_type = "V"
+    #wibnos = [0,1,2,3,4]
+    #fembnos = [0,1,2,3] #0~3
+    wibnos = [0]
+    fembnos = [3] #0~3
+    jumbo_flag = True
+    wire_type = "U"
     #only allow one gain and one peak time run at a time, otherwise memory excess error may happen
     gains = ["250"]  #["250", "140"]
-    tps = ["20"]#["05", "10", "20", "30"]
+    tps = ["30"]#["05", "10", "20", "30"]
     psd_en = False
     psd = 0
     
@@ -97,19 +83,16 @@ if __name__ == '__main__':
             for wibno in wibnos:
                 for fembno in fembnos:
                     if (True):
-                    #if (not ((wibno == 0) and (fembno == 0) ) ) : #APA5
-                    #if (not ((wibno == 2) and (fembno == 2) ) ) : #APA2
-                    #if (not ((wibno == 1) and (fembno == 1) ) ) : #APA4
-                    #if (not ((wibno == 0) and (fembno == 3) ) ) and \
-                    #   (not ((wibno == 2) and (fembno == 0) ) ) and \
-                    #   (not ((wibno == 2) and (fembno == 1) ) ) and \
-                    #   (not ((wibno == 3) and (fembno == 0) ) ) : #APA3
                         log_str = log_str +str(wibno)+str(fembno)+"_" 
-                        #V plane
                         chns = []
                         for chn_loc in All_sort:
                             if ( chn_loc[0][0] == wire_type ):
                                 chns.append(int(chn_loc[1]))
+                        #for delx in [107, 109, 125]:
+                        #for delx in [124, 126, 127]:
+                        for delx in [3, 4, 48, 60] + range(60, 84, 1):
+                            if delx in chns:
+                                chns.remove(delx)
                         mps = []
                         for chnno in chns:
                             chn_cnt = chn_cnt + 1 
@@ -137,11 +120,11 @@ if __name__ == '__main__':
                 fp = out_path + title  + ".png"
             fft_pp = fp
             ped_fft_plot_avg(fft_pp, ffs=ffts, title=title, lf_flg = True, psd_en = psd_en, psd = psd)
-            avgffts = ped_fft_plot_avg(fft_pp, ffs=ffts, title=title, lf_flg = False, psd_en = psd_en, psd = psd)
+            #avgffts = ped_fft_plot_avg(fft_pp, ffs=ffts, title=title, lf_flg = False, psd_en = psd_en, psd = psd)
 
-            ffp = out_path + title + ".fft"
-            with open(ffp, "wb") as ffp:
-                pickle.dump(avgffts, ffp)
+            #ffp = out_path + title + ".fft"
+            #with open(ffp, "wb") as ffp:
+            #    pickle.dump(avgffts, ffp)
 
     print "DONE"
 

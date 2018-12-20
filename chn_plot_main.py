@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/30/2018 3:30:44 PM
+Last modified: 11/30/2018 5:37:12 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     #gains = ["140"] 
     tps = ["05", "10", "20", "30"]
     gains = ["250"] 
-    tps = [  "20"]
+    tps = [  "30"]
     jumbo_flag = True
     wib_femb_chns = [  
 #                        #wib(0-4), femb(0-3), chn(0~127)
@@ -75,7 +75,8 @@ if __name__ == '__main__':
                         [wibno, fembno, chnno]
                     ]    
 #    wib_femb_chns = [  ]
-    for i in range(0,16,1):
+    #for i in range(0,16,1):
+    for i in range(16,32,1):
         wib_femb_chns.append( [0, 1, i] )
     
     for wfc in wib_femb_chns:
