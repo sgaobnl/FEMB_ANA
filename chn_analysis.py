@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/16/2018 1:44:36 PM
+Last modified: 12/20/2018 1:13:29 PM
 """
 
 #defaut setting for scientific caculation
@@ -44,7 +44,7 @@ def fe_cfg(gain="250", tp="30" ):
         sg = 0
     else:
         print "Wrong gain input, exit anyway"
-        exit()
+        exit ()
         
     if (tp=="30"):
         st = 2
@@ -67,8 +67,6 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
         runcode = "1"
     elif runno[5:8] == "fpg" :
         runcode = "2"
-    elif runno.find("dat")>=0 :
-        runcode = "f"
     elif runno[5:8] == "asi" :
         runcode = "4"
 
@@ -80,7 +78,6 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
         stepno = "step" + "2" + runcode 
     elif sg == 0:
         stepno = "step" + "0" + runcode 
-    #stepno = "step4F"
 
     runpath = rootpath + runno + "/" 
     files_cs = []
@@ -92,6 +89,8 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
             wibpos = onedir.find("WIB")
             if ( wibpos >= 0 ):
                 if ( int(onedir[wibpos+3:wibpos+5]) == wibno ) and (onedir.find(stepno) >=0 ) :
+                #print onedir, stepno
+                #if ( int(onedir[wibpos+3:wibpos+4]) == wibno ) and (onedir.find(stepno) >=0 ) :
                     steppath = runpath + onedir + "/"
                     break
         if (steppath != None):
@@ -105,12 +104,10 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
                 if (fa_pos >= 0):
                     fe_set_rd = int(rawfile[fa_pos+11:fa_pos+13], 16) & 0x3C
                     if (fe_set_rd == fecfg_reg0) and (rawfile.find(".bin") >=0 ):
-                    #if (rawfile.find(".bin") >=0 ):
                         files_cs.append(steppath + rawfile)
     else:
         print runpath + " doesn't exist, ignore anyway!"
         files_cs = []
-
     return files_cs
 
 def read_rawdata(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain="250", tp="20", jumbo_flag=False ):
@@ -121,8 +118,8 @@ def read_rawdata(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain
             raw_data = f.read()
             filelength = len(raw_data )
             smps = (filelength-1024)/2/16 
-            #if smps > 200000:
-            #    smps = 200000
+            if smps > 200000:
+                smps = 200000
 
             data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
             ###############0         1      2       3       4     5    6    7      8           9         10#########
@@ -150,7 +147,6 @@ def read_rawdata_coh(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, 
     datas = []
     for onefile in files:
         with open(onefile, 'rb') as f:
-            print onefile
             raw_data = f.read()
             filelength = len(raw_data )
             smps = (filelength-1024)/2/16 
@@ -158,8 +154,6 @@ def read_rawdata_coh(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, 
                 smps = 200000
 
             data, feed_loc, chn_peakp, chn_peakn = raw_convertor_peak(raw_data, smps, jumbo_flag)
-
-            #flt_chn_data = hp_flt_applied(chnrmsdata, fs = 2000000, passfreq = 1000, flt_order = 3)
             ###############0         1      2       3       4     5    6    7      8           9         10#########
             datas.append([onefile, runno, wibno,  fembno, chnno, gain, tp, data, feed_loc, chn_peakp, chn_peakn])
     return datas
@@ -215,21 +209,19 @@ def noise_a_coh(coh_data, coh_flg, rmsdata, chnno, fft_en = True, fft_s=2000, ff
         coh_data = coh_data 
         postdata = chnrmsdata - coh_data
 
-#    sp = len_chnrmsdata//20
-#    rms_tmp = []
-#    for i in range(20):
-#        tmp = np.std(chnrmsdata[i*sp: i*sp + sp]) 
-#        if math.isnan(tmp):
-#            tmp = 1000 + i
-#        rms_tmp.append(tmp)
-#    rms_tmp = np.array(rms_tmp)*100//1
-#    rms_tmp2 = sorted(rms_tmp)
-#    rms10th = rms_tmp2[9]
-#    pos = np.where(rms_tmp == rms10th) [0][0]
-#    k = pos
-    sp = len_chnrmsdata
-    k = 0
-#
+    sp = len_chnrmsdata//20
+    rms_tmp = []
+    for i in range(20):
+        tmp = np.std(chnrmsdata[i*sp: i*sp + sp]) 
+        if math.isnan(tmp):
+            tmp = 1000 + i
+        rms_tmp.append(tmp)
+    rms_tmp = np.array(rms_tmp)*100//1
+    rms_tmp2 = sorted(rms_tmp)
+    rms10th = rms_tmp2[9]
+    pos = np.where(rms_tmp == rms10th) [0][0]
+    k = pos
+
     rms =  np.std(chnrmsdata[k*sp: k*sp + sp])  
     ped = np.mean(chnrmsdata[k*sp: k*sp + sp])  
     cohrms =  np.std(coh_data[k*sp: k*sp + sp]) 
@@ -352,29 +344,23 @@ def noise_a_chn_fast(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50
 def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wibno=0,  fembno=0 ):
     asicchn = chnno % 16
     chnrmsdata = rmsdata[0][7][asicchn]
-
-#    chnrmsdata = hp_flt_applied(chnrmsdata, fs = 2000000, passfreq = 500, flt_order = 3)
-
     feed_loc = rmsdata[0][8]
     len_chnrmsdata = len(chnrmsdata)
-#    print "FFT samples = %d"%len_chnrmsdata 
-    if (len_chnrmsdata > 400000):
-        len_chnrmsdata  = 400000
-#    print "FFT samples = %d"%len_chnrmsdata 
+    if (len_chnrmsdata > 200000):
+        len_chnrmsdata  = 200000
     chnrmsdata = chnrmsdata[0:len_chnrmsdata ]
     rms =  np.std(chnrmsdata[0:10000])
     ped = np.mean(chnrmsdata[0:10000])
     if len(feed_loc) > 2:
-        #data_slice = chnrmsdata[feed_loc[0]:feed_loc[0]+5000]
         data_slice = chnrmsdata
         data_200ms_slice = chnrmsdata[0:200000:200]
     else:
         data_slice = chnrmsdata
         data_200ms_slice = chnrmsdata[0:200000:200]
 
-    avg_cycle_l = 1
-    if (len_chnrmsdata >= 400000):
-        fft_s_l = 400000//avg_cycle_l
+    avg_cycle_l = 10 
+    if (len_chnrmsdata >= 200000):
+        fft_s_l = 200000//avg_cycle_l
     else:
         fft_s_l =len(chnrmsdata) 
 
@@ -386,7 +372,6 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
         p = None
         f_l = None
         p_l = None
-
 
 #   data after highpass filter
     flt_chn_data = hp_flt_applied(chnrmsdata, fs = 2000000, passfreq = 1000, flt_order = 3)
@@ -484,14 +469,14 @@ def cali_linear_calc(chn_cali_paras):
 
     for onecp in chn_cali_paras:
         if (ped >1000): #induction plane
-            if onecp[4] < 3500 : #region inside linearity
+            if onecp[4] < 3000 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
                 areaps.append(onecp[11])
                 areans.append(onecp[12])
         elif (ped <1000): #induction plane
-            if onecp[4] < 2200 : #region inside linearity
+            if onecp[4] < 2000 : #region inside linearity
                 vdacs.append(onecp[2])
                 ampps.append(onecp[4])
                 ampns.append(onecp[5])
@@ -554,13 +539,10 @@ def cali_a_chn(calidata, chnno, cap=1.85E-13, wibno=0,  fembno=0 ):
         ppeak = np.mean(sonecali[2][9][asicchn])
         npeak = np.mean(sonecali[2][10][asicchn])
         data_slice = chncalidata[feed_loc[0]:feed_loc[1]]
-        avg_cycles = len(feed_loc) - 5
-        #avg_data_slice = np.array(chncalidata[feed_loc[0]:feed_loc[1]])
-        avg_data_slice = np.array(chncalidata[feed_loc[0]:feed_loc[0]+400])
-        for loci in range(3, (avg_cycles - 5), 1):
-            #if len(chncalidata[feed_loc[loci+1]:feed_loc[loci+2]]) == len(chncalidata[feed_loc[1]:feed_loc[2]]):
-            #if len(chncalidata[feed_loc[loci+1]:feed_loc[loci+2]]) == 500:
-            avg_data_slice = avg_data_slice +  np.array(chncalidata[feed_loc[loci+1]:feed_loc[loci+1] + 400])
+        avg_data_slice = np.array(chncalidata[feed_loc[0]:feed_loc[1]])
+        avg_cycles = len(feed_loc) - 2
+        for loci in range(avg_cycles - 1):
+            avg_data_slice = avg_data_slice +  np.array(chncalidata[feed_loc[loci+1]:feed_loc[loci+2]])
         avg_data_slice = avg_data_slice / (avg_cycles*1.0)
         dactype = sonecali[0]
         vdac = sonecali[1]
