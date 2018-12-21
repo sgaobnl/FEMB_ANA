@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/16/2018 1:28:14 PM
+Last modified: 12/20/2018 1:32:54 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -449,7 +449,7 @@ def plot_a_chn(out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, APAno = 4,
 def pipe_ana_a_chn(cc, out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, APAno = 4, \
                rmsrunno = "run01rms", fpgarunno = "run01fpg", asicrunno = "run01asi", 
                wibno=0,  fembno=0, chnno=0, gain="250", tp="20", \
-               jumbo_flag=False, fft_s=5000 ):
+               jumbo_flag=False, fft_s=5000, apa = "ProtoDUNE" ):
 
     input_info = ["RMS Raw data Path = %s"%rms_rootpath + rmsrunno, 
                   "Cali(FPGA DAC) Raw data Path = %s"%fpga_rootpath + fpgarunno, 
@@ -468,6 +468,7 @@ def pipe_ana_a_chn(cc, out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, AP
             break
 
     apa_map = APA_MAP()
+    apa_map.APA = apa
     All_sort, X_sort, V_sort, U_sort =  apa_map.apa_femb_mapping()
     wireinfo = None
     for onewire in All_sort:

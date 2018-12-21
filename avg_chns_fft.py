@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/20/2018 1:09:18 PM
+Last modified: 12/20/2018 2:16:46 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -54,6 +54,7 @@ if __name__ == '__main__':
     wire_type = sys.argv[12]
     gains = [sys.argv[13]]
     tps = [sys.argv[14]]
+    fembx = int(sys.argv[15])
 
  
 
@@ -93,8 +94,8 @@ if __name__ == '__main__':
 #    else:
 #        wibnos = [0,1,2,3,4]
 #        fembnos = [0,1,2,3] #0~3
-    wibnos = [1]
-    fembnos = [0] #0~3
+    wibnos = [0]
+    fembnos = [fembx] #0~3
     #wire_type = "V"
     #only allow one gain and one peak time run at a time, otherwise memory excess error may happen
     #gains = ["250"]  #["250", "140"]
@@ -128,10 +129,15 @@ if __name__ == '__main__':
                         for chn_loc in All_sort:
                             if ( chn_loc[0][0] == wire_type ):
                                 chns.append(int(chn_loc[1]))
-                        for delx in [107, 109, 125]:
-
-                        #for delx in [124, 126, 127]:
-                        #for delx in [3, 4, 48, 60] + range(60, 84, 1):
+                        if (fembno == 0 ):
+                            dels = [107, 109, 125]
+                        elif  (fembno == 1 ):
+                            dels = [48, 79, 127]
+                        elif  (fembno == 2 ):
+                            dels = [124, 126, 127]
+                        elif  (fembno == 3 ):
+                            dels =  [3, 4, 48, 60] + range(60, 84, 1)
+                        for delx  in dels:
                             if delx in chns:
                                 chns.remove(delx)
                         print chns
