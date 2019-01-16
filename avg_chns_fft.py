@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/20/2018 2:16:46 PM
+Last modified: 12/22/2018 9:27:17 AM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -55,33 +55,36 @@ if __name__ == '__main__':
     gains = [sys.argv[13]]
     tps = [sys.argv[14]]
     fembx = int(sys.argv[15])
+    wibx =  int(sys.argv[16])
 
  
 
     if (apafolder == "SBND"):
-        rms_rootpath =  "D:/SBND_40APA/Rawdata/Rawdata_" + rmsdate + "/"
+        rms_rootpath  =  "D:/SBND_40APA/Rawdata/Rawdata_" + rmsdate + "/"
         fpga_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + fpgdate + "/"
         asic_rootpath = "D:/SBND_40APA/Rawdata/Rawdata_" + asidate + "/"
+        rms_rootpath  =  "F:/Hibay_backup/Rawdata/rawdata_1001/"
+        fpga_rootpath =  "F:/Hibay_backup/Rawdata/rawdata_1001/"
+        asic_rootpath =  "F:/Hibay_backup/Rawdata/rawdata_1001/"
         apa = "APA40"
-
-    elif (apafolder == "APA40"):
-        rms_rootpath =  "D:/APA40/Rawdata/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "D:/APA40/Rawdata/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "D:/APA40/Rawdata/Rawdata_" + asidate + "/"
-        apa = "APA40"
-    elif (apafolder != "APA"):
-        rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + rmsdate + "/"
-        fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + fpgdate + "/"
-        asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + asidate + "/"
-        apa = "ProtoDUNE"
-    else:
-        rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + rmsdate + "/"
-        fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + fpgdate + "/"
-        asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + asidate + "/"
-        rms_rootpath =  "/nfs/sw/shanshan/Rawdata/APA%d/Rawdata_"%APAno + rmsdate + "/"
-        fpga_rootpath = "/nfs/sw/shanshan/Rawdata/APA%d/Rawdata_"%APAno + fpgdate + "/"
-        asic_rootpath = "/nfs/sw/shanshan/Rawdata/APA%d/Rawdata_"%APAno + asidate + "/"
-        apa = "ProtoDUNE"
+#    elif (apafolder == "APA40"):
+#        rms_rootpath =  "D:/APA40/Rawdata/Rawdata_" + rmsdate + "/"
+#        fpga_rootpath = "D:/APA40/Rawdata/Rawdata_" + fpgdate + "/"
+#        asic_rootpath = "D:/APA40/Rawdata/Rawdata_" + asidate + "/"
+#        apa = "APA40"
+#    elif (apafolder != "APA"):
+#        rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + rmsdate + "/"
+#        fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + fpgdate + "/"
+#        asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_" + asidate + "/"
+#        apa = "ProtoDUNE"
+#    else:
+#        rms_rootpath =  "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + rmsdate + "/"
+#        fpga_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + fpgdate + "/"
+#        asic_rootpath = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno + asidate + "/"
+#        rms_rootpath =  "/nfs/sw/shanshan/Rawdata/APA%d/Rawdata_"%APAno + rmsdate + "/"
+#        fpga_rootpath = "/nfs/sw/shanshan/Rawdata/APA%d/Rawdata_"%APAno + fpgdate + "/"
+#        asic_rootpath = "/nfs/sw/shanshan/Rawdata/APA%d/Rawdata_"%APAno + asidate + "/"
+#        apa = "ProtoDUNE"
 
  
     from timeit import default_timer as timer
@@ -94,7 +97,7 @@ if __name__ == '__main__':
 #    else:
 #        wibnos = [0,1,2,3,4]
 #        fembnos = [0,1,2,3] #0~3
-    wibnos = [0]
+    wibnos = [wibx]
     fembnos = [fembx] #0~3
     #wire_type = "V"
     #only allow one gain and one peak time run at a time, otherwise memory excess error may happen
@@ -129,14 +132,23 @@ if __name__ == '__main__':
                         for chn_loc in All_sort:
                             if ( chn_loc[0][0] == wire_type ):
                                 chns.append(int(chn_loc[1]))
-                        if (fembno == 0 ):
-                            dels = [107, 109, 125]
-                        elif  (fembno == 1 ):
-                            dels = [48, 79, 127]
-                        elif  (fembno == 2 ):
+                        if (wibno == 1) and (fembno == 0 ):
+                            dels = [15, 31, 46, 49, 65, 81, 98, 100 ]
+                        elif (wibno == 1) and (fembno == 1 ):
+                            dels = [15, 30, 31, 46, 48, 65, 81, 98]
+                        elif (wibno == 1) and (fembno == 2 ):
                             dels = [124, 126, 127]
-                        elif  (fembno == 3 ):
-                            dels =  [3, 4, 48, 60] + range(60, 84, 1)
+                        elif (wibno == 1) and (fembno == 3 ):
+                            dels =  [48, 50] 
+                        elif (wibno == 2) and (fembno == 0 ):
+                            dels = [48]
+                        elif (wibno == 2) and (fembno == 1 ):
+                            dels = [13, 25, 30, 33, 43, 53, 69, 86, 96, 108, 112]
+                        elif (wibno == 2) and (fembno == 2 ):
+                            dels = [3, 24, 40, 53, 67, 84, 111]
+                        elif (wibno == 2) and (fembno == 3 ):
+                            dels =  [11, 29, 49, 67, 86, 101 ]
+
                         for delx  in dels:
                             if delx in chns:
                                 chns.remove(delx)

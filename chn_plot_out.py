@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/20/2018 1:32:54 PM
+Last modified: 12/21/2018 4:48:32 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -459,7 +459,7 @@ def pipe_ana_a_chn(cc, out_path, rms_rootpath,  fpga_rootpath, asic_rootpath, AP
                   "Gain = %2.1f mV/fC"% (int(gain)/10.0) , 
                   "Tp = %1.1f$\mu$s"% (int(tp)/10.0)  ]
     wibfemb= "WIB"+format(wibno,'02d') + "_" + "FEMB" + format(fembno,'1d') 
-    print wibfemb + "chn%d"%chnno
+    #print wibfemb + "chn%d"%chnno
     femb_pos_np = femb_position (APAno)
     apainfo = None
     for femb_pos in femb_pos_np:

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 12/20/2018 1:13:29 PM
+Last modified: 12/22/2018 9:33:11 AM
 """
 
 #defaut setting for scientific caculation
@@ -32,6 +32,7 @@ from highpass_filter import hp_flt_applied
 from highpass_filter import hp_FIR_applied
 import multiprocessing as mp
 import copy
+
 
 def fe_cfg(gain="250", tp="30" ):
     if (gain=="250"):
@@ -73,9 +74,10 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
     if sg == 3:
         stepno = "step" + "3" + runcode 
     elif sg == 2:
-        stepno = "step" + "1" + runcode 
-    elif sg == 1:
         stepno = "step" + "2" + runcode 
+    elif sg == 1:
+        #stepno = "step" + "2" + runcode 
+        stepno = "step" + "1" + runcode 
     elif sg == 0:
         stepno = "step" + "0" + runcode 
 
@@ -88,9 +90,8 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
         for onedir in dirs:
             wibpos = onedir.find("WIB")
             if ( wibpos >= 0 ):
-                if ( int(onedir[wibpos+3:wibpos+5]) == wibno ) and (onedir.find(stepno) >=0 ) :
-                #print onedir, stepno
-                #if ( int(onedir[wibpos+3:wibpos+4]) == wibno ) and (onedir.find(stepno) >=0 ) :
+                #if ( int(onedir[wibpos+3:wibpos+5]) == wibno ) and (onedir.find(stepno) >=0 ) :
+                if ( int(onedir[wibpos+3:wibpos+4]) == wibno ) and (onedir.find(stepno) >=0 ) :
                     steppath = runpath + onedir + "/"
                     break
         if (steppath != None):
@@ -107,7 +108,6 @@ def generate_rawpaths(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0,
                         files_cs.append(steppath + rawfile)
     else:
         print runpath + " doesn't exist, ignore anyway!"
-        files_cs = []
     return files_cs
 
 def read_rawdata(rootpath, runno = "run01rms", wibno=0,  fembno=0, chnno=0, gain="250", tp="20", jumbo_flag=False ):
@@ -358,7 +358,7 @@ def noise_a_chn(rmsdata, chnno, fft_en = True, fft_s=2000, fft_avg_cycle=50, wib
         data_slice = chnrmsdata
         data_200ms_slice = chnrmsdata[0:200000:200]
 
-    avg_cycle_l = 10 
+    avg_cycle_l = 20 
     if (len_chnrmsdata >= 200000):
         fft_s_l = 200000//avg_cycle_l
     else:
