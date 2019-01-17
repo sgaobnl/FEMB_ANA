@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/16/2019 10:01:12 PM
+Last modified: 1/17/2019 11:27:17 AM
 """
 
 #defaut setting for scientific caculation
@@ -469,20 +469,27 @@ def cali_linear_calc(chn_cali_paras):
     ped = chn_cali_paras[0][10]
 
     for onecp in chn_cali_paras:
-        if (ped >1000): #induction plane
-            if onecp[4] < 3000 : #region inside linearity
-                vdacs.append(onecp[2])
-                ampps.append(onecp[4])
-                ampns.append(onecp[5])
-                areaps.append(onecp[11])
-                areans.append(onecp[12])
-        elif (ped <1000): #induction plane
-            if onecp[4] < 2000 : #region inside linearity
-                vdacs.append(onecp[2])
-                ampps.append(onecp[4])
-                ampns.append(onecp[5])
-                areaps.append(onecp[11])
-                areans.append(onecp[12])
+        if onecp[4] - ped < 1500 : #region inside linearity
+            vdacs.append(onecp[2])
+            ampps.append(onecp[4])
+            ampns.append(onecp[5])
+            areaps.append(onecp[11])
+            areans.append(onecp[12])
+
+        #if (ped >1000): #induction plane
+        #    if onecp[4] < 3000 : #region inside linearity
+        #        vdacs.append(onecp[2])
+        #        ampps.append(onecp[4])
+        #        ampns.append(onecp[5])
+        #        areaps.append(onecp[11])
+        #        areans.append(onecp[12])
+        #elif (ped <1000): #induction plane
+        #    if onecp[4] < 2000 : #region inside linearity
+        #        vdacs.append(onecp[2])
+        #        ampps.append(onecp[4])
+        #        ampns.append(onecp[5])
+        #        areaps.append(onecp[11])
+        #        areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
     if (ped >1000): #induction plane

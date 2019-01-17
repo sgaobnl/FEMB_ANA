@@ -1,10 +1,16 @@
 ::#!/bin/bash
 ::                     # apano,   rmsdate,     fpgdate,     asidate, rmsrunno, fpgarunno, asicrunno, apafolder
 ::python APA_analysis.py   9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND 
-python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  1
-python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  2
-python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  3
-python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  4
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  1
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  2
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  3
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run02rms   run05fpg  run01asi  SBND  4
+
+python APA_analysis.py   9    "01_16_2019" "01_16_2019" "01_16_2019" run03rms   run06fpg  run01asi  SBND 
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run03rms   run06fpg  run01asi  SBND  1
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run03rms   run06fpg  run01asi  SBND  2
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run03rms   run06fpg  run01asi  SBND  3
+::python apa_plot_main.py  9    "01_16_2019" "01_16_2019" "01_16_2019" run03rms   run06fpg  run01asi  SBND  4
 
 ::python APA_analysis.py  9    "11_15_2018" "11_15_2018" "11_15_2018" run13rms   run05fpg  run99asi  SBND 
 ::python apa_plot_main.py 9    "11_15_2018" "11_15_2018" "11_15_2018" run13rms   run05fpg  run99asi  SBND 
