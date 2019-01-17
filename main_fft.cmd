@@ -12,25 +12,25 @@
 ::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 U  140  20 2 2
 ::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 U  140  20 3 2
 ::
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 0 1
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 1 1
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 2 1
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 3 1
-
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 0 2
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 1 2
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 2 2
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 3 2
-
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 0 1
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 1 1
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 2 1
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 3 1
-
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 0 2
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 1 2
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 2 2
-python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 3 2
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 0 1
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 1 1
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 2 1
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 3 1
+::
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 0 2
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 1 2
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 2 2
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 V  140  20 3 2
+::
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 0 1
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 1 1
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 2 1
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 3 1
+::
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 0 2
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 1 2
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 2 2
+::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run16rms run01fpg  run01asi  SBND  True  False 0 X  140  20 3 2
 
 ::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run04rms run01fpg  run01asi  SBND  True  False 0 V  140  20 0
 ::python avg_chns_fft.py   9   "11_17_2018" "11_17_2018" "11_17_2018" run04rms run01fpg  run01asi  SBND  True  False 0 X  140  20 0
