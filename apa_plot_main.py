@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/16/2019 11:16:44 PM
+Last modified: 1/19/2019 4:23:05 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -173,12 +173,15 @@ plot3_overall_gain (pp, orgdicts, title="APA Gain Measurement" )
 
 #plot2_peds (pp, orgdicts,title="Pedestals", gs=[ "140"], tp="20"  , loc = loc) 
 #plot2_peds (pp, orgdicts,title="Pedestals", gs=["250", "140"], tp="20"  , loc = loc) 
-plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "140"], tp="05", loc=loc )  #
+plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "078"], tp="05", loc=loc )  #
+plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "078"], tp="10", loc=loc )  #
+plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "078"], tp="20", loc=loc )  #
+plot1_chns_enc_1 (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms", gs=["250", "140", "078"], tp="30", loc=loc )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="250", fembs_on_apa = fembs_on_apa )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="140", fembs_on_apa = fembs_on_apa )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="078", fembs_on_apa = fembs_on_apa )  #
 #plot1_chns_enc (pp, orgdicts, title="APA ENC Distribution",  cali_cs="fpg_gain", rms_cs = "rms",   g="047", fembs_on_apa = fembs_on_apa )  #
-#plot4_chns_gain (pp, orgdicts, title="Gain Distribution",  g="250" , fembs_on_apa = fembs_on_apa)  #
+plot4_chns_gain (pp, orgdicts, title="Gain Distribution",  g="250" , fembs_on_apa = fembs_on_apa)  #
 #plot4_chns_gain (pp, orgdicts, title="Gain Distribution",  g="140" , fembs_on_apa = fembs_on_apa)  #
 #plot4_chns_gain (pp, orgdicts, title="Gain Distribution",  g="078" , fembs_on_apa = fembs_on_apa)  #
 #plot4_chns_gain (pp, orgdicts, title="Gain Distribution",  g="047" , fembs_on_apa = fembs_on_apa)  #

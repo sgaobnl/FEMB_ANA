@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/17/2019 11:27:17 AM
+Last modified: 1/19/2019 5:52:23 PM
 """
 
 #defaut setting for scientific caculation
@@ -469,7 +469,7 @@ def cali_linear_calc(chn_cali_paras):
     ped = chn_cali_paras[0][10]
 
     for onecp in chn_cali_paras:
-        if onecp[4] - ped < 1500 : #region inside linearity
+        if onecp[4] - ped < 1000 : #region inside linearity
             vdacs.append(onecp[2])
             ampps.append(onecp[4])
             ampns.append(onecp[5])
@@ -492,7 +492,7 @@ def cali_linear_calc(chn_cali_paras):
         #        areans.append(onecp[12])
     fc_dacs = np.array(vdacs) * fc_daclsb
     
-    if (ped >1000): #induction plane
+    if (ped >1500): #induction plane
         #amplitude, positive pulse
         ampp_fit = linear_fit(fc_dacs,  ampps )
         ampn_fit = linear_fit(fc_dacs,  ampns )
@@ -616,7 +616,7 @@ def ana_a_chn(rms_rootpath,  cali_rootpath, mode="CHN", APAno = 4, \
             wireinfo = onewire
             break
     feset_info = [gain, tp]
-    rmsdata = read_rawdata_fast(rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
+    rmsdata = read_rawdata(rms_rootpath, rmsrunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     calidata = read_rawdata(cali_rootpath, calirunno, wibno,  fembno, chnno, gain, tp, jumbo_flag)
     
     chn_noise_paras = noise_a_chn(rmsdata, chnno,fft_en, fft_s, fft_avg_cycle, wibno, fembno)

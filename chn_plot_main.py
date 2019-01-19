@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/30/2018 5:37:12 PM
+Last modified: 1/19/2019 5:25:16 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -76,8 +76,8 @@ if __name__ == '__main__':
                     ]    
 #    wib_femb_chns = [  ]
     #for i in range(0,16,1):
-    for i in range(16,32,1):
-        wib_femb_chns.append( [0, 1, i] )
+#    for i in range(16,32,1):
+#        wib_femb_chns.append( [0, 1, i] )
     
     for wfc in wib_femb_chns:
         wibno = wfc[0]

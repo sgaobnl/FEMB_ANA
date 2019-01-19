@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 11/19/2018 1:45:42 AM
+Last modified: 1/17/2019 2:44:44 PM
 """
 
 #defaut setting for scientific caculation
@@ -20,13 +20,13 @@ Last modified: 11/19/2018 1:45:42 AM
 def bad_channels_mapping(wib_ip=1, femb_no=0,env="RT"):
 
     if (femb_no== 0) :
-        apa_yuv_bad = [107, 109, 125 ] 
+        apa_yuv_bad = [ ] 
     elif ( femb_no == 1):
-        apa_yuv_bad = [48, 79, 127]
+        apa_yuv_bad = []
     elif ( femb_no == 2):
-        apa_yuv_bad = [124,126,127] 
+        apa_yuv_bad = [] 
     elif ( femb_no == 3):
-        apa_yuv_bad = [48, 50 ] 
+        apa_yuv_bad = [ ] 
 
 
     return apa_yuv_bad
