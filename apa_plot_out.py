@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jan 19 20:08:20 2019
+Last modified: 1/19/2019 8:10:30 PM
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -521,7 +521,7 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
     ax2.tick_params(labelsize=16)
     ax2.set_ylim([-100,100])
     ax2.set_ylabel("Detector capacitance (fC)",  fontsize= 16)
-    ax2.legend(loc=1)
+    ax2.legend(loc=1, fontsize=16)
 
     if (True):
         ax.set_ylim([0,ymax])
@@ -530,7 +530,7 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
         ax.set_xlabel("FEMB channel no.",  fontsize= 16)
         ax.set_title( " ENC ",  fontsize= 16 )
     ax.tick_params(labelsize=16)
-    ax.legend(loc=2)
+    ax.legend(loc=2, fontsize=16)
     ax.grid()
 
 
