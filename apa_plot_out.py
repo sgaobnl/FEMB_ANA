@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/19/2019 8:05:22 PM
+Last modified: Sat Jan 19 20:08:20 2019
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -518,16 +518,18 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
     ax2 = ax.twinx()
     ax2.plot(apachn, capmap , color = 'tab:orange' )
     ax2.scatter(apachn, capmap , color = 'b',           marker = '1', label = "Detector capacitance (fC)")
+    ax2.tick_params(labelsize=16)
     ax2.set_ylim([-100,100])
-    ax2.set_ylabel("Detector capacitance (fC)")
+    ax2.set_ylabel("Detector capacitance (fC)",  fontsize= 16)
     ax2.legend(loc=1)
 
     if (True):
         ax.set_ylim([0,ymax])
         ax.set_xlim([0,127 ] )
-        ax.set_ylabel("ENC /e$^-$")
-        ax.set_xlabel("FEMB channel no.", , fontsize= 66)
-        ax.set_title( " ENC " )
+        ax.set_ylabel("ENC Distribution/e$^-$",  fontsize= 16)
+        ax.set_xlabel("FEMB channel no.",  fontsize= 16)
+        ax.set_title( " ENC ",  fontsize= 16 )
+    ax.tick_params(labelsize=16)
     ax.legend(loc=2)
     ax.grid()
 
