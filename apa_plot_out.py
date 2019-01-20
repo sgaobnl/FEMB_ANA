@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/19/2019 8:10:30 PM
+Last modified: Sat Jan 19 20:12:45 2019
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -513,10 +513,11 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
             enc = np.array(plotrms)*np.array(plotgain)
 
             label = "%2.1f mV/fC, %1.1f $\mu$s)"%(gain_f, tp_f )
-            ax.scatter(apachn, enc, marker='.',color="C" + str(gi) )
+            ax.scatter(apachn, enc, marker='.',color="C" + str(gi, label=label) )
             ax.plot(apachn, enc,color="C" + str(gi), label=label)
+
     ax2 = ax.twinx()
-    ax2.plot(apachn, capmap , color = 'tab:orange' )
+    ax2.plot(apachn, capmap , color = 'tab:orange' , label = "Detector capacitance (fC)")
     ax2.scatter(apachn, capmap , color = 'b',           marker = '1', label = "Detector capacitance (fC)")
     ax2.tick_params(labelsize=16)
     ax2.set_ylim([-100,100])
@@ -530,7 +531,7 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
         ax.set_xlabel("FEMB channel no.",  fontsize= 16)
         ax.set_title( " ENC ",  fontsize= 16 )
     ax.tick_params(labelsize=16)
-    ax.legend(loc=2, fontsize=16)
+    ax.legend(loc=3, fontsize=16)
     ax.grid()
 
 
