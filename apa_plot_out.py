@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/19/2019 7:34:22 PM
+Last modified: Sat Jan 19 19:35:47 2019
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -524,12 +524,10 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
     ax.legend(loc="best")
 
     ax2 = ax.twinx()
-    ax2patch =  [mpatches.Patch(color = 'tab:orange')]
-    ax2label = ["Detector capacitance / fC"]
     ax2.plot(apachn, capmap , color = 'tab:orange' )
     ax2.scatter(apachn, capmap , color = 'b',           marker = '1', label = "Detector capacitance (fC)")
     ax2.set_ylim([0,100])
-    #ax2.legend(loc = 1, fontsize=16 )
+    ax2.set_ylabe("Detector capacitance (fC)")
     ax.legend(loc="best")
 
 
