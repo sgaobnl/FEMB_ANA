@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/19/2019 4:26:54 PM
+Last modified: 1/19/2019 7:34:22 PM
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -30,6 +30,7 @@ import matplotlib.patches as mpatches
 import matplotlib.mlab as mlab
 
 from matplotlib.backends.backend_pdf import PdfPages
+from APA40_cap_mapping import APA_CAPMAP   
 
 import pickle
 
@@ -488,6 +489,7 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
             apaloc = subdicts[0]["apaloc"]
             wibno = subdicts[0]["wib"]
             fembno = subdicts[0]["femb"]
+            capmap = APA_CAPMAP.femb_map(fembid = ( 4 + fembno)) #B side
             apachn, rms, hfrms, sfrms, ped, hfped, sfped, fpg_gain, asi_gain, unstk_ratio = draw_results (subdicts) 
             if (rms_cs=="rms" ):
                 plotrms = rms
@@ -520,6 +522,16 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
         ax.set_xlabel("FEMB channel no.")
         ax.set_title( " ENC " )
     ax.legend(loc="best")
+
+    ax2 = ax.twinx()
+    ax2patch =  [mpatches.Patch(color = 'tab:orange')]
+    ax2label = ["Detector capacitance / fC"]
+    ax2.plot(apachn, capmap , color = 'tab:orange' )
+    ax2.scatter(apachn, capmap , color = 'b',           marker = '1', label = "Detector capacitance (fC)")
+    ax2.set_ylim([0,100])
+    #ax2.legend(loc = 1, fontsize=16 )
+    ax.legend(loc="best")
+
 
 def sub_chns_hist_plot1_1 (ax, dicts, rms_cs="rms", cali_cs="fpg_gain" ) :
     apachn = []
