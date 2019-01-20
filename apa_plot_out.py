@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jan 19 19:35:47 2019
+Last modified: 1/19/2019 8:05:22 PM
 """
 #import matplotlib
 #matplotlib.use('Agg')
@@ -489,7 +489,8 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
             apaloc = subdicts[0]["apaloc"]
             wibno = subdicts[0]["wib"]
             fembno = subdicts[0]["femb"]
-            capmap = APA_CAPMAP.femb_map(fembid = ( 4 + fembno)) #B side
+            a= APA_CAPMAP()
+            capmap = a.femb_cap(fembid = ( 4 + fembno)) #B side
             apachn, rms, hfrms, sfrms, ped, hfped, sfped, fpg_gain, asi_gain, unstk_ratio = draw_results (subdicts) 
             if (rms_cs=="rms" ):
                 plotrms = rms
@@ -514,21 +515,21 @@ def sub_chns_plot1_1 (ax, dicts, gs = ["250", "140", "078"], tp = "20",  rms_cs=
             label = "%2.1f mV/fC, %1.1f $\mu$s)"%(gain_f, tp_f )
             ax.scatter(apachn, enc, marker='.',color="C" + str(gi) )
             ax.plot(apachn, enc,color="C" + str(gi), label=label)
- 
+    ax2 = ax.twinx()
+    ax2.plot(apachn, capmap , color = 'tab:orange' )
+    ax2.scatter(apachn, capmap , color = 'b',           marker = '1', label = "Detector capacitance (fC)")
+    ax2.set_ylim([-100,100])
+    ax2.set_ylabel("Detector capacitance (fC)")
+    ax2.legend(loc=1)
+
     if (True):
         ax.set_ylim([0,ymax])
         ax.set_xlim([0,127 ] )
         ax.set_ylabel("ENC /e$^-$")
-        ax.set_xlabel("FEMB channel no.")
+        ax.set_xlabel("FEMB channel no.", , fontsize= 66)
         ax.set_title( " ENC " )
-    ax.legend(loc="best")
-
-    ax2 = ax.twinx()
-    ax2.plot(apachn, capmap , color = 'tab:orange' )
-    ax2.scatter(apachn, capmap , color = 'b',           marker = '1', label = "Detector capacitance (fC)")
-    ax2.set_ylim([0,100])
-    ax2.set_ylabe("Detector capacitance (fC)")
-    ax.legend(loc="best")
+    ax.legend(loc=2)
+    ax.grid()
 
 
 def sub_chns_hist_plot1_1 (ax, dicts, rms_cs="rms", cali_cs="fpg_gain" ) :

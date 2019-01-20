@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Sat Jan 19 18:47:03 2019
+Last modified: 1/19/2019 7:48:13 PM
 """
 
 #defaut setting for scientific caculation
@@ -19,8 +19,7 @@ import numpy as np
 
 class APA_CAPMAP:
     def femb_cap ( self, fembid=4 ):
-        #for ofc in self.femb_caps[fembid:fembid+1]:
-        ofc = self.femb_caps[fembid:fembid+1]
+        ofc = self.femb_caps[fembid]
         j1_1 = ofc[0::4][::-1]
         j1_3 = ofc[1::4][16:32] + ofc[1::4][0:16]
         j2_1 = ofc[2::4][0:16][::-1] + ofc[2::4][16:32][::-1]
