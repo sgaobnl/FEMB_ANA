@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed 06 Jun 2018 06:32:55 AM CEST
+Last modified: Wed Feb 20 10:59:31 2019
 """
 
 #defaut setting for scientific caculation
@@ -117,7 +117,8 @@ def gain_process(path, wb, onedir = "step1", env = "RT", FEMB = "FEMB0", DAC = "
                 ws = wb.create_sheet(0)
             ws.title = sheet_title #onedir[0:30]
             for chn in range(16):
-                ws.cell(column=chn+1,row=chip_num+1+16*DAC_code,value=chn_peakmean[chn])             
+                #ws.cell(column=chn+1,row=chip_num+1+16*DAC_code,value=chn_peakmean[chn])             
+                ws.cell(column=chn+1,row=chip_num+1+16*DAC_code).value=int(chn_peakmean[chn])        
             wb.save(filename = save_file)
 import sys
 strdate = sys.argv[1] #
@@ -136,37 +137,25 @@ if (jumbo_flag == "True"):
 else:
     jumbo_flag = False
 server_flg = sys.argv[6]
-APAno = int(sys.argv[7])
 
-
+#/home/nfs/dunecet/CET/ProtoDUNE_LD-01/data/ProtoDUNE/Rawdata/CHKOUT/Rawdata_02_20_2019
 one_run =   strrun 
 if (server_flg == "server"):
-    path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno+ strdate + "/" + strrun + "/"
-    #path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ strdate + "/" + strrun + "/"
+    path = "/home/nfs/dunecet/CET/ProtoDUNE_LD-01/data/ProtoDUNE/Rawdata/CHKOUT/Rawdata_"+ strdate + "/" + strrun + "/"
 else:
     path = "/Users/shanshangao/Documents/data2/Rawdata/APA3/Rawdata_"+ strdate + "/" + strrun + "/"
 #femb_set = strenv + strstep
 femb_set = strstep
-onedir_np = ["WIB00"+femb_set, "WIB01"+femb_set, "WIB02"+femb_set, "WIB03"+femb_set,"WIB04"+femb_set,]
+onedir_np = ["WIB00"+femb_set, "WIB01"+femb_set, "WIB02"+femb_set,]
 for onedir in onedir_np:
     for FEMB in ["FEMB0", "FEMB1", "FEMB2","FEMB3" ]:
         Active_flg = True
-
-        #if (APAno == 2):
-        #    if (onedir.find("WIB02") >= 0) and (FEMB == "FEMB2"):
-        #        Active_flg = False
-        #elif (APAno == 3):
-        #    if (onedir.find("WIB02") >= 0) and (FEMB == "FEMB1"):
-        #        Active_flg = False
-        #    elif (onedir.find("WIB02") >= 0) and (FEMB == "FEMB0"):
-        #        Active_flg = False
-        #    elif (onedir.find("WIB03") >= 0) and (FEMB == "FEMB0"):
-        #        Active_flg = False
-        #    elif (onedir.find("WIB00") >= 0) and (FEMB == "FEMB3"):
-        #        Active_flg = False
-        #elif (APAno == 4):
-        #    if (onedir.find("WIB01") >= 0) and (FEMB == "FEMB1"):
-        #        Active_flg = False
+        if (onedir.find("WIB00") >= 0) and (FEMB == "FEMB3"):
+            Active_flg = False
+        elif (onedir.find("WIB01") >= 0) and (FEMB == "FEMB0"):
+            Active_flg = False
+        elif (onedir.find("WIB02") >= 0) and (FEMB == "FEMB0"):
+            Active_flg = False
 
         if (Active_flg ):
             wb = Workbook()

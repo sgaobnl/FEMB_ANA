@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed 06 Jun 2018 06:57:30 AM CEST
+Last modified: Wed Feb 20 13:58:59 2019
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -49,7 +49,8 @@ gainstrstep =  sys.argv[6]
 gainstrdate = sys.argv[7] #
 jumbo_flag = sys.argv[8]
 server_flg = sys.argv[9]
-APAno = sys.argv[10]
+strwib = sys.argv[10]
+fembno = int(sys.argv[11])
 
 if (gainstrstep[1] == "2" ):
     DAC_cs = "FPGADAC"
@@ -72,18 +73,21 @@ else:
 femb_set = "step"
 
 if (server_flg == "server" ):
-    path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ rmsstrdate + "/" 
-    path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ gainstrdate + "/" 
+#    path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ rmsstrdate + "/" 
+#    path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ gainstrdate + "/" 
+    path_raw = "/home/nfs/dunecet/CET/ProtoDUNE_LD-01/data/ProtoDUNE/Rawdata/CHKOUT/Rawdata_"+ rmsstrdate + "/" 
+    path_gain = "/home/nfs/dunecet/CET/ProtoDUNE_LD-01/data/ProtoDUNE/Rawdata/CHKOUT/Rawdata_"+ gainstrdate + "/" 
 else:
     path_raw = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ rmsstrdate + "/" 
     path_gain = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ gainstrdate + "/"
 
 step_info = [ 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB00"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB01"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB01"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB04"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB04"+femb_set], 
+              [[rmsstrstep],[fembno],strenv, strwib+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
+#              [[rmsstrstep],[0,1,2],strenv, "WIB00"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
+#              [[rmsstrstep],[1,2,3],strenv, "WIB01"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB01"+femb_set], 
+#              [[rmsstrstep],[1,2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB04"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB04"+femb_set], 
             ]
 
 psd = True
