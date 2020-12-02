@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed 06 Jun 2018 06:32:55 AM CEST
+Last modified: 9/25/2019 3:48:13 PM
 """
 
 #defaut setting for scientific caculation
@@ -144,12 +144,14 @@ if (server_flg == "server"):
     path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA%d/Rawdata_"%APAno+ strdate + "/" + strrun + "/"
     #path = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/Coldbox/Rawdata_"+ strdate + "/" + strrun + "/"
 else:
-    path = "/Users/shanshangao/Documents/data2/Rawdata/APA3/Rawdata_"+ strdate + "/" + strrun + "/"
+    #path = "/Users/shanshangao/Documents/data2/Rawdata/APA3/Rawdata_"+ strdate + "/" + strrun + "/"
+    path = "D:/P3_P2_rawdata/Rawdata_"+ strdate + "/" + strrun + "/"
 #femb_set = strenv + strstep
 femb_set = strstep
-onedir_np = ["WIB00"+femb_set, "WIB01"+femb_set, "WIB02"+femb_set, "WIB03"+femb_set,"WIB04"+femb_set,]
+#onedir_np = ["WIB00"+femb_set, "WIB01"+femb_set, "WIB02"+femb_set, "WIB03"+femb_set,"WIB04"+femb_set,]
+onedir_np = ["WIB00"+femb_set ]
 for onedir in onedir_np:
-    for FEMB in ["FEMB0", "FEMB1", "FEMB2","FEMB3" ]:
+    for FEMB in [ "FEMB2","FEMB3" ]:
         Active_flg = True
 
         #if (APAno == 2):

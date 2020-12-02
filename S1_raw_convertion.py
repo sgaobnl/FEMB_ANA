@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Tue Nov 28 12:35:08 2017
+Last modified: 9/25/2019 4:03:10 PM
 """
 
 #defaut setting for scientific caculation
@@ -66,7 +66,7 @@ def rms_process_chn(path, onedir = "step1", env = "RT", FEMB = "FEMB0",rms_smps 
 
                     femb_num = int(onefile[onefile.find("FEMB")+4])
                     chip_num = int(onefile[onefile.find("CHIP")+4])
-                    tp = int(onefile[onefile.find("CHIP")+6])
+                    tp = (int(onefile[onefile.find("CHIP")+6], 16))&0x03
                     print smps, femb_num, chip_num, tp
                     chn_data = raw_convertor(raw_data, smps, jumbo_flag)
                     alldata.append([femb_num, chip_num, tp, chn_data])

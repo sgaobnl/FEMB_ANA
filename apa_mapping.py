@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: 1/13/2018 3:47:54 PM
+Last modified: 9/25/2019 11:38:55 PM
 """
 
 #defaut setting for scientific caculation
@@ -178,44 +178,50 @@ class APA_MAP:
         return All_sort, X_sort, V_sort, U_sort
     
     def apa_mapping(self):
-        if (self.APA == 'ProtoDUNE'):
-            apa_yuv = []
-            apa_y = []
-            apa_u = []
-            apa_v = []
-            All_sort, X_sort, V_sort, U_sort = self.apa_femb_mapping_pd()
-            for onewire in All_sort:
-                apa_yuv.append(int(onewire[1]))
+        #if (self.APA == 'ProtoDUNE'):
+        #    apa_yuv = []
+        #    apa_y = []
+        #    apa_u = []
+        #    apa_v = []
+        #    All_sort, X_sort, V_sort, U_sort = self.apa_femb_mapping_pd()
+        #    for onewire in All_sort:
+        #        apa_yuv.append(int(onewire[1]))
     
-            for onewire in X_sort:
-                if onewire[0][0] == "X":
-                    apa_y.append(int(onewire[1]))
-            for onewire in V_sort:
-                if onewire[0][0] == "V":
-                    apa_v.append(int(onewire[1]))
-            for onewire in U_sort:
-                if onewire[0][0] == "U":
-                    apa_u.append(int(onewire[1]))
-        else:
-            apa_yuv = range(128)
-            apa_y = [0  ,1  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,9  ,10 ,11 ,12 ,13 ,
-                     18 ,19 ,20 ,21, 22, 23, 24, 25, 26, 27 ,28 ,29 ,30 ,31 ,
-                     64, 65, 66 ,67, 68, 69, 70, 71, 72, 73 ,74 ,75 ,76 ,77 ,
-                     82, 83 ,84 ,85, 86, 87, 88, 89, 90 ,91 ,92 ,93 ,94 ,95 , ]
-            apa_v = [32, 33, 34 ,36, 38 , 40, 42, 44, 46,
-                     48, 50, 52 ,54, 56 , 58, 60, 62, 63,
-                     96, 98, 100,102,104,106,108,110,111,
-                     112,113,114,116,118,120,122,124,126, ]
-            apa_u = [14, 15, 16, 17, 78 , 79, 80, 81, 
-                     35, 37, 39 ,41, 43 , 45, 47, 
-                     49, 51, 53 ,55, 57 , 59, 61, 
-                     97, 99, 101,103,105,107,109,
-                     115,117,119,121,123,125,127, ]
+        #    for onewire in X_sort:
+        #        if onewire[0][0] == "X":
+        #            apa_y.append(int(onewire[1]))
+        #    for onewire in V_sort:
+        #        if onewire[0][0] == "V":
+        #            apa_v.append(int(onewire[1]))
+        #    for onewire in U_sort:
+        #        if onewire[0][0] == "U":
+        #            apa_u.append(int(onewire[1]))
+        #elif (self.APA == 'APA40'):
+        #    apa_yuv = range(128)
+        #    apa_y = [0  ,1  ,2  ,3  ,4  ,5  ,6  ,7  ,8  ,9  ,10 ,11 ,12 ,13 ,
+        #             18 ,19 ,20 ,21, 22, 23, 24, 25, 26, 27 ,28 ,29 ,30 ,31 ,
+        #             64, 65, 66 ,67, 68, 69, 70, 71, 72, 73 ,74 ,75 ,76 ,77 ,
+        #             82, 83 ,84 ,85, 86, 87, 88, 89, 90 ,91 ,92 ,93 ,94 ,95 , ]
+        #    apa_v = [32, 33, 34 ,36, 38 , 40, 42, 44, 46,
+        #             48, 50, 52 ,54, 56 , 58, 60, 62, 63,
+        #             96, 98, 100,102,104,106,108,110,111,
+        #             112,113,114,116,118,120,122,124,126, ]
+        #    apa_u = [14, 15, 16, 17, 78 , 79, 80, 81, 
+        #             35, 37, 39 ,41, 43 , 45, 47, 
+        #             49, 51, 53 ,55, 57 , 59, 61, 
+        #             97, 99, 101,103,105,107,109,
+        #             115,117,119,121,123,125,127, ]
+
+        apa_yuv = range(128)
+        apa_y = range(0,32) + range(64, 96)
+        apa_u = range(32, 64) 
+        apa_v = range(96, 128)
         return apa_yuv, apa_y, apa_u, apa_v
 
     def __init__(self):
 #        self.APA = 'APA40'
-        self.APA = 'ProtoDUNE'
+#        self.APA = 'ProtoDUNE'
+        self.APA = 'SBND'
 
 #    apa_y = [
 #                 10+0*16, 11+0*16, 12+0*16, 13+0*16, 14+0*16, 15+0*16,

@@ -5,7 +5,7 @@ Author: GSS
 Mail: gao.hillhill@gmail.com
 Description: 
 Created Time: 7/15/2016 11:47:39 AM
-Last modified: Wed 06 Jun 2018 06:57:30 AM CEST
+Last modified: 9/30/2019 11:11:24 PM
 """
 import matplotlib
 matplotlib.use('Agg')
@@ -58,10 +58,16 @@ elif (gainstrstep[1] == "4" ):
 
 if (gainstrstep[0] == "3" ):
     gain = 3
-    dac_np = [1,2,3,4]
+    dac_np = [1,2,3,4,5]
 elif (gainstrstep[0] == "1" ):
     gain = 2
-    dac_np = [3,4,5,6,7]
+    dac_np = [1,2, 3,4,5]
+elif (gainstrstep[0] == "0" ):
+    gain = 0
+    dac_np = [1,2,3,4,5]
+elif (gainstrstep[0] == "2" ):
+    gain = 1
+    dac_np = [1,2,3,4,5]
 
 if (jumbo_flag == "True"):
     jumbo_flag = True
@@ -75,15 +81,15 @@ if (server_flg == "server" ):
     path_raw = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ rmsstrdate + "/" 
     path_gain = "/nfs/rscratch/bnl_ce/shanshan/Rawdata/APA"+APAno+"/Rawdata_"+ gainstrdate + "/" 
 else:
-    path_raw = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ rmsstrdate + "/" 
-    path_gain = "/Users/shanshangao/Documents/Share_Windows/CERN_test_stand/Rawdata/Rawdata_"+ gainstrdate + "/"
+    path_raw = "D:/P3_P2_rawdata/Rawdata_"+ rmsstrdate + "/" 
+    path_gain = "D:/P3_P2_rawdata/Rawdata_"+ gainstrdate + "/"
 
 step_info = [ 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB00"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB01"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB01"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
-              [[rmsstrstep],[0,1,2,3],strenv, "WIB04"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB04"+femb_set], 
+              [[rmsstrstep],[2, 3],strenv, "WIB00"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB00"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB01"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB01"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB02"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB02"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB03"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB03"+femb_set], 
+#              [[rmsstrstep],[0,1,2,3],strenv, "WIB04"+femb_set+gainstrstep, gain, dac_np, DAC_cs, "run" + rmsstrrun, "run" + gainstrrun, "WIB04"+femb_set], 
             ]
 
 psd = True
@@ -119,15 +125,18 @@ for step_one_info in step_info:
             
             #raw data processing or import processed result
             print "raw data processing or import processed result"
-            #readfile = path +"\\" + "FEMB%d"%femb +  step +  "_" + DAC + "_"+ "alldata_result.bin"
-            ####readfile = path +"/" + rms_step +  "FEMB%d"%femb +  step +  "_" + DAC + "_"+ "alldata_result_org.bin"
-            ####if os.path.isfile(readfile):
-            ####    import pickle
-            ####    with open (readfile, 'rb') as fp:
-            ####        all_chn_results = pickle.load(fp)
-            ####else:
-            if (True):
-                all_chn_results = raw_convertion( path, gainpath, step_np = [step], env = env, femb=femb, psd = psd, rms_smps =100000, stuck_filter = True, \
+            readfile = path +"\\" + "FEMB%d"%femb +  step +  "_" + DAC + "_"+ "alldata_result_org.bin"
+            ####readfile = path +"/" + "FEMB2WIB00step31_FPGADAC_alldata_result_org.bin" # + rms_step +  "FEMB%d"%femb +  step +  "_" + DAC + "_"+ "alldata_result_org.bin"
+            print readfile
+            if os.path.isfile(readfile):
+                import pickle
+                with open (readfile, 'rb') as fp:
+                    all_chn_results = pickle.load(fp)
+            else:
+                exit()
+                print "error"
+            #if (True):
+                all_chn_results = raw_convertion( path, gainpath, step_np = [step], env = env, femb=femb, psd = psd, rms_smps =100000, stuck_filter = False, \
                             gain = gain, gain_step = gain_step, DAC = DAC, DACvalue = DACvalue, jumbo_flag = jumbo_flag)
             print "time cost = %.3f seconds"%(timer()-start)
 
@@ -141,29 +150,29 @@ for step_one_info in step_info:
             print "time cost = %.3f seconds"%(timer()-start)
            
            
-            for chn in range(128):
-                one_chn_plot (all_chn_results, chn,  pp, step, env, femb, psd, gain, DACvalue=DACvalue)
-                print "time cost = %.3f seconds"%(timer()-start)
-
-            x_range = [0, 1e6]
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 0, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 1, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 2, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 3, psd=psd, step=step, x_range=x_range, SF=True)
-            print "time cost = %.3f seconds"%(timer()-start)
-            
-            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 0, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 1, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 2, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 3, psd=psd, step=step, x_range=x_range, SF=True)
-            print "time cost = %.3f seconds"%(timer()-start)
-            
-            x_range = [0, 2e5]
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 0, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 1, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 2, psd=psd, step=step, x_range=x_range, SF=True)
-            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 3, psd=psd, step=step, x_range=x_range, SF=True)
-            print "time cost = %.3f seconds"%(timer()-start)
+#            for chn in range(128):
+#                one_chn_plot (all_chn_results, chn,  pp, step, env, femb, psd, gain, DACvalue=DACvalue)
+#                print "time cost = %.3f seconds"%(timer()-start)
+#
+#            x_range = [0, 1e6]
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 0, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 1, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 2, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 3, psd=psd, step=step, x_range=x_range, SF=False)
+#            print "time cost = %.3f seconds"%(timer()-start)
+#            
+#            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 0, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 1, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 2, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_3d_plot(all_chn_results, pp, femb = femb, tp = 3, psd=psd, step=step, x_range=x_range, SF=False)
+#            print "time cost = %.3f seconds"%(timer()-start)
+#            
+#            x_range = [0, 2e5]
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 0, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 1, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 2, psd=psd, step=step, x_range=x_range, SF=False)
+#            fft_2d_plot(all_chn_results, pp, femb = femb, tp = 3, psd=psd, step=step, x_range=x_range, SF=False)
+#            print "time cost = %.3f seconds"%(timer()-start)
           
             pp.close()
     print "DONE"
